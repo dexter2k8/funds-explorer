@@ -1,14 +1,16 @@
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import Sidebar from "@/app/(dashboard)/components/Sidebar";
 import { PropsWithChildren } from "react";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
-  const { layout } = styles;
+  const { layout, container } = styles;
   return (
     <div className={layout}>
       <Sidebar />
-      <div>
-        <h1 style={{ backgroundColor: "green" }}>Header</h1>
+      <div className={container}>
+        <header style={{ display: "flex", width: "100%", backgroundColor: "green" }}>
+          <h1>Header</h1>
+        </header>
         {children}
       </div>
     </div>

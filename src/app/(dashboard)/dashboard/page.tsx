@@ -1,3 +1,3 @@
 export default function Dashboard() {
-  return <div style={{ backgroundColor: "yellow" }}>Dashboard</div>;
+  return <div style={{ backgroundColor: "yellow", height: "100%" }}>Dashboard</div>;
 }
