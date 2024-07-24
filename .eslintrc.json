@@ -1,3 +1,127 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:@next/next/recommended"
+  ],
+
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "react-hooks",
+    "simple-import-sort",
+    "import",
+    "unused-imports"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+
+    "@typescript-eslint/consistent-type-imports": "error",
+
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.ts", "**/*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // side effect imports
+              ["^\\u0000"],
+
+              // `react` first, `next` second, then packages starting with a character
+              ["^react$", "^next$", "^react-native$"],
+
+              // Packages starting with `@`
+              ["^@", "^[a-z]"],
+
+              // local packages
+              [
+                "^@assets",
+                "^@app",
+                "^@templates",
+                "^@utils",
+                "^@store",
+                "^@components",
+                "^@contexts",
+                "^@screens",
+                "^@navigation",
+                "^@styles"
+              ],
+
+              // Imports starting with `../`
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+
+              // Imports starting with `./`
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+
+              // Style imports
+              ["^./styles.ts$"],
+
+              // type imports from other contexts
+              ["^@?\\w.*\\u0000$"],
+
+              // type imports from actual contexts
+              ["^[^.].*\\u0000$", "^\\..*\\u0000$"]
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
