@@ -4,20 +4,29 @@ import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdDonutLarge, MdLogout } from "react-icons/md";
 import { FaShoppingBag } from "react-icons/fa";
 import { RiGroupFill, RiMessage2Fill } from "react-icons/ri";
+import { usePathname } from "next/navigation";
+import { useState } from "react"; // TODO: remove when dashboard is ready
 
 const sidebarItems = [
-  { name: "Dashboard", icon: <MdDashboard /> },
-  { name: "My Store", icon: <FaShoppingBag /> },
-  { name: "Analytics", icon: <MdDonutLarge /> },
-  { name: "Message", icon: <RiMessage2Fill /> },
-  { name: "Team", icon: <RiGroupFill /> },
+  { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },
+  { label: "My Store", value: "/my-store", icon: <FaShoppingBag /> },
+  { label: "Analytics", value: "/analytics", icon: <MdDonutLarge /> },
+  { label: "Message", value: "/message", icon: <RiMessage2Fill /> },
+  { label: "Team", value: "/team", icon: <RiGroupFill /> },
 ];
 
-export default function Sidebar() {
+interface ISidebarProps {
+  collapsed: boolean;
+}
+
+export default function Sidebar({ collapsed }: ISidebarProps) {
+  const pathname = usePathname();
   const { sidebar, head, items, foot } = styles;
 
+  const [active, setActive] = useState(0);
+
   return (
-    <aside className={sidebar}>
+    <aside className={sidebar} data-collapsed={collapsed}>
       <div className={head}>
         <Link href="/dashboard">
           <Logo />
@@ -27,11 +36,14 @@ export default function Sidebar() {
 
       <ul className={items}>
         {sidebarItems.map((item, i) => (
-          <li key={i}>
-            <a href="#">
+          <li key={i} data-active={i === active} onClick={() => setActive(i)}>
+            {/* <li key={i} data-active={pathname === item.value}> */}
+            {/* TODO: uncomment when dashboard is ready */}
+            {/* <Link href={item.value}> */}
+            <Link href="#">
               {item.icon}
-              <span>{item.name}</span>
-            </a>
+              <span>{item.label}</span>
+            </Link>
           </li>
         ))}
       </ul>

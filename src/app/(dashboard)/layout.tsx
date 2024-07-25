@@ -1,16 +1,17 @@
+"use client";
 import styles from "./styles.module.scss";
 import Sidebar from "@/app/(dashboard)/components/Sidebar";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
+import Header from "./components/Header";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
+  const [collapsed, setCollapsed] = useState(false);
   const { layout, container } = styles;
   return (
     <div className={layout}>
-      <Sidebar />
+      <Sidebar collapsed={collapsed} />
       <div className={container}>
-        <header style={{ display: "flex", width: "100%", backgroundColor: "green" }}>
-          <h1>Header</h1>
-        </header>
+        <Header menuClick={() => setCollapsed(!collapsed)} />
         {children}
       </div>
     </div>
