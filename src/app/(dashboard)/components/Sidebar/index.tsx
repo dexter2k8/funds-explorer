@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdDonutLarge, MdLogout } from "react-icons/md";
 import { FaShoppingBag } from "react-icons/fa";
-import { RiGroupFill, RiMessage2Fill } from "react-icons/ri";
+import { RiGroupFill } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import { useState } from "react"; // TODO: remove when dashboard is ready
 
@@ -11,7 +11,6 @@ const sidebarItems = [
   { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },
   { label: "My Store", value: "/my-store", icon: <FaShoppingBag /> },
   { label: "Analytics", value: "/analytics", icon: <MdDonutLarge /> },
-  { label: "Message", value: "/message", icon: <RiMessage2Fill /> },
   { label: "Team", value: "/team", icon: <RiGroupFill /> },
 ];
 
