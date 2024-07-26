@@ -2,7 +2,6 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdLogout, MdOutlineSettings, MdOutlineTableChart } from "react-icons/md";
-import { useState } from "react"; // TODO: remove when dashboard is ready
 
 const sidebarItems = [
   { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },
@@ -18,8 +17,6 @@ interface ISidebarProps {
 export default function Sidebar({ collapsed, pathname }: ISidebarProps) {
   const { sidebar, head, items, foot } = styles;
 
-  const [active, setActive] = useState(0);
-
   return (
     <nav className={sidebar} data-collapsed={collapsed}>
       <div className={head}>
@@ -31,11 +28,8 @@ export default function Sidebar({ collapsed, pathname }: ISidebarProps) {
 
       <ul className={items}>
         {sidebarItems.map((item, i) => (
-          <li key={i} data-active={i === active} onClick={() => setActive(i)}>
-            {/* <li key={i} data-active={pathname === item.value}> */}
-            {/* TODO: uncomment when dashboard is ready */}
-            {/* <Link href={item.value}> */}
-            <Link href="#">
+          <li key={i} data-active={pathname === item.value}>
+            <Link href={item.value}>
               {item.icon}
               <span>{item.label}</span>
             </Link>
