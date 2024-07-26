@@ -4,7 +4,6 @@ import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdDonutLarge, MdLogout } from "react-icons/md";
 import { FaShoppingBag } from "react-icons/fa";
 import { RiGroupFill } from "react-icons/ri";
-import { usePathname } from "next/navigation";
 import { useState } from "react"; // TODO: remove when dashboard is ready
 
 const sidebarItems = [
@@ -16,16 +15,16 @@ const sidebarItems = [
 
 interface ISidebarProps {
   collapsed: boolean;
+  pathname: string;
 }
 
-export default function Sidebar({ collapsed }: ISidebarProps) {
-  const pathname = usePathname();
+export default function Sidebar({ collapsed, pathname }: ISidebarProps) {
   const { sidebar, head, items, foot } = styles;
 
   const [active, setActive] = useState(0);
 
   return (
-    <aside className={sidebar} data-collapsed={collapsed}>
+    <nav className={sidebar} data-collapsed={collapsed}>
       <div className={head}>
         <Link href="/dashboard">
           <Logo />
@@ -53,6 +52,6 @@ export default function Sidebar({ collapsed }: ISidebarProps) {
           <span>Logout</span>
         </Link>
       </div>
-    </aside>
+    </nav>
   );
 }
