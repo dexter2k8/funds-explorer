@@ -10,12 +10,12 @@
   &::before {
     content: "";
     position: absolute;
-    bottom: -2.5rem;
+    bottom: -1rem;
     left: 0;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 50%;
-    box-shadow: -1.25rem -1.25rem 0 var(--light);
+    box-shadow: -0.5rem -0.5rem 0 var(--light);
   }
   .content {
     display: flex;
