@@ -20,7 +20,7 @@ export default function SignIn() {
         </div>
         <div className={item}>
           <label htmlFor="password">Password</label>
-          <Input id="password" />
+          <Input id="password" type="password" />
         </div>
         <Button size="large" variant="primary">
           Sign In
