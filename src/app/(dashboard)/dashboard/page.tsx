@@ -1,3 +1,6 @@
+import styles from "./styles.module.css";
+
 export default function Dashboard() {
-  return <div style={{ padding: "1.5rem", height: "100%" }}>Dashboard</div>;
+  const { dashboard } = styles;
+  return <main className={dashboard}>Dashboard</main>;
 }
