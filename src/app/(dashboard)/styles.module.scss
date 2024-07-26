@@ -7,10 +7,12 @@
   }
 }
 
-// @media (max-width: 630px) {
-//   .layout {
-//     .container {
-//       margin-left: 3.7rem;
-//     }
-//   }
-// }
+@media (max-width: 630px) {
+  .layout {
+    .content {
+      position: absolute;
+      top: 3.5rem;
+      left: 3.25rem;
+    }
+  }
+}
