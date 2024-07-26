@@ -4,18 +4,18 @@ import { MdMenu } from "react-icons/md";
 
 interface IHeaderProps {
   menuClick: () => void;
-  title: string;
+  label: string;
 }
 
-export default function Header({ menuClick, title }: IHeaderProps) {
-  const { header, content } = styles;
+export default function Header({ menuClick, label }: IHeaderProps) {
+  const { header, content, title } = styles;
   return (
     <header className={header}>
       <div className={content}>
         <button onClick={menuClick}>
           <MdMenu />
         </button>
-        <h2>{title}</h2>
+        <h2 className={title}>{label}</h2>
       </div>
       {/* TODO: Add user details */}
       <UserDetails username="Dexter" email="LqS2f@example.com" />

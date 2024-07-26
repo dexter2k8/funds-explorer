@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     <div className={layout}>
       <Sidebar pathname={pathname} collapsed={collapsed} />
       <div className={container}>
-        <Header title={title} menuClick={() => setCollapsed(!collapsed)} />
+        <Header label={title} menuClick={() => setCollapsed(!collapsed)} />
         {children}
       </div>
     </div>

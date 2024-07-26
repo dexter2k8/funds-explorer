@@ -35,3 +35,13 @@
     }
   }
 }
+
+@media (max-width: 630px) {
+  .header {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    .title {
+      display: none;
+    }
+  }
+}
