@@ -1,3 +1,4 @@
+import UserDetails from "../UserDetails";
 import styles from "./styles.module.scss";
 import { MdMenu } from "react-icons/md";
 
@@ -7,13 +8,17 @@ interface IHeaderProps {
 }
 
 export default function Header({ menuClick, title }: IHeaderProps) {
-  const { header } = styles;
+  const { header, content } = styles;
   return (
     <header className={header}>
-      <button onClick={menuClick}>
-        <MdMenu />
-      </button>
-      <h2>{title}</h2>
+      <div className={content}>
+        <button onClick={menuClick}>
+          <MdMenu />
+        </button>
+        <h2>{title}</h2>
+      </div>
+      {/* TODO: Add user details */}
+      <UserDetails username="Dexter" email="LqS2f@example.com" />
     </header>
   );
 }

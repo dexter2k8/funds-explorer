@@ -1,16 +1,13 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import Logo from "../../../../../public/assets/logo";
-import { MdDashboard, MdDonutLarge, MdLogout } from "react-icons/md";
-import { FaShoppingBag } from "react-icons/fa";
-import { RiGroupFill } from "react-icons/ri";
+import { MdDashboard, MdLogout, MdOutlineSettings, MdOutlineTableChart } from "react-icons/md";
 import { useState } from "react"; // TODO: remove when dashboard is ready
 
 const sidebarItems = [
   { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },
-  { label: "My Store", value: "/my-store", icon: <FaShoppingBag /> },
-  { label: "Analytics", value: "/analytics", icon: <MdDonutLarge /> },
-  { label: "Team", value: "/team", icon: <RiGroupFill /> },
+  { label: "Analytics", value: "/analytics", icon: <MdOutlineTableChart /> },
+  { label: "Settings", value: "/settings", icon: <MdOutlineSettings /> },
 ];
 
 interface ISidebarProps {
