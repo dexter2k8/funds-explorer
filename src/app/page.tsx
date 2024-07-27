@@ -10,16 +10,18 @@ import schema from "@/schemas/validateLogin";
 import { ISignInProps } from "@/store/useAuth/types";
 import { useAuth } from "@/store/useAuth";
 import api from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
+  const router = useRouter();
   const { signIn } = useAuth();
   const { control, handleSubmit } = useForm<ISignInProps>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<ISignInProps> = (data) => {
-    signIn(data);
+  const onSubmit: SubmitHandler<ISignInProps> = async (data) => {
+    (await signIn(data)) && router.replace("/dashboard");
   };
 
   return (
@@ -42,7 +44,7 @@ export default function SignIn() {
         </Button>
         <Link href="/sign-up">Create an account</Link>
       </form>
-      <button onClick={() => GetFunds()}>get funds</button>
+      {/* <button onClick={() => GetFunds()}>get funds</button> */}
     </main>
   );
 }

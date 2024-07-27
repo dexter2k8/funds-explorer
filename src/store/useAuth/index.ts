@@ -9,6 +9,6 @@ export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState
       set({ [state]: value });
     },
 
-    signIn: async (props) => SignIn(props),
+    signIn: async (props) => await SignIn(props),
   })
 );

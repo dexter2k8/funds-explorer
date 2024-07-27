@@ -7,11 +7,13 @@ async function SignIn({ email, password }: ISignInProps) {
   try {
     await api.client.post("/api/sign_in", { email, password });
     toast.success("Login successfully");
+    return true;
   } catch (error) {
     if (error instanceof AxiosError) {
       toast.error(error.response?.data);
     }
   }
+  return false;
 }
 
 export { SignIn };
