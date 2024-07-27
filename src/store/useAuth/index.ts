@@ -2,6 +2,7 @@ import { create, StoreApi, UseBoundStore } from "zustand";
 import type { TActions, TState } from "./types";
 import api from "@/services/api";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState & TActions>(
   (set) => ({
@@ -14,9 +15,10 @@ export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState
       try {
         const response = await api.client.post("/api/sign_in", { email, password });
         console.log(response.data);
+        toast.success("Login successfully");
       } catch (error) {
         if (error instanceof AxiosError) {
-          console.error(error.response?.data);
+          toast.error(error.response?.data);
         }
       }
     },
