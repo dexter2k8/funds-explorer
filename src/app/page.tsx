@@ -7,21 +7,18 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateLogin";
-import Select from "@/components/Select";
-
-interface ISignInProps {
-  email: string;
-  password: string;
-}
+import { ISignInProps } from "@/store/useAuth/types";
+import { useAuth } from "@/store/useAuth";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
+  const { signIn } = useAuth();
   const { control, handleSubmit } = useForm<ISignInProps>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<ISignInProps> = (data) => {
-    console.log(data);
+    signIn(data);
   };
 
   return (
