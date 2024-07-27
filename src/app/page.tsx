@@ -1,12 +1,13 @@
 "use client";
-import Input from "@/components/Input";
 import styles from "./page.module.scss";
+import Input from "@/components/Input";
 import Logo from "../../public/assets/logo";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateLogin";
+import Select from "@/components/Select";
 
 interface ISignInProps {
   email: string;

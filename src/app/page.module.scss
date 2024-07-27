@@ -36,6 +36,10 @@
       flex-direction: column;
       gap: 0.25rem;
       width: 18rem;
+      label {
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
     }
     button {
       width: 18rem;

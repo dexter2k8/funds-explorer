@@ -53,12 +53,11 @@
 }
 
 .dx-input-container input:hover {
-  border-color: #4096ff;
+  border-color: #b6b6b6;
 }
 
 .dx-input-container input:focus {
-  box-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
-  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(119, 119, 119, 0.1);
 }
 
 .dx-input-container .dx-input-error {
