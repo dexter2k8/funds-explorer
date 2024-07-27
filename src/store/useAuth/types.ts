@@ -11,3 +11,8 @@ export interface ISignInProps {
   email: string;
   password: string;
 }
+
+export interface ISignUpProps extends ISignInProps {
+  name: string;
+  confirmPassword: string;
+}
