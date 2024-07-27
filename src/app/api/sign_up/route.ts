@@ -6,24 +6,16 @@ import { cookies } from "next/headers";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password } = body;
+    const { name, email, password, confirmPassword } = body;
 
-    const response = await api.server.post("/login", {
+    const response = await api.server.post("/users", {
+      name,
       email,
       password,
+      confirmPassword,
     });
 
-    const token = response.data.token;
-
-    cookies().set({
-      name: "funds-explorer-token",
-      value: token,
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-      path: "/",
-    });
-
-    return Response.json(response.data.token, { status: 200 });
+    return Response.json(response.data, { status: 200 });
   } catch (error) {
     if (error instanceof AxiosError) {
       return Response.json(error.response?.data.message, { status: error.response?.status });

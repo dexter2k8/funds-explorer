@@ -4,19 +4,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Logo from "../../../public/assets/logo";
 import schema from "@/schemas/validateSignUp";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ISignUpProps } from "@/store/useAuth/types";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/useAuth";
+import type { ISignUpProps } from "@/store/useAuth/types";
 
 export default function SignUp() {
   const { main, container, head, item } = styles;
+  const { signUp } = useAuth();
+  const router = useRouter();
   const { control, handleSubmit } = useForm<ISignUpProps>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: SubmitHandler<ISignUpProps> = async (data: ISignUpProps) => {
-    console.log(data);
+    (await signUp(data)) && router.push("/");
   };
 
   return (

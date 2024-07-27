@@ -1,6 +1,6 @@
 import { create, StoreApi, UseBoundStore } from "zustand";
+import { SignIn, SignUp } from "./fetchers";
 import type { TActions, TState } from "./types";
-import { SignIn } from "./fetchers";
 
 export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState & TActions>(
   (set) => ({
@@ -10,5 +10,6 @@ export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState
     },
 
     signIn: async (props) => await SignIn(props),
+    signUp: async (props) => await SignUp(props),
   })
 );

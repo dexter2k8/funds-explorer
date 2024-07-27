@@ -7,10 +7,10 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateLogin";
-import { ISignInProps } from "@/store/useAuth/types";
 import { useAuth } from "@/store/useAuth";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
+import type { ISignInProps } from "@/store/useAuth/types";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;

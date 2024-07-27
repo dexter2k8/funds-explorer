@@ -1,7 +1,7 @@
 import api from "@/services/api";
-import { ISignInProps } from "./types";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import type { ISignInProps, ISignUpProps } from "./types";
 
 async function SignIn({ email, password }: ISignInProps) {
   try {
@@ -16,4 +16,17 @@ async function SignIn({ email, password }: ISignInProps) {
   return false;
 }
 
-export { SignIn };
+async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) {
+  try {
+    await api.client.post("/api/sign_up", { name, email, password, confirmPassword });
+    toast.success("Sign up successfully");
+    return true;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      toast.error(error.response?.data);
+    }
+  }
+  return false;
+}
+
+export { SignIn, SignUp };
