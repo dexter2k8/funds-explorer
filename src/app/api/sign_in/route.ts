@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 import api from "@/services/api";
+import { cookies } from "next/headers";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +14,16 @@ export async function POST(request: NextRequest) {
     const response = await api.server.post("/login", {
       email,
       password,
+    });
+
+    const token = response.data.token;
+
+    cookies().set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: "/",
     });
 
     return Response.json(response.data.token, { status: 200 });

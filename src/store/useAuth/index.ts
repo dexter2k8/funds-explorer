@@ -3,6 +3,7 @@ import type { TActions, TState } from "./types";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { SignIn } from "./fetchers";
 
 export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState & TActions>(
   (set) => ({
@@ -11,16 +12,6 @@ export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState
       set({ [state]: value });
     },
 
-    signIn: async ({ email, password }) => {
-      try {
-        const response = await api.client.post("/api/sign_in", { email, password });
-        console.log(response.data);
-        toast.success("Login successfully");
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          toast.error(error.response?.data);
-        }
-      }
-    },
+    signIn: async (props) => SignIn(props),
   })
 );
