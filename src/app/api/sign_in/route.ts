@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const token = response.data.token;
 
     cookies().set({
-      name: "token",
+      name: "funds-explorer-token",
       value: token,
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 30, // 30 days

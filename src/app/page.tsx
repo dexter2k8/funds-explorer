@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateLogin";
 import { ISignInProps } from "@/store/useAuth/types";
 import { useAuth } from "@/store/useAuth";
+import api from "@/services/api";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
@@ -41,6 +42,16 @@ export default function SignIn() {
         </Button>
         <Link href="/sign-up">Create an account</Link>
       </form>
+      <button onClick={() => GetFunds()}>get funds</button>
     </main>
   );
+}
+
+async function GetFunds() {
+  try {
+    const response = await api.client.get("/api/get_funds");
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
 }

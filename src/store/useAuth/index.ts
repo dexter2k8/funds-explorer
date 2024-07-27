@@ -1,8 +1,5 @@
 import { create, StoreApi, UseBoundStore } from "zustand";
 import type { TActions, TState } from "./types";
-import api from "@/services/api";
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
 import { SignIn } from "./fetchers";
 
 export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState & TActions>(
