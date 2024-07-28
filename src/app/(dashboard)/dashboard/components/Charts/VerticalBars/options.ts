@@ -8,7 +8,9 @@ export default function chartOptions(data: IVerticalChartData[]) {
         type: "shadow",
       },
     },
-    legend: {},
+    legend: {
+      top: 8, // Move legend 8px down
+    },
     grid: { left: "3%", right: "4%", bottom: "3%", containLabel: true },
     xAxis: [
       {
@@ -24,9 +26,9 @@ export default function chartOptions(data: IVerticalChartData[]) {
     ],
     series: [
       {
-        name: "Pending",
+        name: "Patrimony",
         type: "bar",
-        stack: "Claims",
+        stack: "Portfolio",
         emphasis: {
           focus: "series",
         },
@@ -34,9 +36,9 @@ export default function chartOptions(data: IVerticalChartData[]) {
         color: "#29B6F5",
       },
       {
-        name: "Accepted",
+        name: "Profit",
         type: "bar",
-        stack: "Claims",
+        stack: "Portfolio",
         emphasis: {
           focus: "series",
         },
