@@ -7,7 +7,7 @@ import SegmentedControl, { ISegmentedControlItem } from "@/components/SegmentedC
 const Charts = dynamic(() => import("echarts-for-react"));
 
 const segmentedItems: ISegmentedControlItem[] = [
-  { key: 1, label: "All time" },
+  { key: 1, label: "6M" },
   { key: 2, label: "12M" },
   { key: 3, label: "YTD" },
 ];

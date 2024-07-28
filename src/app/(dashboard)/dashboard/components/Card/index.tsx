@@ -14,7 +14,7 @@ export default function Card({ label, value, difference }: ICardProps) {
     <div className={card}>
       <div>
         <h4>{label}</h4>
-        <CountUp end={value} prefix="R$" decimals={2} locale="pt-BR" />
+        <CountUp duration={1} end={value} prefix="R$" decimals={2} locale="pt-BR" />
       </div>
       <div className={diff} style={{ color: "var(--green)" }}>
         <MdOutlineArrowDropUp size={20} />
