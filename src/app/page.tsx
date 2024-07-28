@@ -52,7 +52,7 @@ export default function SignIn() {
 async function GetFunds() {
   try {
     const response = await api.client.get("/api/get_funds");
-    console.log(response);
+    console.log(response.data);
   } catch (error) {
     console.log(error);
   }
