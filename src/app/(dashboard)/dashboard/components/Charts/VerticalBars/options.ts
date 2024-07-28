@@ -1,4 +1,4 @@
-import { IVerticalBarsProps, IVerticalChartData } from "./types";
+import { IVerticalChartData } from "./types";
 
 export default function chartOptions(data: IVerticalChartData[]) {
   const options: echarts.EChartsOption = {
@@ -13,7 +13,7 @@ export default function chartOptions(data: IVerticalChartData[]) {
     xAxis: [
       {
         type: "category",
-        data: data.map((el) => el.transaction_date),
+        data: data.map((el) => el.year_month),
         axisLabel: { rotate: 45 },
       },
     ],
@@ -24,34 +24,24 @@ export default function chartOptions(data: IVerticalChartData[]) {
     ],
     series: [
       {
-        name: "Accepted",
-        type: "bar",
-        stack: "Claims",
-        emphasis: {
-          focus: "series",
-        },
-        data: data.map((el) => el.total_accepted),
-        color: "#8AD562",
-      },
-      {
-        name: "Rejected",
-        type: "bar",
-        stack: "Claims",
-        emphasis: {
-          focus: "series",
-        },
-        data: data.map((el) => el.total_rejected),
-        color: "#E3595A",
-      },
-      {
         name: "Pending",
         type: "bar",
         stack: "Claims",
         emphasis: {
           focus: "series",
         },
-        data: data.map((el) => el.total_pending),
+        data: data.map((el) => el.total_patrimony),
         color: "#29B6F5",
+      },
+      {
+        name: "Accepted",
+        type: "bar",
+        stack: "Claims",
+        emphasis: {
+          focus: "series",
+        },
+        data: data.map((el) => el.total_income),
+        color: "#8AD562",
       },
     ],
   };

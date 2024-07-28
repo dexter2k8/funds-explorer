@@ -1,8 +1,7 @@
 export interface IVerticalChartData {
-  transaction_date: string;
-  total_accepted: number | string;
-  total_rejected: number | string;
-  total_pending: number | string;
+  year_month: string;
+  total_patrimony: number | string;
+  total_income: number | string;
 }
 
 export interface IVerticalBarsProps {
