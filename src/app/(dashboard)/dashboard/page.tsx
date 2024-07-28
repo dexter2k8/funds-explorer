@@ -2,6 +2,10 @@ import styles from "./styles.module.scss";
 import Card from "./components/Card";
 import VerticalBars from "./components/Charts/VerticalBars";
 import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
+import Donut from "./components/Charts/Donut";
+
+const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
+const profitColors = ["#006400", "#32CD32", "#7CFC00"];
 
 export default function Dashboard() {
   const { dashboard, cards } = styles;
@@ -14,6 +18,10 @@ export default function Dashboard() {
         </section>
         <section>
           <VerticalBars data={mockVerticalBarsData} />
+        </section>
+        <section className={cards}>
+          <Donut title="Patrimony" data={mockDonutData} colors={patrimonyColors} />
+          <Donut title="Profits" data={mockDonutData} colors={profitColors} />
         </section>
       </main>
       <aside>
@@ -87,5 +95,20 @@ const mockVerticalBarsData: IVerticalChartData[] = [
     year_month: "2022-12",
     total_patrimony: 420,
     total_income: 200,
+  },
+];
+
+const mockDonutData = [
+  {
+    name: "Ação",
+    value: 185095,
+  },
+  {
+    name: "FII",
+    value: 174144,
+  },
+  {
+    name: "BDI",
+    value: 163342,
   },
 ];
