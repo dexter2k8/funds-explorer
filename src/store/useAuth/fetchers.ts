@@ -6,7 +6,6 @@ import type { ISignInProps, ISignUpProps } from "./types";
 async function SignIn({ email, password }: ISignInProps) {
   try {
     await api.client.post("/api/sign_in", { email, password });
-    toast.success("Login successfully");
     return true;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -31,13 +30,10 @@ async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) 
 
 async function SignOut() {
   try {
-    const response = await api.client.get("/api/sign_out");
-    console.log(response.data);
-    return true;
+    await api.client.get("/api/sign_out");
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
-  return false;
 }
 
 export { SignIn, SignUp, SignOut };
