@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*"], // routes to be protected
+  matcher: ["/", "/dashboard/:path*", "/analytics/:path*", "/settings/:path"], // routes to be protected
 };
 
 async function verifyToken(token: string) {

@@ -1,7 +1,8 @@
-import Link from "next/link";
 import styles from "./styles.module.scss";
+import Link from "next/link";
 import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdLogout, MdOutlineSettings, MdOutlineTableChart } from "react-icons/md";
+import { useAuth } from "@/store/useAuth";
 
 const sidebarItems = [
   { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },
@@ -16,6 +17,7 @@ interface ISidebarProps {
 
 export default function Sidebar({ collapsed, pathname }: ISidebarProps) {
   const { sidebar, head, items, foot } = styles;
+  const { signOut } = useAuth();
 
   return (
     <nav className={sidebar} data-collapsed={collapsed}>
@@ -38,7 +40,7 @@ export default function Sidebar({ collapsed, pathname }: ISidebarProps) {
       </ul>
 
       <div className={foot}>
-        <Link href="/">
+        <Link href="/" onClick={signOut}>
           <MdLogout />
           <span>Logout</span>
         </Link>

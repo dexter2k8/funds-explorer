@@ -2,6 +2,7 @@ export type TActions = {
   setValue<T extends keyof TState>(state: T, value: TState[T]): void;
   signIn: (data: ISignInProps) => Promise<boolean>;
   signUp: (data: ISignUpProps) => Promise<boolean>;
+  signOut: () => Promise<boolean>;
 };
 
 export type TState = {

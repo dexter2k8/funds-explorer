@@ -29,4 +29,15 @@ async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) 
   return false;
 }
 
-export { SignIn, SignUp };
+async function SignOut() {
+  try {
+    const response = await api.client.get("/api/sign_out");
+    console.log(response.data);
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}
+
+export { SignIn, SignUp, SignOut };
