@@ -7,7 +7,7 @@ export default function Transaction(props: ITransactionProps) {
 
   return (
     <div className={transaction}>
-      <h4>{props.name}</h4>
+      <p>{props.name}</p>
       <div className={content}>
         <div className={left}>
           <small className={alias}>{props.alias}</small>
