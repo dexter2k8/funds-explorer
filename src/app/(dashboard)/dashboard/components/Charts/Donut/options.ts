@@ -7,13 +7,13 @@ export default function chartOptions({ data, colors }: IDonutOptions) {
       align: "center",
     },
     legend: {
-      top: "0",
+      top: 8,
       left: "center",
     },
     series: [
       {
-        top: 0,
-        bottom: "-10%",
+        top: "-10%",
+        bottom: "-20%",
         type: "pie",
         radius: ["37%", "60%"],
         avoidLabelOverlap: false,
