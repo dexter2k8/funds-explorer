@@ -1,4 +1,13 @@
+import { formatCurrency } from "@/utils/lib";
 import { IVerticalChartData } from "./types";
+
+const formatParams = (params: any) => {
+  let content = `${params[0].axisValue}<br/>`;
+  params.forEach((item: any) => {
+    content += `${item.marker} ${item.seriesName}: <b>${formatCurrency(item.value)}</b><br/>`;
+  });
+  return content;
+};
 
 export default function chartOptions(data: IVerticalChartData[]) {
   const options: echarts.EChartsOption = {
@@ -7,6 +16,7 @@ export default function chartOptions(data: IVerticalChartData[]) {
       axisPointer: {
         type: "shadow",
       },
+      formatter: formatParams,
     },
     legend: {
       top: 8, // Move legend 8px down
@@ -22,6 +32,9 @@ export default function chartOptions(data: IVerticalChartData[]) {
     yAxis: [
       {
         type: "value",
+        axisLabel: {
+          formatter: formatCurrency,
+        },
       },
     ],
     series: [
