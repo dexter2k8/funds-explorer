@@ -44,7 +44,7 @@ export default function Dashboard() {
       </main>
       <aside>
         <div>
-          <h4>Last transactions</h4>
+          <h3>Last transactions</h3>
           <p>List of the latest 5 company shares traded.</p>
         </div>
         {mockTransactions.map((transaction) => (

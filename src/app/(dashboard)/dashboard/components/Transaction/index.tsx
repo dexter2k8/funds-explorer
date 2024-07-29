@@ -13,7 +13,8 @@ export default function Transaction(props: ITransactionProps) {
           <small className={alias}>{props.alias}</small>
           <div className={stats}>
             <p>
-              {props.quantity} <small>shares</small>
+              {props.quantity}
+              <small>x</small>
             </p>
             <small
               className={tag}
