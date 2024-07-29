@@ -1,10 +1,12 @@
 import styles from "./styles.module.scss";
 import Card from "./components/Card";
 import VerticalBars from "./components/Charts/VerticalBars";
-import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
 import Donut from "./components/Charts/Donut";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaHandHoldingDollar } from "react-icons/fa6";
+import Transaction from "./components/Transaction";
+import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
+import type { ITransactionProps } from "./components/Transaction/types";
 
 const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
 const profitColors = ["#006400", "#32CD32", "#7CFC00"];
@@ -41,11 +43,13 @@ export default function Dashboard() {
         </section>
       </main>
       <aside>
-        <h4>Product</h4>
-        <p>
-          Choose your produce,for which Build your investment portfolio. Monitor How Your Investment
-          are Working
-        </p>
+        <div>
+          <h4>Last transactions</h4>
+          <p>List of the latest 5 company shares traded.</p>
+        </div>
+        {mockTransactions.map((transaction) => (
+          <Transaction key={transaction.id} {...transaction} />
+        ))}
       </aside>
     </div>
   );
@@ -124,7 +128,55 @@ const mockDonutData = [
     value: 174144,
   },
   {
-    name: "BDI",
+    name: "BDR",
     value: 163342,
+  },
+];
+
+const mockTransactions: ITransactionProps[] = [
+  {
+    id: "1",
+    date: "2022-01-01",
+    type: "buy",
+    alias: "AAPL",
+    name: "Apple Inc.",
+    quantity: 100,
+    price: 100,
+  },
+  {
+    id: "2",
+    date: "2022-01-01",
+    type: "sell",
+    alias: "ACCO",
+    name: "Acco Brands Inc.",
+    quantity: 10,
+    price: 120,
+  },
+  {
+    id: "3",
+    date: "2022-01-01",
+    type: "buy",
+    alias: "HGLG11",
+    name: "Banco do Brasil S.A.",
+    quantity: 11,
+    price: 90,
+  },
+  {
+    id: "4",
+    date: "2022-01-01",
+    type: "sell",
+    alias: "CSCO",
+    name: "Cisco Systems Inc.",
+    quantity: 15,
+    price: 50,
+  },
+  {
+    id: "5",
+    date: "2022-01-01",
+    type: "buy",
+    alias: "GOOG",
+    name: "Google Inc.",
+    quantity: 20,
+    price: 80,
   },
 ];
