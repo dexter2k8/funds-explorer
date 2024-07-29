@@ -32,9 +32,6 @@ export default function chartOptions(data: IVerticalChartData[]) {
     yAxis: [
       {
         type: "value",
-        axisLabel: {
-          formatter: formatCurrency,
-        },
       },
     ],
     series: [

@@ -3,6 +3,8 @@ import Card from "./components/Card";
 import VerticalBars from "./components/Charts/VerticalBars";
 import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
 import Donut from "./components/Charts/Donut";
+import { AiFillDollarCircle } from "react-icons/ai";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 
 const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
 const profitColors = ["#006400", "#32CD32", "#7CFC00"];
@@ -13,8 +15,22 @@ export default function Dashboard() {
     <div className={dashboard}>
       <main>
         <section className={cards}>
-          <Card label="Patrimony" value={258789} difference="+7%" />
-          <Card label="Profit" value={59348} difference="+2.5%" />
+          <Card
+            label="Patrimony"
+            icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
+            value={258789}
+            difference="+7%"
+          />
+          <Card
+            label="Profit"
+            icon={
+              <FaHandHoldingDollar
+                style={{ color: "var(--green)", fontSize: "1.25rem", marginBottom: "0.25rem" }}
+              />
+            }
+            value={59348}
+            difference="+2.5%"
+          />
         </section>
         <section>
           <VerticalBars data={mockVerticalBarsData} />
