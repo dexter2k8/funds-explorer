@@ -1,10 +1,18 @@
+import { formatCurrency } from "@/utils/lib";
 import { IDonutOptions } from "./types";
+
+const formatParams = (params: any) => {
+  return `${params.marker} ${params.name}: <b>${formatCurrency(params.value)}</b> (${
+    params.percent
+  }%)`;
+};
 
 export default function chartOptions({ data, colors }: IDonutOptions) {
   const options: echarts.EChartsOption = {
     tooltip: {
       trigger: "item",
       align: "center",
+      formatter: formatParams,
     },
     legend: {
       top: 8,
