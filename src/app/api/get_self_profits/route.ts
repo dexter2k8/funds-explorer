@@ -7,15 +7,15 @@ export async function GET(req: NextRequest) {
   try {
     const searchParams = new URL(req.url);
     const type = searchParams.searchParams.get("type");
-    const initDate = searchParams.searchParams.get("initDate");
-    const endDate = searchParams.searchParams.get("endDate");
+    const init_date = searchParams.searchParams.get("init_date");
+    const end_date = searchParams.searchParams.get("end_date");
 
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response = await api.server.get("/incomes/self_profits", {
+    const response = await api.server.get("/incomes/self-profits", {
       headers: { Authorization: `Bearer ${token}` },
-      params: { type, initDate, endDate },
+      params: { type, init_date, end_date },
     });
 
     return Response.json(response.data, { status: 200 });

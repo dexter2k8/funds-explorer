@@ -26,6 +26,10 @@ export default function SignIn() {
   };
 
   // const { response } = useSWR("/api/get_funds");
+  // const { response } = useSWR("/api/get_self_profits", {
+  //   init_date: "2022-01-01",
+  //   end_date: "2022-12-31",
+  // });
   // console.log(response);
 
   return (
@@ -48,7 +52,7 @@ export default function SignIn() {
         </Button>
         <Link href="/sign-up">Create an account</Link>
       </form>
-      {/* <button onClick={() => GetFunds()}>get funds</button> */}
+      <button onClick={() => GetFunds()}>get funds</button>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import api from "@/services/api";
-import { AxiosError } from "axios";
 import fetchSWR from "swr";
+import type { AxiosError } from "axios";
 import type { KeyedMutator, SWRConfiguration } from "swr";
 
 interface IResponse<T> {
@@ -15,7 +15,7 @@ export function useSWR<T extends object, P = object>(
   params?: P,
   config?: SWRConfiguration
 ): IResponse<T> {
-  const urlParams = params ? new URLSearchParams() : "";
+  const urlParams = params ? new URLSearchParams(params) : "";
   const fullURL = `${key}?${urlParams}`;
 
   const fetcher = async () => {
