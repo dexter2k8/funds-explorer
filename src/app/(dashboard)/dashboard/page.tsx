@@ -10,7 +10,7 @@ import type { ITransactionProps } from "./components/Transaction/types";
 import { useSWR } from "@/hook/useSWR";
 import SegmentedControl from "@/components/SegmentedControl";
 import { useState } from "react";
-import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
+import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedTypes } from "./types";
 import { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 
 export default function Dashboard() {
@@ -18,11 +18,28 @@ export default function Dashboard() {
   const [range, setRange] = useState(3);
   const [type, setType] = useState(1);
 
-  const { response: profits } = useSWR<IGetSelfProfits[]>("/api/get_self_profits", {
-    init_date: getDate(range),
-    end_date: endDate,
-    type: type === 1 ? "" : segmentedTypes[type - 1].label,
-  });
+  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetSelfProfits[]>(
+    "/api/get_self_profits",
+    {
+      init_date: getDate(range),
+      end_date: endDate,
+      type: type === 1 ? "" : segmentedTypes[type - 1].label,
+    }
+  );
+
+  // TODO: implement loading to prevent ?? 0
+  const patrimony = profits ? profits[profits.length - 1].total_patrimony : 0;
+  const percentPatrimony = profits
+    ? getGain(
+        profits[profits.length - 1].total_patrimony,
+        profits[profits.length - 2].total_patrimony
+      )
+    : 0;
+
+  const profit = profits ? profits[profits.length - 1].total_income : 0;
+  const percentProfit = profits
+    ? getGain(profits[profits.length - 1].total_income, profits[profits.length - 2].total_income)
+    : 0;
 
   return (
     <div className={dashboard}>
@@ -39,8 +56,9 @@ export default function Dashboard() {
           <Card
             label="Patrimony"
             icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
-            value={258789}
-            difference="+7%"
+            value={patrimony}
+            difference={percentPatrimony}
+            isLoading={isLoadingProfits}
           />
           <Card
             label="Profit"
@@ -49,8 +67,9 @@ export default function Dashboard() {
                 style={{ color: "var(--green)", fontSize: "1.25rem", marginBottom: "0.25rem" }}
               />
             }
-            value={59348}
-            difference="+2.5%"
+            value={profit}
+            difference={percentProfit}
+            isLoading={isLoadingProfits}
           />
         </section>
         <section>
