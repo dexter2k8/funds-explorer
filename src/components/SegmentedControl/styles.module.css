@@ -8,6 +8,10 @@
   background-color: #e8eaf6;
 }
 
+.controlList[data-variant="secondary"] {
+  background-color: #fff;
+}
+
 .controlList::before {
   content: "";
   position: absolute;

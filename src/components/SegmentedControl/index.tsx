@@ -1,6 +1,6 @@
 "use client";
-import { createRef, useEffect, useState } from "react";
 import classes from "./styles.module.css";
+import { createRef, useEffect, useState } from "react";
 
 export interface ISegmentedControlItem {
   key: number;
@@ -12,6 +12,7 @@ interface ISegmentedControlProps {
   defaultSelected?: number;
   selected?: number;
   onSelect?: (key: number) => void;
+  variant?: "primary" | "secondary";
 }
 
 export default function SegmentedControl({
@@ -19,6 +20,7 @@ export default function SegmentedControl({
   defaultSelected = 0,
   selected,
   onSelect,
+  variant = "primary",
 }: ISegmentedControlProps) {
   const activeRef = createRef<HTMLLIElement>();
   const segmentRef = createRef<HTMLUListElement>();
@@ -40,7 +42,7 @@ export default function SegmentedControl({
   }, [active, activeRef, onSelect, segmentRef, selected]);
 
   return (
-    <ul className={controlList} ref={segmentRef}>
+    <ul className={controlList} data-variant={variant} ref={segmentRef}>
       {items.map((item) => (
         <li
           key={item.key}

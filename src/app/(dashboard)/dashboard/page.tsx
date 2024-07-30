@@ -9,12 +9,13 @@ import Transaction from "./components/Transaction";
 import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
 import type { ITransactionProps } from "./components/Transaction/types";
 import { useSWR } from "@/hook/useSWR";
+import SegmentedControl from "@/components/SegmentedControl";
 
 const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
 const profitColors = ["#006400", "#32CD32", "#7CFC00"];
 
 export default function Dashboard() {
-  const { dashboard, cards } = styles;
+  const { dashboard, cards, segmented } = styles;
 
   const { response } = useSWR("/api/get_self_profits", {
     init_date: "2022-01-01",
@@ -26,6 +27,18 @@ export default function Dashboard() {
   return (
     <div className={dashboard}>
       <main>
+        <div className={segmented}>
+          <SegmentedControl
+            defaultSelected={1}
+            variant="secondary"
+            items={[
+              { key: 1, label: "All" },
+              { key: 2, label: "Ação" },
+              { key: 3, label: "FII" },
+              { key: 4, label: "BDR" },
+            ]}
+          />
+        </div>
         <section className={cards}>
           <Card
             label="Patrimony"
