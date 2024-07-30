@@ -1,9 +1,6 @@
-export interface IVerticalChartData {
-  year_month: string;
-  total_patrimony: number | string;
-  total_income: number | string;
-}
+import { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 
 export interface IVerticalBarsProps {
-  data: IVerticalChartData[];
+  data: IGetSelfProfits[];
+  selectedRange: (key: number) => void;
 }

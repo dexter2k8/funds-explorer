@@ -6,23 +6,23 @@ import Donut from "./components/Charts/Donut";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import Transaction from "./components/Transaction";
-import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
 import type { ITransactionProps } from "./components/Transaction/types";
 import { useSWR } from "@/hook/useSWR";
 import SegmentedControl from "@/components/SegmentedControl";
-
-const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
-const profitColors = ["#006400", "#32CD32", "#7CFC00"];
+import { useState } from "react";
+import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
+import { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;
+  const [range, setRange] = useState(3);
+  const [type, setType] = useState(1);
 
-  const { response } = useSWR("/api/get_self_profits", {
-    init_date: "2022-01-01",
-    end_date: "2022-12-31",
+  const { response: profits } = useSWR<IGetSelfProfits[]>("/api/get_self_profits", {
+    init_date: getDate(range),
+    end_date: endDate,
+    type: type === 1 ? "" : segmentedTypes[type - 1].label,
   });
-
-  console.log(response);
 
   return (
     <div className={dashboard}>
@@ -30,13 +30,9 @@ export default function Dashboard() {
         <div className={segmented}>
           <SegmentedControl
             defaultSelected={1}
+            onSelect={setType}
             variant="secondary"
-            items={[
-              { key: 1, label: "All" },
-              { key: 2, label: "Ação" },
-              { key: 3, label: "FII" },
-              { key: 4, label: "BDR" },
-            ]}
+            items={segmentedTypes}
           />
         </div>
         <section className={cards}>
@@ -58,7 +54,8 @@ export default function Dashboard() {
           />
         </section>
         <section>
-          <VerticalBars data={mockVerticalBarsData} />
+          {/* TODO: implement skeleton to loading and no data instead of ?? [] */}
+          <VerticalBars selectedRange={setRange} data={profits ?? []} />
         </section>
         <section className={cards}>
           <Donut title="Patrimony" data={mockDonutData} colors={patrimonyColors} />
@@ -78,69 +75,6 @@ export default function Dashboard() {
     </div>
   );
 }
-
-const mockVerticalBarsData: IVerticalChartData[] = [
-  {
-    year_month: "2022-01",
-    total_patrimony: 300,
-    total_income: 100,
-  },
-  {
-    year_month: "2022-02",
-    total_patrimony: 310,
-    total_income: 170,
-  },
-  {
-    year_month: "2022-03",
-    total_patrimony: 330,
-    total_income: 110,
-  },
-  {
-    year_month: "2022-04",
-    total_patrimony: 340,
-    total_income: 120,
-  },
-  {
-    year_month: "2022-05",
-    total_patrimony: 350,
-    total_income: 130,
-  },
-  {
-    year_month: "2022-06",
-    total_patrimony: 360,
-    total_income: 140,
-  },
-  {
-    year_month: "2022-07",
-    total_patrimony: 370,
-    total_income: 150,
-  },
-  {
-    year_month: "2022-08",
-    total_patrimony: 380,
-    total_income: 160,
-  },
-  {
-    year_month: "2022-09",
-    total_patrimony: 390,
-    total_income: 170,
-  },
-  {
-    year_month: "2022-10",
-    total_patrimony: 400,
-    total_income: 180,
-  },
-  {
-    year_month: "2022-11",
-    total_patrimony: 410,
-    total_income: 190,
-  },
-  {
-    year_month: "2022-12",
-    total_patrimony: 420,
-    total_income: 200,
-  },
-];
 
 const mockDonutData = [
   {

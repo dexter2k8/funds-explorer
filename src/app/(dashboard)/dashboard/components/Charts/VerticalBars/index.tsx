@@ -6,15 +6,10 @@ import chartOptions from "./options";
 import { IVerticalBarsProps } from "./types";
 import SegmentedControl, { ISegmentedControlItem } from "@/components/SegmentedControl";
 import { CSSProperties } from "react";
+import { segmentedRange } from "../../../types";
 const Charts = dynamic(() => import("echarts-for-react"));
 
-const segmentedItems: ISegmentedControlItem[] = [
-  { key: 1, label: "6M" },
-  { key: 2, label: "12M" },
-  { key: 3, label: "YTD" },
-];
-
-export default function VerticalBars({ data }: IVerticalBarsProps) {
+export default function VerticalBars({ data, selectedRange }: IVerticalBarsProps) {
   const { container, content } = styles;
   const options = chartOptions(data);
   const calcWidth = data.length * 2.5;
@@ -24,7 +19,9 @@ export default function VerticalBars({ data }: IVerticalBarsProps) {
     <div>
       <LayoutCharts
         title="Portfolio over time"
-        sideControls={<SegmentedControl defaultSelected={3} items={segmentedItems} />}
+        sideControls={
+          <SegmentedControl onSelect={selectedRange} defaultSelected={3} items={segmentedRange} />
+        }
       >
         <div className={container}>
           <div className={content} style={widthStyle as CSSProperties}>

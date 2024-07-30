@@ -2,6 +2,8 @@ import { cookies } from "next/headers";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
+import { IResponse } from "../types";
+import { IGetSelfProfits } from "./types";
 
 export async function GET(req: NextRequest) {
   try {
@@ -13,7 +15,7 @@ export async function GET(req: NextRequest) {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response = await api.server.get("/incomes/self-profits", {
+    const response: IResponse<IGetSelfProfits> = await api.server.get("/incomes/self-profits", {
       headers: { Authorization: `Bearer ${token}` },
       params: { type, init_date, end_date },
     });
