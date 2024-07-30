@@ -11,7 +11,6 @@ import { useAuth } from "@/store/useAuth";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
 import type { ISignInProps } from "@/store/useAuth/types";
-import { useSWR } from "@/hook/useSWR";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
@@ -24,13 +23,6 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<ISignInProps> = async (data) => {
     (await signIn(data)) && router.replace("/dashboard");
   };
-
-  // const { response } = useSWR("/api/get_funds");
-  // const { response } = useSWR("/api/get_self_profits", {
-  //   init_date: "2022-01-01",
-  //   end_date: "2022-12-31",
-  // });
-  // console.log(response);
 
   return (
     <main className={main}>

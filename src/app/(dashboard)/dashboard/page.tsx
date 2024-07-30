@@ -1,3 +1,4 @@
+"use client";
 import styles from "./styles.module.scss";
 import Card from "./components/Card";
 import VerticalBars from "./components/Charts/VerticalBars";
@@ -7,12 +8,21 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import Transaction from "./components/Transaction";
 import type { IVerticalChartData } from "./components/Charts/VerticalBars/types";
 import type { ITransactionProps } from "./components/Transaction/types";
+import { useSWR } from "@/hook/useSWR";
 
 const patrimonyColors = ["#00579A", "#029BE4", "#4FC3F6"];
 const profitColors = ["#006400", "#32CD32", "#7CFC00"];
 
 export default function Dashboard() {
   const { dashboard, cards } = styles;
+
+  const { response } = useSWR("/api/get_self_profits", {
+    init_date: "2022-01-01",
+    end_date: "2022-12-31",
+  });
+
+  console.log(response);
+
   return (
     <div className={dashboard}>
       <main>
@@ -42,6 +52,7 @@ export default function Dashboard() {
           <Donut title="Profits" data={mockDonutData} colors={profitColors} />
         </section>
       </main>
+
       <aside>
         <div>
           <h3>Last transactions</h3>
