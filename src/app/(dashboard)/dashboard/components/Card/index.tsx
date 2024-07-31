@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import CountUp from "@/components/CountUp";
+import Skeleton from "@/components/Skeleton";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 
 interface ICardProps {
@@ -20,18 +21,27 @@ export default function Card({ label, value, difference, icon, isLoading }: ICar
           <h4>{label}</h4>
         </div>
         {isLoading ? (
-          <small>Loading...</small>
+          <Skeleton height={40} width={150} />
         ) : (
           <CountUp duration={1} end={value} prefix="R$" decimals={2} locale="pt-BR" />
         )}
       </div>
       <div className={diff} style={{ color: difference >= 0 ? "var(--green)" : "var(--red)" }}>
-        {difference >= 0 ? (
-          <MdOutlineArrowDropUp size={20} />
+        {isLoading ? (
+          <>
+            <div> </div>
+            <Skeleton height={20} width={30} />
+          </>
         ) : (
-          <MdOutlineArrowDropDown size={20} />
+          <>
+            {difference >= 0 ? (
+              <MdOutlineArrowDropUp size={20} />
+            ) : (
+              <MdOutlineArrowDropDown size={20} />
+            )}
+            <small>{difference}%</small>
+          </>
         )}
-        {isLoading ? <small>Loading...</small> : <small>{difference}%</small>}
       </div>
     </div>
   );

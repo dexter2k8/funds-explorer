@@ -73,8 +73,7 @@ export default function Dashboard() {
           />
         </section>
         <section>
-          {/* TODO: implement skeleton to loading and no data instead of ?? [] */}
-          <VerticalBars selectedRange={setRange} data={profits ?? []} />
+          <VerticalBars selectedRange={setRange} data={profits} isLoading={isLoadingProfits} />
         </section>
         <section className={cards}>
           <Donut title="Patrimony" data={mockDonutData} colors={patrimonyColors} />
