@@ -1,8 +1,8 @@
-import { IGetLatestTransactions } from "@/app/api/get_latest_transactions/types";
+import { IGetTransactions } from "@/app/api/get_transactions/types";
 import styles from "./styles.module.scss";
 import { formatCurrency, formatDate } from "@/utils/lib";
 
-export default function Transaction(props: IGetLatestTransactions) {
+export default function Transaction(props: IGetTransactions) {
   const { transaction, head, content, left, right, alias, tag, stats } = styles;
 
   const type = props.quantity < 0 ? "sell" : "buy";

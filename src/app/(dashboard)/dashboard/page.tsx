@@ -12,7 +12,8 @@ import { useState } from "react";
 import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedTypes } from "./types";
 import Skeleton from "@/components/Skeleton";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
-import type { IGetLatestTransactions } from "@/app/api/get_latest_transactions/types";
+import type { IGetTransactions } from "@/app/api/get_transactions/types";
+import { IResponse } from "@/app/api/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;
@@ -28,8 +29,8 @@ export default function Dashboard() {
     }
   );
 
-  const { response: latest, isLoading: isLoadingLatest } = useSWR<IGetLatestTransactions[]>(
-    "/api/get_latest_transactions",
+  const { response: latest, isLoading: isLoadingLatest } = useSWR<IGetTransactions[]>(
+    "/api/get_transactions",
     {
       limit: 5,
       offset: 0,

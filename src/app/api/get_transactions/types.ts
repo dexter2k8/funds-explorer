@@ -1,4 +1,4 @@
-export interface IGetLatestTransactions {
+export interface IGetTransactions {
   id: string;
   bought_at: string;
   price: number;

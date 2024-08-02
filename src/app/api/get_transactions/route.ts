@@ -3,7 +3,7 @@ import api from "@/services/api";
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 import { IResponse } from "../types";
-import { IGetLatestTransactions } from "./types";
+import { IGetTransactions } from "./types";
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,15 +15,12 @@ export async function GET(req: NextRequest) {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response: IResponse<IGetLatestTransactions> = await api.server.get(
-      "/transactions/latest",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { fund_alias, limit, offset },
-      }
-    );
+    const response: IResponse<IGetTransactions> = await api.server.get("/transactions", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { fund_alias, limit, offset },
+    });
 
-    return Response.json(response.data, { status: 200 });
+    return Response.json(response.data.data, { status: 200 });
   } catch (error) {
     if (error instanceof AxiosError) {
       return Response.json(error.response?.data.message, {
