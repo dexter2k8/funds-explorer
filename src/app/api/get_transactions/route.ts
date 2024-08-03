@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
-import { IResponse } from "../types";
-import { IGetTransactions } from "./types";
+import type { IResponse } from "../types";
+import type { IGetTransactions } from "./types";
 
 export async function GET(req: NextRequest) {
   try {

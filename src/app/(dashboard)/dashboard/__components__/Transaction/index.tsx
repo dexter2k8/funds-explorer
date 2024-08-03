@@ -2,9 +2,9 @@ import { useRef } from "react";
 import styles from "./styles.module.scss";
 import { formatCurrency, formatDate } from "@/utils/lib";
 import Tooltip from "@/components/Tooltip";
-import type { IGetTransactions } from "@/app/api/get_transactions/types";
+import { ITransactions } from "@/app/api/get_transactions/types";
 
-export default function Transaction(props: IGetTransactions) {
+export default function Transaction(props: ITransactions) {
   const { transaction, head, content, left, right, alias, tag, stats } = styles;
   const fund = useRef<HTMLParagraphElement>(null);
 

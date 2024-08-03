@@ -1,4 +1,4 @@
-export interface IGetTransactions {
+export interface ITransactions {
   id: string;
   bought_at: string;
   price: number;
@@ -6,4 +6,9 @@ export interface IGetTransactions {
   quantity: number;
   name: string;
   description: string;
+}
+
+export interface IGetTransactions {
+  data: ITransactions[];
+  count: number;
 }

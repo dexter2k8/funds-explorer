@@ -12,8 +12,8 @@ import { useState } from "react";
 import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedTypes } from "./types";
 import Skeleton from "@/components/Skeleton";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
-import type { IGetTransactions } from "@/app/api/get_transactions/types";
-import { IGetIncomesPatrimony } from "@/app/api/get_incomes_patrimony/types";
+import type { ITransactions } from "@/app/api/get_transactions/types";
+import { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
 import { API } from "@/app/paths";
 
 export default function Dashboard() {
@@ -30,7 +30,7 @@ export default function Dashboard() {
     }
   );
 
-  const { response: latest, isLoading: isLoadingLatest } = useSWR<IGetTransactions[]>(
+  const { response: latest, isLoading: isLoadingLatest } = useSWR<ITransactions[]>(
     API.GET_TRANSACTIONS,
     {
       limit: 5,
@@ -38,23 +38,9 @@ export default function Dashboard() {
     }
   );
 
-  const { response: incomes, isLoading: isLoadingIncomes } = useSWR<IGetIncomesPatrimony[]>(
+  const { response: incomes, isLoading: isLoadingIncomes } = useSWR<IGetIncomesResponse>(
     API.GET_INCOMES_PATRIMONY
   );
-
-  const donutPatrimony = incomes?.map((income) => {
-    return {
-      name: income.type,
-      value: income.total_patrimony,
-    };
-  });
-
-  const donutProfit = incomes?.map((income) => {
-    return {
-      name: income.type,
-      value: income.total_income,
-    };
-  });
 
   const patrimony = profits ? profits[profits.length - 1]?.total_patrimony : 0;
   const percentPatrimony = profits
@@ -108,13 +94,13 @@ export default function Dashboard() {
         <section className={cards}>
           <Donut
             title="Patrimony"
-            data={donutPatrimony}
+            data={incomes?.patrimony}
             isLoading={isLoadingIncomes}
             colors={patrimonyColors}
           />
           <Donut
             title="Profits"
-            data={donutProfit}
+            data={incomes?.profit}
             isLoading={isLoadingIncomes}
             colors={profitColors}
           />

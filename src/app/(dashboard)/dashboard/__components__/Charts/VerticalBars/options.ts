@@ -1,5 +1,5 @@
 import { formatCurrency } from "@/utils/lib";
-import { IVerticalChartData } from "./types";
+import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 
 const formatParams = (params: any) => {
   let content = `${params[0].axisValue}<br/>`;
@@ -9,7 +9,7 @@ const formatParams = (params: any) => {
   return content;
 };
 
-export default function chartOptions(data: IVerticalChartData[]) {
+export default function chartOptions(data: IGetSelfProfits[]) {
   const options: echarts.EChartsOption = {
     tooltip: {
       trigger: "axis",

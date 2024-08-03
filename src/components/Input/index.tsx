@@ -6,7 +6,7 @@ import InfoCircle from "./Icons/info-circle";
 import CheckCircle from "./Icons/check-circle";
 import ExclamationCircle from "./Icons/exclamation-circle";
 import { FC, forwardRef, InputHTMLAttributes, useState } from "react";
-import { ControlledInput } from "../ControlledInput";
+import { ControlledInput } from "./__components__/ControlledInput";
 
 type TStatus = "info" | "success" | "error";
 type size = "small" | "default" | "large";
