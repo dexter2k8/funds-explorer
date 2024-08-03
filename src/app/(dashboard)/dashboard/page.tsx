@@ -13,7 +13,6 @@ import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedType
 import Skeleton from "@/components/Skeleton";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 import type { IGetTransactions } from "@/app/api/get_transactions/types";
-import { IResponse } from "@/app/api/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;

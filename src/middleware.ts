@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL;
+import { verifyToken } from "./utils/lib";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -13,7 +12,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token) {
-    const isValid = await verifyToken(token);
+    const isValid = !!verifyToken(token);
     if (!isValid) {
       const response = NextResponse.redirect(loginUrl);
       response.cookies.delete("funds-explorer-token");
@@ -29,15 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/dashboard/:path*", "/analytics/:path*", "/settings/:path"], // routes to be protected
+  matcher: ["/((?!api|_next/static|/:path*|_next/image|sign-up|favicon.ico|image|sign-up/).*)"], // routes to be unprotected, separated by "|"
 };
-
-async function verifyToken(token: string) {
-  const response = await fetch(`${clientUrl}/api/verify_token`, {
-    headers: {
-      "Content-Type": "application/json",
-      Cookie: `funds-explorer-token=${token}`,
-    },
-  }).then((res) => res.json());
-  return response.isValid;
-}

@@ -1,4 +1,7 @@
 import dayjs from "dayjs";
+import { jwtVerify } from "jose";
+
+const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export const formatCurrency = (value: number): string => {
   const formatter = new Intl.NumberFormat("pt-BR", {
@@ -20,3 +23,12 @@ export function parseDate(date: string | Date) {
   if (!parsedDate.isValid()) return null;
   return parsedDate.format("YYYY-MM-DD");
 }
+
+export const verifyToken = async (token: string) => {
+  try {
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(SECRET_KEY));
+    return payload;
+  } catch (err) {
+    return "";
+  }
+};
