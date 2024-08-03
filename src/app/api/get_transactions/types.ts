@@ -5,4 +5,5 @@ export interface IGetTransactions {
   fund_alias: string;
   quantity: number;
   name: string;
+  description: string;
 }
