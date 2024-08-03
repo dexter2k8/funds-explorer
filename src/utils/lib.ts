@@ -3,13 +3,11 @@ import { jwtVerify } from "jose";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const formatCurrency = (value: number): string => {
-  const formatter = new Intl.NumberFormat("pt-BR", {
+export const formatCurrency = (value: number) => {
+  return value.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
-    minimumFractionDigits: 2,
   });
-  return formatter.format(value);
 };
 
 export function formatDate(date: string) {

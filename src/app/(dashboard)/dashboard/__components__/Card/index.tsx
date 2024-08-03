@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
-import CountUp from "@/components/CountUp";
 import Skeleton from "@/components/Skeleton";
+import { formatCurrency } from "@/utils/lib";
+import CountUp from "react-countup";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 
 interface ICardProps {
@@ -23,7 +24,7 @@ export default function Card({ label, value = 0, difference = 0, icon, isLoading
         {isLoading ? (
           <Skeleton height={40} width={150} />
         ) : (
-          <CountUp duration={1} end={value} prefix="R$" decimals={2} locale="pt-BR" />
+          <CountUp duration={1} end={value} formattingFn={formatCurrency} />
         )}
       </div>
       <div className={diff} style={{ color: difference >= 0 ? "var(--green)" : "var(--red)" }}>

@@ -59,8 +59,8 @@ export default function Dashboard() {
           <Card
             label="Patrimony"
             icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
-            value={profits?.patrimony.value || 0}
-            difference={profits?.patrimony.difference || 0}
+            value={profits?.patrimony.value ?? 0}
+            difference={profits?.patrimony.difference ?? 0}
             isLoading={isLoadingProfits}
           />
           <Card
@@ -70,8 +70,8 @@ export default function Dashboard() {
                 style={{ color: "var(--green)", fontSize: "1.25rem", marginBottom: "0.25rem" }}
               />
             }
-            value={profits?.profit.value || 0}
-            difference={profits?.profit.difference || 0}
+            value={profits?.profit.value ?? 0}
+            difference={profits?.profit.difference ?? 0}
             isLoading={isLoadingProfits}
           />
         </section>
