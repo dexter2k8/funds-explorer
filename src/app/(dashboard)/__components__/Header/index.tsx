@@ -24,7 +24,7 @@ export default function Header({ menuClick, label }: IHeaderProps) {
           </button>
           <h2 className={title}>{label}</h2>
         </div>
-        <UserDetails username={response?.name} email={response?.email} />
+        <UserDetails username={response?.name} email={response?.email} avatar={response?.avatar} />
       </div>
     </header>
   );

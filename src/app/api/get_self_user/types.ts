@@ -3,4 +3,5 @@ export interface IGetSelfUser {
   name: string;
   email: string;
   admin: boolean;
+  avatar?: string;
 }

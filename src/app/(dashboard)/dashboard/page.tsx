@@ -128,7 +128,7 @@ export default function Dashboard() {
         </div>
         {isLoadingLatest
           ? skeletons
-          : latest.map((transaction) => <Transaction key={transaction.id} {...transaction} />)}
+          : latest?.map((transaction) => <Transaction key={transaction.id} {...transaction} />)}
       </aside>
     </div>
   );
