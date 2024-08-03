@@ -39,11 +39,11 @@ export default function CountUp({
       <span>
         {prefix}
         {locale
-          ? count.toLocaleString(locale, {
+          ? count?.toLocaleString(locale, {
               minimumFractionDigits: decimals,
               maximumFractionDigits: decimals,
             })
-          : count.toFixed(decimals)}
+          : count?.toFixed(decimals)}
       </span>
     </div>
   );

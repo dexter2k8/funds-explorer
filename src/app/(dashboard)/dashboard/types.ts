@@ -31,6 +31,6 @@ export function getDate(key: number): string | undefined {
 export const endDate = currentDate.subtract(1, "month").endOf("month").format("YYYY-MM-DD");
 
 export function getGain(final: number, initial: number) {
-  if (initial === 0) return 0;
+  if (!initial || !final) return 0;
   return Number((((final - initial) / initial) * 100).toFixed(1));
 }

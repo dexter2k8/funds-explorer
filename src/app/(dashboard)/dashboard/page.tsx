@@ -13,6 +13,7 @@ import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedType
 import Skeleton from "@/components/Skeleton";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 import type { IGetTransactions } from "@/app/api/get_transactions/types";
+import { IGetIncomesPatrimony } from "@/app/api/get_incomes_patrimony/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;
@@ -36,17 +37,35 @@ export default function Dashboard() {
     }
   );
 
-  const patrimony = profits ? profits[profits.length - 1].total_patrimony : 0;
+  const { response: incomes, isLoading: isLoadingIncomes } = useSWR<IGetIncomesPatrimony[]>(
+    "/api/get_incomes_patrimony"
+  );
+
+  const donutPatrimony = incomes?.map((income) => {
+    return {
+      name: income.type,
+      value: income.total_patrimony,
+    };
+  });
+
+  const donutProfit = incomes?.map((income) => {
+    return {
+      name: income.type,
+      value: income.total_income,
+    };
+  });
+
+  const patrimony = profits ? profits[profits.length - 1]?.total_patrimony : 0;
   const percentPatrimony = profits
     ? getGain(
-        profits[profits.length - 1].total_patrimony,
-        profits[profits.length - 2].total_patrimony
+        profits[profits.length - 1]?.total_patrimony,
+        profits[profits.length - 2]?.total_patrimony
       )
     : 0;
 
-  const profit = profits ? profits[profits.length - 1].total_income : 0;
+  const profit = profits ? profits[profits.length - 1]?.total_income : 0;
   const percentProfit = profits
-    ? getGain(profits[profits.length - 1].total_income, profits[profits.length - 2].total_income)
+    ? getGain(profits[profits.length - 1]?.total_income, profits[profits.length - 2]?.total_income)
     : 0;
 
   const skeletons = Array.from({ length: 5 }, (_, index) => <Skeleton key={index} height={90} />);
@@ -86,8 +105,18 @@ export default function Dashboard() {
           <VerticalBars selectedRange={setRange} data={profits} isLoading={isLoadingProfits} />
         </section>
         <section className={cards}>
-          <Donut title="Patrimony" data={mockDonutData} colors={patrimonyColors} />
-          <Donut title="Profits" data={mockDonutData} colors={profitColors} />
+          <Donut
+            title="Patrimony"
+            data={donutPatrimony}
+            isLoading={isLoadingIncomes}
+            colors={patrimonyColors}
+          />
+          <Donut
+            title="Profits"
+            data={donutProfit}
+            isLoading={isLoadingIncomes}
+            colors={profitColors}
+          />
         </section>
       </main>
 
@@ -103,18 +132,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-const mockDonutData = [
-  {
-    name: "Ação",
-    value: 185095,
-  },
-  {
-    name: "FII",
-    value: 174144,
-  },
-  {
-    name: "BDR",
-    value: 163342,
-  },
-];

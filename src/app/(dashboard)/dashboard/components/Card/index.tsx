@@ -11,7 +11,7 @@ interface ICardProps {
   isLoading?: boolean;
 }
 
-export default function Card({ label, value, difference, icon, isLoading }: ICardProps) {
+export default function Card({ label, value = 0, difference = 0, icon, isLoading }: ICardProps) {
   const { card, title, diff } = styles;
   return (
     <div className={card}>

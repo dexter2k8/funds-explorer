@@ -12,4 +12,5 @@ export interface IDonutProps {
   title: string;
   data: IDonutData[];
   colors: string[];
+  isLoading?: boolean;
 }
