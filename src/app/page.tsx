@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import styles from "./page.module.scss";
 import Input from "@/components/Input";
 import Logo from "../../public/assets/logo";
@@ -14,6 +15,7 @@ import type { ISignInProps } from "@/store/useAuth/types";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { signIn } = useAuth();
   const { control, handleSubmit } = useForm<ISignInProps>({
@@ -21,7 +23,9 @@ export default function SignIn() {
   });
 
   const onSubmit: SubmitHandler<ISignInProps> = async (data) => {
+    setLoading(true);
     (await signIn(data)) && router.replace("/dashboard");
+    setLoading(false);
   };
 
   return (
@@ -39,7 +43,7 @@ export default function SignIn() {
           <label htmlFor="password">Password</label>
           <Input.Controlled control={control} name="password" id="password" type="password" />
         </div>
-        <Button size="large" variant="primary">
+        <Button loading={loading} size="large" variant="primary">
           Sign In
         </Button>
         <Link href="/sign-up">Create an account</Link>

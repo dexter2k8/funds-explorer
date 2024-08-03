@@ -5,6 +5,7 @@ export default function Button({
   children,
   variant = "default",
   size = "default",
+  loading = false,
   ...props
 }: IButtonProps) {
   const buttonClasses = ["ds-button"];
@@ -12,11 +13,15 @@ export default function Button({
   variant === "link" && buttonClasses.push("ds-button-link");
   size === "small" && buttonClasses.push("ds-button-small");
   size === "large" && buttonClasses.push("ds-button-large");
+  loading && buttonClasses.push("ds-button-loading");
   const buttonClass = buttonClasses.join(" ");
 
   return (
     <button className={buttonClass} {...props}>
-      {children}
+      <div style={{ position: "relative" }}>
+        <span className={loading ? "ds-loading" : ""} />
+      </div>
+      <p>{children}</p>
     </button>
   );
 }

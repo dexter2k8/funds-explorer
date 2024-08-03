@@ -7,6 +7,16 @@
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.ds-button-loading {
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.4;
 }
 
 .ds-button:not(:disabled):hover {
@@ -17,6 +27,10 @@
 .ds-button-primary {
   background: #666;
   border-color: #666;
+}
+
+.ds-button-primary p,
+.ds-button-primary:not(:disabled):hover p {
   color: #fff;
 }
 
@@ -70,5 +84,26 @@
 
   100% {
     box-shadow: 0 0 0 0 rgba(119, 119, 119, 0);
+  }
+}
+
+.ds-loading {
+  position: absolute;
+  right: 0;
+  top: -12px;
+  border: 2px solid #666;
+  border-radius: 50%;
+  border-top: 2px solid #f3f3f3;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

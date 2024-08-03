@@ -5,4 +5,5 @@ export interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   children?: React.ReactNode;
   variant?: TButtonVariant;
   size?: TButtonSize;
+  loading?: boolean;
 }

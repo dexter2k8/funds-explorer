@@ -11,10 +11,10 @@ import SegmentedControl from "@/components/SegmentedControl";
 import { useState } from "react";
 import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
 import Skeleton from "@/components/Skeleton";
+import { API } from "@/app/paths";
 import type { IGetSelfProfitsResponse } from "@/app/api/get_self_profits/types";
 import type { ITransactions } from "@/app/api/get_transactions/types";
-import { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
-import { API } from "@/app/paths";
+import type { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;
