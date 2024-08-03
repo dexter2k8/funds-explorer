@@ -9,9 +9,9 @@ import Transaction from "./__components__/Transaction";
 import { useSWR } from "@/hook/useSWR";
 import SegmentedControl from "@/components/SegmentedControl";
 import { useState } from "react";
-import { endDate, getDate, getGain, patrimonyColors, profitColors, segmentedTypes } from "./types";
+import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
 import Skeleton from "@/components/Skeleton";
-import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
+import type { IGetSelfProfitsResponse } from "@/app/api/get_self_profits/types";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
 import { API } from "@/app/paths";
@@ -21,7 +21,7 @@ export default function Dashboard() {
   const [range, setRange] = useState(3);
   const [type, setType] = useState(1);
 
-  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetSelfProfits[]>(
+  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetSelfProfitsResponse>(
     API.GET_SELF_PROFITS,
     {
       init_date: getDate(range),
@@ -42,19 +42,6 @@ export default function Dashboard() {
     API.GET_INCOMES_PATRIMONY
   );
 
-  const patrimony = profits ? profits[profits.length - 1]?.total_patrimony : 0;
-  const percentPatrimony = profits
-    ? getGain(
-        profits[profits.length - 1]?.total_patrimony,
-        profits[profits.length - 2]?.total_patrimony
-      )
-    : 0;
-
-  const profit = profits ? profits[profits.length - 1]?.total_income : 0;
-  const percentProfit = profits
-    ? getGain(profits[profits.length - 1]?.total_income, profits[profits.length - 2]?.total_income)
-    : 0;
-
   const skeletons = Array.from({ length: 5 }, (_, index) => <Skeleton key={index} height={90} />);
 
   return (
@@ -72,8 +59,8 @@ export default function Dashboard() {
           <Card
             label="Patrimony"
             icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
-            value={patrimony}
-            difference={percentPatrimony}
+            value={profits?.patrimony.value || 0}
+            difference={profits?.patrimony.difference || 0}
             isLoading={isLoadingProfits}
           />
           <Card
@@ -83,13 +70,17 @@ export default function Dashboard() {
                 style={{ color: "var(--green)", fontSize: "1.25rem", marginBottom: "0.25rem" }}
               />
             }
-            value={profit}
-            difference={percentProfit}
+            value={profits?.profit.value || 0}
+            difference={profits?.profit.difference || 0}
             isLoading={isLoadingProfits}
           />
         </section>
         <section>
-          <VerticalBars selectedRange={setRange} data={profits} isLoading={isLoadingProfits} />
+          <VerticalBars
+            selectedRange={setRange}
+            data={profits?.data}
+            isLoading={isLoadingProfits}
+          />
         </section>
         <section className={cards}>
           <Donut

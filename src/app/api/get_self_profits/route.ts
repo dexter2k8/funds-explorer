@@ -3,7 +3,8 @@ import api from "@/services/api";
 import { AxiosError } from "axios";
 import { NextRequest } from "next/server";
 import { IResponse } from "../types";
-import { IGetSelfProfits } from "./types";
+import { getGain } from "./types";
+import type { IGetSelfProfits, IGetSelfProfitsResponse } from "./types";
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,12 +16,36 @@ export async function GET(req: NextRequest) {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response: IResponse<IGetSelfProfits> = await api.server.get("/incomes/self-profits", {
+    const response: IResponse<IGetSelfProfits[]> = await api.server.get("/incomes/self-profits", {
       headers: { Authorization: `Bearer ${token}` },
       params: { type, init_date, end_date },
     });
 
-    return Response.json(response.data, { status: 200 });
+    const profits = response?.data;
+    const patrimony = profits[profits.length - 1]?.total_patrimony;
+    const profit = profits[profits.length - 1]?.total_income;
+    const percentPatrimony = getGain(
+      profits[profits.length - 1]?.total_patrimony,
+      profits[profits.length - 2]?.total_patrimony
+    );
+    const percentProfit = getGain(
+      profits[profits.length - 1]?.total_income,
+      profits[profits.length - 2]?.total_income
+    );
+
+    const data: IGetSelfProfitsResponse = {
+      data: profits,
+      patrimony: {
+        value: patrimony,
+        difference: percentPatrimony,
+      },
+      profit: {
+        value: profit,
+        difference: percentProfit,
+      },
+    };
+
+    return Response.json(data, { status: 200 });
   } catch (error) {
     if (error instanceof AxiosError) {
       return Response.json(error.response?.data.message, {
