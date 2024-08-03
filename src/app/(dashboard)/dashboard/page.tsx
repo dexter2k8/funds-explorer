@@ -1,11 +1,11 @@
 "use client";
 import styles from "./styles.module.scss";
-import Card from "./components/Card";
-import VerticalBars from "./components/Charts/VerticalBars";
-import Donut from "./components/Charts/Donut";
+import Card from "./__components__/Card";
+import VerticalBars from "./__components__/Charts/VerticalBars";
+import Donut from "./__components__/Charts/Donut";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaHandHoldingDollar } from "react-icons/fa6";
-import Transaction from "./components/Transaction";
+import Transaction from "./__components__/Transaction";
 import { useSWR } from "@/hook/useSWR";
 import SegmentedControl from "@/components/SegmentedControl";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import Skeleton from "@/components/Skeleton";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 import type { IGetTransactions } from "@/app/api/get_transactions/types";
 import { IGetIncomesPatrimony } from "@/app/api/get_incomes_patrimony/types";
+import { API } from "@/app/paths";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;
@@ -21,7 +22,7 @@ export default function Dashboard() {
   const [type, setType] = useState(1);
 
   const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetSelfProfits[]>(
-    "/api/get_self_profits",
+    API.GET_SELF_PROFITS,
     {
       init_date: getDate(range),
       end_date: endDate,
@@ -30,7 +31,7 @@ export default function Dashboard() {
   );
 
   const { response: latest, isLoading: isLoadingLatest } = useSWR<IGetTransactions[]>(
-    "/api/get_transactions",
+    API.GET_TRANSACTIONS,
     {
       limit: 5,
       offset: 0,
@@ -38,7 +39,7 @@ export default function Dashboard() {
   );
 
   const { response: incomes, isLoading: isLoadingIncomes } = useSWR<IGetIncomesPatrimony[]>(
-    "/api/get_incomes_patrimony"
+    API.GET_INCOMES_PATRIMONY
   );
 
   const donutPatrimony = incomes?.map((income) => {

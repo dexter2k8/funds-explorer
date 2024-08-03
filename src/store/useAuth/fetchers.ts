@@ -5,14 +5,14 @@ import type { ISignInProps, ISignUpProps } from "./types";
 
 async function SignIn({ email, password }: ISignInProps) {
   try {
-    await api.client.post("/api/sign_in", { email, password });
-    return true;
+    const response = await api.client.post("/api/sign_in", { email, password });
+    return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       toast.error(error.response?.data);
     }
   }
-  return false;
+  return "";
 }
 
 async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) {
@@ -31,6 +31,7 @@ async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) 
 async function SignOut() {
   try {
     await api.client.get("/api/sign_out");
+    window.location.href = "/";
   } catch (error) {
     console.error(error);
   }

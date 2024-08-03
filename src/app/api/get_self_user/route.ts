@@ -1,13 +1,15 @@
 import { cookies } from "next/headers";
 import api from "@/services/api";
 import { AxiosError } from "axios";
+import { IResponse } from "../types";
+import { IGetSelfUser } from "./types";
 
 export async function GET() {
   try {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response = await api.server.get("/verify-token", {
+    const response: IResponse<IGetSelfUser> = await api.server.get("/users/self-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
 

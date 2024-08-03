@@ -1,6 +1,9 @@
 import styles from "./styles.module.scss";
 import UserDetails from "../UserDetails";
 import { MdMenu } from "react-icons/md";
+import { useSWR } from "@/hook/useSWR";
+import { API } from "@/app/paths";
+import { IGetSelfUser } from "@/app/api/get_self_user/types";
 
 interface IHeaderProps {
   menuClick: () => void;
@@ -9,6 +12,9 @@ interface IHeaderProps {
 
 export default function Header({ menuClick, label }: IHeaderProps) {
   const { header, menu, title, content } = styles;
+
+  const { response } = useSWR<IGetSelfUser>(API.GET_SELF_USER);
+
   return (
     <header className={header}>
       <div className={content}>
@@ -18,8 +24,7 @@ export default function Header({ menuClick, label }: IHeaderProps) {
           </button>
           <h2 className={title}>{label}</h2>
         </div>
-        {/* TODO: Add user details */}
-        <UserDetails username="Dexter" email="LqS2f@example.com" />
+        <UserDetails username={response?.name} email={response?.email} />
       </div>
     </header>
   );

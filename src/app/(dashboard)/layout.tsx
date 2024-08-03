@@ -1,8 +1,8 @@
 "use client";
 import styles from "./styles.module.scss";
-import Sidebar from "@/app/(dashboard)/components/Sidebar";
+import Sidebar from "@/app/(dashboard)/__components__/Sidebar";
 import { PropsWithChildren, useState } from "react";
-import Header from "./components/Header";
+import Header from "./__components__/Header";
 import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
