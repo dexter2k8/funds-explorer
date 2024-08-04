@@ -14,17 +14,21 @@ export default function Analytics() {
           <Line />
         </section>
         <section>
-          <Table
-            columns={columns}
-            rows={data}
-            pageSize={5} //default is 10
-            // serverPagination
-            // serverRowCount={10}
-            // serverPage={serverPage}
-            // serverPageChange={(page) => setServerPage(page)}
-            // serverFiltered={({ field, text }) => console.log(field, text)}
-            // serverSorted={({ field, sort }) => console.log(field, sort)}
-          />
+          <div style={{ overflow: "auto" }}>
+            <div style={{ minWidth: "600px" }}>
+              <Table
+                columns={columns}
+                rows={data}
+                pageSize={5} //default is 10
+                // serverPagination
+                // serverRowCount={10}
+                // serverPage={serverPage}
+                // serverPageChange={(page) => setServerPage(page)}
+                // serverFiltered={({ field, text }) => console.log(field, text)}
+                // serverSorted={({ field, sort }) => console.log(field, sort)}
+              />
+            </div>
+          </div>
         </section>
       </main>
     </div>
