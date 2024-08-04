@@ -1,11 +1,11 @@
 "use client";
+import styles from "./styles.module.scss";
 import Table from "@/components/Table";
 import Line from "./__components__/Charts/Line";
 import { columns, data } from "./columns";
-import styles from "./styles.module.scss";
 
 export default function Analytics() {
-  const { analytics, charts, table, table_content } = styles;
+  const { analytics, charts, table, head, table_content } = styles;
   return (
     <div className={analytics}>
       <main>
@@ -17,6 +17,9 @@ export default function Analytics() {
         <section className={table}>
           <div className={table_content}>
             <div style={{ minWidth: "600px" }}>
+              <div className={head}>
+                <h4>Incomes Table</h4>
+              </div>
               <Table
                 columns={columns}
                 rows={data}

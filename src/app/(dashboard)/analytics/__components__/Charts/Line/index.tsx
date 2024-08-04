@@ -9,7 +9,7 @@ export default function Line() {
   return (
     <div>
       <LayoutCharts title="Patrimonial Evolution">
-        <Charts option={options} />
+        <Charts option={options} style={{ height: 200 }} />
       </LayoutCharts>
     </div>
   );
