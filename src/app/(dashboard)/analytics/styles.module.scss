@@ -17,6 +17,14 @@
     .charts > :first-child {
       grid-column: span 2;
     }
+    .table {
+      padding-bottom: 1rem;
+    }
+    .table_content {
+      background-color: var(--light);
+      border-radius: 0.5rem;
+      overflow: auto hidden;
+    }
   }
 }
 

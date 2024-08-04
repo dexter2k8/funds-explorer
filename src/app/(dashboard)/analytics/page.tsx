@@ -5,7 +5,7 @@ import { columns, data } from "./columns";
 import styles from "./styles.module.scss";
 
 export default function Analytics() {
-  const { analytics, charts } = styles;
+  const { analytics, charts, table, table_content } = styles;
   return (
     <div className={analytics}>
       <main>
@@ -13,8 +13,9 @@ export default function Analytics() {
           <Line />
           <Line />
         </section>
-        <section>
-          <div style={{ overflow: "auto" }}>
+
+        <section className={table}>
+          <div className={table_content}>
             <div style={{ minWidth: "600px" }}>
               <Table
                 columns={columns}
