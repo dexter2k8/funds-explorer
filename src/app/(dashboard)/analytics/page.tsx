@@ -1,3 +1,32 @@
+"use client";
+import Table from "@/components/Table";
+import Line from "./__components__/Charts/Line";
+import { columns, data } from "./columns";
+import styles from "./styles.module.scss";
+
 export default function Analytics() {
-  return <div style={{ padding: "1.5rem", height: "100%" }}>Analytics</div>;
+  const { analytics, charts } = styles;
+  return (
+    <div className={analytics}>
+      <main>
+        <section className={charts}>
+          <Line />
+          <Line />
+        </section>
+        <section>
+          <Table
+            columns={columns}
+            rows={data}
+            pageSize={5} //default is 10
+            // serverPagination
+            // serverRowCount={10}
+            // serverPage={serverPage}
+            // serverPageChange={(page) => setServerPage(page)}
+            // serverFiltered={({ field, text }) => console.log(field, text)}
+            // serverSorted={({ field, sort }) => console.log(field, sort)}
+          />
+        </section>
+      </main>
+    </div>
+  );
 }
