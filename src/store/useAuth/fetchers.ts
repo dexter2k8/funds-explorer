@@ -9,7 +9,7 @@ async function SignIn({ email, password }: ISignInProps) {
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      toast.error(error.response?.data);
+      toast.error(error?.message);
     }
   }
   return "";
@@ -22,7 +22,7 @@ async function SignUp({ name, email, password, confirmPassword }: ISignUpProps) 
     return true;
   } catch (error) {
     if (error instanceof AxiosError) {
-      toast.error(error.response?.data);
+      toast.error(error?.message);
     }
   }
   return false;

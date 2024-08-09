@@ -3,15 +3,18 @@ import styles from "./styles.module.scss";
 import Table from "@/components/Table";
 import Line from "./__components__/Charts/Line";
 import { columns, data } from "./columns";
+import { useState } from "react";
 
 export default function Analytics() {
   const { analytics, charts, table, head, table_content } = styles;
+  const [fund, setFund] = useState("");
+
   return (
     <div className={analytics}>
       <main>
         <section className={charts}>
-          <Line />
-          <Line />
+          <Line selectedFund={setFund} />
+          <Line selectedFund={setFund} />
         </section>
 
         <section className={table}>
