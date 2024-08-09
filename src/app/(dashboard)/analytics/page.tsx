@@ -1,20 +1,37 @@
 "use client";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Table from "@/components/Table";
 import Line from "./__components__/Charts/Line";
 import { columns, data } from "./columns";
-import { useState } from "react";
+import { API } from "@/app/paths";
+import { useSWR } from "@/hook/useSWR";
+import type { ITransactions } from "@/app/api/get_transactions/types";
 
 export default function Analytics() {
   const { analytics, charts, table, head, table_content } = styles;
   const [fund, setFund] = useState("");
 
+  const {
+    response: latest,
+    isLoading: isLoadingLatest,
+    mutate: mutateLatest,
+  } = useSWR<ITransactions[]>(API.GET_TRANSACTIONS, {
+    fund_alias: fund,
+    limit: 5,
+    offset: 0,
+  });
+
+  useEffect(() => {
+    mutateLatest();
+  }, [fund]);
+
   return (
     <div className={analytics}>
       <main>
         <section className={charts}>
-          <Line selectedFund={setFund} />
-          <Line selectedFund={setFund} />
+          <Line onChangeFund={setFund} />
+          <Line onChangeFund={setFund} />
         </section>
 
         <section className={table}>

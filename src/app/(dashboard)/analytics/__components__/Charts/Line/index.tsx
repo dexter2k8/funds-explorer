@@ -15,7 +15,7 @@ const mockFunds: ISelectOptions[] = [
   { value: "YTD", label: "YTD" },
 ];
 
-export default function Line({ selectedFund }: ILineChartProps) {
+export default function Line({ onChangeFund }: ILineChartProps) {
   const options = chartOptions();
   const [funds, setFunds] = useState<ISelectOptions[]>();
 
@@ -26,13 +26,17 @@ export default function Line({ selectedFund }: ILineChartProps) {
 
   const fund = funds?.length ? funds[0].value : "";
 
+  useEffect(() => {
+    onChangeFund(fund);
+  }, [fund]);
+
   return (
     <div>
       <LayoutCharts
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select value={fund} options={funds || []} onChange={selectedFund} />
+            <Select value={fund} options={funds || []} onChange={onChangeFund} />
           </div>
         }
       >
