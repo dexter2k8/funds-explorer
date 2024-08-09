@@ -24,13 +24,15 @@ export default function Line({ selectedFund }: ILineChartProps) {
     selfFunds();
   }, []);
 
+  const fund = funds?.length ? funds[0].value : "";
+
   return (
     <div>
       <LayoutCharts
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select value={funds && funds[0].value} options={funds || []} onChange={selectedFund} />
+            <Select value={fund} options={funds || []} onChange={selectedFund} />
           </div>
         }
       >
