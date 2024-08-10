@@ -11,7 +11,7 @@ export default function Donut({ title, data, colors, isLoading }: IDonutProps) {
 
   return (
     <LayoutCharts title={title}>
-      {isLoading ? <Skeleton height={288} /> : <Charts option={options} />}
+      {isLoading ? <Skeleton height="18rem" /> : <Charts option={options} />}
     </LayoutCharts>
   );
 }

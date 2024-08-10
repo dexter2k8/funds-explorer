@@ -7,6 +7,7 @@ import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layo
 import { formatCurrency, formatDate } from "@/utils/lib";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Skeleton from "@/components/Skeleton";
 
 interface IInfiniteListProps {
   fund_alias: string;
@@ -43,14 +44,16 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
     setOffset((prev) => prev + limit);
   };
 
+  const skeletons = Array.from({ length: 3 }, (_, index) => <Skeleton key={index} height={60} />);
+
   return (
     <LayoutCharts title="Transactions">
       <InfiniteScroll
         dataLength={transactions.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        height="12.375rem"
+        loader={skeletons}
+        height="12rem"
       >
         {transactions.map((transaction, i) => {
           const type = transaction.quantity < 0 ? "sell" : "buy";

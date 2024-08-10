@@ -25,7 +25,7 @@ export default function VerticalBars({ data = [], selectedRange, isLoading }: IV
         }
       >
         {isLoading ? (
-          <Skeleton height={288} />
+          <Skeleton height="18rem" />
         ) : (
           <div className={container}>
             <div className={content} style={widthStyle as CSSProperties}>

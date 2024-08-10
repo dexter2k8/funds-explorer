@@ -5,30 +5,25 @@ import Table from "@/components/Table";
 import Line from "./__components__/Charts/Line";
 import { columns, data } from "./columns";
 import InfiniteList from "./__components__/InfiniteList";
+import { useSWR } from "@/hook/useSWR";
+import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
+import { API } from "@/app/paths";
 
 export default function Analytics() {
   const { analytics, charts, table, head, table_content } = styles;
   const [fund, setFund] = useState("");
 
-  // const {
-  //   response: latest,
-  //   isLoading: isLoadingLatest,
-  //   mutate: mutateLatest,
-  // } = useSWR<ITransactions[]>(API.GET_TRANSACTIONS, {
-  //   fund_alias: fund,
-  //   limit: 5,
-  //   offset: 0,
-  // });
+  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetIncomesFundResponse[]>(
+    API.GET_INCOMES_FUND + fund
+  );
 
-  // useEffect(() => {
-  //   mutateLatest();
-  // }, [fund]);
+  console.log(profits);
 
   return (
     <div className={analytics}>
       <main>
         <section className={charts}>
-          <Line onChangeFund={setFund} />
+          <Line onChangeFund={setFund} profits={profits} isLoading={isLoadingProfits} />
           <InfiniteList fund_alias={fund} />
         </section>
 

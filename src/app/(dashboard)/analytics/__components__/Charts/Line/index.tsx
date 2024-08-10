@@ -8,9 +8,10 @@ import Select from "@/components/Select";
 import { GetSelfFunds } from "./fetchers";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { ILineChartProps } from "./types";
+import Skeleton from "@/components/Skeleton";
 
-export default function Line({ onChangeFund }: ILineChartProps) {
-  const options = chartOptions();
+export default function Line({ profits, onChangeFund, isLoading }: ILineChartProps) {
+  const options = chartOptions(profits || []);
   const [funds, setFunds] = useState<ISelectOptions[]>();
 
   useEffect(() => {
@@ -34,7 +35,13 @@ export default function Line({ onChangeFund }: ILineChartProps) {
           </div>
         }
       >
-        <Charts option={options} style={{ height: "12rem" }} />
+        {isLoading ? (
+          <Skeleton height="11.5rem" />
+        ) : (
+          <div style={{ height: "12rem" }}>
+            <Charts option={options} style={{ height: "12rem" }} />
+          </div>
+        )}
       </LayoutCharts>
     </div>
   );

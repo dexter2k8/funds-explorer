@@ -22,7 +22,7 @@ export default function Card({ label, value = 0, difference = 0, icon, isLoading
           <h4>{label}</h4>
         </div>
         {isLoading ? (
-          <Skeleton height={40} width={150} />
+          <Skeleton height="2rem" width="9rem" />
         ) : (
           <CountUp duration={1} end={value} formattingFn={formatCurrency} />
         )}
@@ -31,14 +31,14 @@ export default function Card({ label, value = 0, difference = 0, icon, isLoading
         {isLoading ? (
           <>
             <div> </div>
-            <Skeleton height={20} width={30} />
+            <Skeleton height="1.25rem" width="2rem" />
           </>
         ) : (
           <>
             {difference >= 0 ? (
-              <MdOutlineArrowDropUp size={20} />
+              <MdOutlineArrowDropUp size="1.25rem" />
             ) : (
-              <MdOutlineArrowDropDown size={20} />
+              <MdOutlineArrowDropDown size="1.25rem" />
             )}
             <small>{difference}%</small>
           </>
