@@ -76,7 +76,7 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
 
   return (
     <ul>
-      <LayoutCharts title="Transactions" height="17rem" overflow="auto">
+      <LayoutCharts title="Transactions">
         {transactions.map((transaction, i) => {
           const type = transaction.quantity < 0 ? "sell" : "buy";
           const total = formatCurrency(Math.abs(transaction.quantity) * transaction.price);
