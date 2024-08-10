@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import dynamic from "next/dynamic";
 import chartOptions from "./options";
@@ -8,12 +8,6 @@ import Select from "@/components/Select";
 import { GetSelfFunds } from "./fetchers";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { ILineChartProps } from "./types";
-
-const mockFunds: ISelectOptions[] = [
-  { value: "6", label: "6M" },
-  { value: "12", label: "12M" },
-  { value: "YTD", label: "YTD" },
-];
 
 export default function Line({ onChangeFund }: ILineChartProps) {
   const options = chartOptions();
@@ -24,7 +18,7 @@ export default function Line({ onChangeFund }: ILineChartProps) {
     selfFunds();
   }, []);
 
-  const fund = funds?.length ? funds[0].value : "";
+  const fund = useMemo(() => (funds?.length ? funds[0].value : ""), [funds]);
 
   useEffect(() => {
     onChangeFund(fund);
