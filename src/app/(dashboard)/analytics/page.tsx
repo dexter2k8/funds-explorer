@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./styles.module.scss";
 import Table from "@/components/Table";
 import Line from "./__components__/Charts/Line";
-import { columns, data } from "./columns";
+import { columns } from "./columns";
 import InfiniteList from "./__components__/InfiniteList";
 import { useSWR } from "@/hook/useSWR";
 import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
@@ -34,15 +34,10 @@ export default function Analytics() {
                 <h4>Incomes Table</h4>
               </div>
               <Table
+                isLoading={isLoadingProfits}
                 columns={columns}
-                rows={data}
-                pageSize={5} //default is 10
-                // serverPagination
-                // serverRowCount={10}
-                // serverPage={serverPage}
-                // serverPageChange={(page) => setServerPage(page)}
-                // serverFiltered={({ field, text }) => console.log(field, text)}
-                // serverSorted={({ field, sort }) => console.log(field, sort)}
+                rows={profits || []}
+                pageSize={5}
               />
             </div>
           </div>

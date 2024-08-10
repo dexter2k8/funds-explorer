@@ -6,7 +6,7 @@ export type TRowModel = {
 };
 
 export interface GridBaseColDef<T extends TRowModel = TRowModel> {
-  field: string; // Field of the row.
+  field: keyof T; // Field of the row.
   label?: string; // Label of the column.
   width?: string | number; // Width of the column.
   fixed?: "left" | "right"; // Fixed position of the column.
