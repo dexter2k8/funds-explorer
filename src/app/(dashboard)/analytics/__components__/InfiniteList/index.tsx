@@ -18,7 +18,7 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const { content, left, right, tag } = styles;
+  const { container, content, left, right, tag } = styles;
 
   const limit = 5;
 
@@ -75,8 +75,8 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   }, [fund_alias]);
 
   return (
-    <ul>
-      <LayoutCharts title="Transactions">
+    <LayoutCharts title="Transactions">
+      <ul className={container}>
         {transactions.map((transaction, i) => {
           const type = transaction.quantity < 0 ? "sell" : "buy";
           const total = formatCurrency(Math.abs(transaction.quantity) * transaction.price);
@@ -100,7 +100,7 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
             </li>
           );
         })}
-      </LayoutCharts>
-    </ul>
+      </ul>
+    </LayoutCharts>
   );
 }
