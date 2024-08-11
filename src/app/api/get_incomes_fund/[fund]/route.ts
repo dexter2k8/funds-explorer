@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     const incomes: IGetIncomesFundResponse[] = response.data.data.map((income) => {
       return {
         ...income,
-        pvp: income.income / income.patrimony,
+        pvp: (income.income / income.patrimony) * 100,
       };
     });
 

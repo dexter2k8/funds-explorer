@@ -26,6 +26,7 @@ export const columns: GridColDef<IGetIncomesFundResponse>[] = [
       );
     },
   },
+  { field: "income", label: "INCOME" },
   {
     field: "pvp",
     label: "P/VP",

@@ -17,8 +17,6 @@ export default function Analytics() {
     API.GET_INCOMES_FUND + fund
   );
 
-  console.log(profits);
-
   return (
     <div className={analytics}>
       <main>
