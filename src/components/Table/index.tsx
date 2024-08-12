@@ -80,8 +80,10 @@ export default function Table({
       <colgroup>
         {columns.map((col, i) => (
           <col
-            key={col.field}
-            ref={(el) => (colRefs.current[i] = el)}
+            key={col.field as string}
+            ref={(el) => {
+              colRefs.current[i] = el;
+            }}
             style={{ minWidth: col.width, maxWidth: col.width }}
           />
         ))}
@@ -127,8 +129,12 @@ export default function Table({
 
       {(isLoading || noData) && (
         <tbody className="ds-table__loading-wrapper">
-          {isLoading && <tr className="ds-table__loading"></tr>}
-          {noData && !isLoading && <tr className="ds-table__no-data">No data</tr>}
+          {isLoading && <tr className="ds-table__loading" />}
+          {noData && !isLoading && (
+            <tr className="ds-table__no-data">
+              <td>No data</td>
+            </tr>
+          )}
         </tbody>
       )}
     </table>

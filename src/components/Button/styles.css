@@ -88,14 +88,19 @@
 }
 
 .ds-loading {
+  position: relative;
+  width: 20px;
+}
+
+.ds-loading span {
   position: absolute;
   right: 0;
-  top: -12px;
+  top: -10px;
   border: 2px solid #666;
   border-radius: 50%;
   border-top: 2px solid #f3f3f3;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   animation: spin 1s linear infinite;
 }
 

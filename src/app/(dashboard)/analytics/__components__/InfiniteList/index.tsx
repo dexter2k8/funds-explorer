@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { API } from "@/app/paths";
@@ -5,9 +6,19 @@ import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import { formatCurrency, formatDate } from "@/utils/lib";
-import type { ITransactions } from "@/app/api/get_transactions/types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
+import { CiSquarePlus } from "react-icons/ci";
+import Modal from "@/components/Modal";
+import Input from "@/components/Input";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "@/schemas/validateAddTransaction";
+import { AxiosError } from "axios";
+import Calendar from "@/components/Calendar";
+import type { SubmitHandler } from "react-hook-form";
+import type { ITransactions } from "@/app/api/get_transactions/types";
+import type { IPostTransaction } from "@/app/api/post_transaction/types";
 
 interface IInfiniteListProps {
   fund_alias: string;
@@ -18,7 +29,26 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(limit);
-  const { content, left, right, tag } = styles;
+  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { content, left, right, tag, modal } = styles;
+
+  const { control, handleSubmit } = useForm<IPostTransaction>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
+    setLoading(true);
+    try {
+      await api.client.post("/api/transactions", data);
+      toast.success("Transaction added successfully");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.message);
+      }
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     api.client
@@ -47,7 +77,16 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   const skeletons = Array.from({ length: 3 }, (_, index) => <Skeleton key={index} height={60} />);
 
   return (
-    <LayoutCharts title="Transactions">
+    <LayoutCharts
+      title="Transactions"
+      sideControls={
+        <CiSquarePlus
+          size="2rem"
+          onClick={() => setOpenModal(true)}
+          style={{ cursor: "pointer" }}
+        />
+      }
+    >
       <InfiniteScroll
         dataLength={transactions.length}
         next={fetchMoreData}
@@ -79,6 +118,14 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
           );
         })}
       </InfiniteScroll>
+
+      <Modal open={openModal} onClose={() => setOpenModal(false)} title="Add Transaction" hideCross>
+        <form className={modal} onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="price">Price</label>
+          <Input.Controlled control={control} name="price" id="price" />
+          <Calendar />
+        </form>
+      </Modal>
     </LayoutCharts>
   );
 }

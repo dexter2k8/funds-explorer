@@ -14,7 +14,7 @@ export default function Analytics() {
   const [fund, setFund] = useState("");
 
   const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetIncomesFundResponse[]>(
-    API.GET_INCOMES_FUND + fund
+    fund && API.GET_INCOMES_FUND + fund
   );
 
   return (

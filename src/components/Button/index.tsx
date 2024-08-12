@@ -18,9 +18,11 @@ export default function Button({
 
   return (
     <button className={buttonClass} {...props}>
-      <div style={{ position: "relative" }}>
-        <span className={loading ? "ds-loading" : ""} />
-      </div>
+      {loading && (
+        <div className="ds-loading">
+          <span />
+        </div>
+      )}
       <p>{children}</p>
     </button>
   );

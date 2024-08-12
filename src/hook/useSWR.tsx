@@ -19,6 +19,7 @@ export function useSWR<T extends object, P = object>(
   const fullURL = `${key}?${urlParams}`;
 
   const fetcher = async () => {
+    if (!key) return;
     const response = await api.client.get(fullURL);
     return response.data;
   };
