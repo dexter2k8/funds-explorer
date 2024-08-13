@@ -1,0 +1,85 @@
+.calendar {
+  width: 16rem;
+
+  // header do calendário
+  .react-calendar__navigation {
+    display: flex;
+    justify-content: center;
+  }
+
+  //remove a cor de fundo e borda de todos os elementos
+  .react-calendar__navigation__arrow,
+  .react-calendar__navigation__label,
+  .react-calendar__tile {
+    background-color: transparent;
+    border: none;
+    font-family: inherit;
+  }
+
+  .react-calendar__navigation__label__labelText--from {
+    color: var(--black);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  // fonte do weekday
+  .react-calendar__month-view__weekdays__weekday {
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--black);
+    text-align: center;
+    abbr {
+      text-decoration: none;
+      cursor: default;
+    }
+  }
+
+  //container do calendário
+  .react-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  // fonte do body do calendário
+  .react-calendar__tile {
+    font-family: inherit;
+    width: min-content;
+    padding: 0.25rem;
+    cursor: pointer;
+  }
+
+  // padding do weekdays
+  .react-calendar__month-view__weekdays__weekday--weekend {
+    padding-bottom: 0.5rem;
+  }
+
+  // gap das linhas do body do calendário
+  .react-calendar__month-view__days {
+    gap: 0.5rem 0;
+  }
+
+  // cor do dia selecionado
+  .react-calendar__tile--active {
+    background-color: var(--dark);
+    border-radius: 0.25rem;
+    color: var(--light);
+  }
+
+  // cor dos dias do mês anterior
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: var(--grey);
+  }
+
+  .react-calendar__navigation__prev-button {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .react-calendar__navigation__next-button {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
