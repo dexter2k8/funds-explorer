@@ -17,11 +17,13 @@ export default function Analytics() {
     fund && API.GET_INCOMES_FUND + fund
   );
 
+  const reverseProfits = profits?.slice().reverse();
+
   return (
     <div className={analytics}>
       <main>
         <section className={charts}>
-          <Line onChangeFund={setFund} profits={profits} isLoading={isLoadingProfits} />
+          <Line onChangeFund={setFund} profits={reverseProfits} isLoading={isLoadingProfits} />
           <InfiniteList fund_alias={fund} />
         </section>
 
