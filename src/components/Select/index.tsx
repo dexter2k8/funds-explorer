@@ -1,4 +1,4 @@
-import { FC, forwardRef, useEffect, useRef, useState } from "react";
+import { CSSProperties, FC, forwardRef, useEffect, useRef, useState } from "react";
 import classes from "./styles.module.css";
 import { ISelectProps } from "./types";
 import { ControlledSelect } from "./__components__/ControlledSelect";
@@ -10,6 +10,7 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
     const [text, setText] = useState(options.find((t) => t.value === defaultValue)?.label ?? "");
     const [open, setOpen] = useState(false);
     const [isAbove, setIsAbove] = useState(false);
+    const [position, setPosition] = useState({ top: 0, width: 0 });
     const selectRef = useRef<HTMLDivElement>(null);
 
     const handleChange = (value: string) => {
@@ -34,17 +35,18 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
     });
 
     useEffect(() => {
-      const handleScroll = () => {
+      const handleMouseOver = () => {
         if (selectRef.current) {
-          const { top } = selectRef.current.getBoundingClientRect();
+          const { top, width } = selectRef.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
+          setPosition({ top, width });
           setIsAbove(top > windowHeight / 2);
         }
       };
-      window.addEventListener("scroll", handleScroll); // inverte a direção da lista de opções ao passar da metade do viewport
+      window.addEventListener("mouseover", handleMouseOver); // inverte a direção da lista de opções ao passar da metade do viewport
 
       return () => {
-        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("mouseover", handleMouseOver);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -71,6 +73,11 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
     useEffect(() => {
       value && setSelected(value);
     }, [value]);
+
+    const positionStyle = {
+      "--top": `${position.top}px`,
+      "--width": `${position.width}px`,
+    };
 
     return (
       <div className={classes.container}>
@@ -103,6 +110,7 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
           data-open={open}
           data-above={isAbove}
           data-empty={!filteredOptions.length}
+          style={positionStyle as CSSProperties}
         >
           {filteredOptions.map((option) => (
             <li

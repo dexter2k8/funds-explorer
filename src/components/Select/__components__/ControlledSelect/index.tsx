@@ -1,6 +1,6 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { ISelectProps } from "../../types";
 import Select from "../..";
+import type { ISelectProps } from "../../types";
 
 interface IControlledSelectProps<T extends FieldValues> extends ISelectProps {
   name: Path<T>;

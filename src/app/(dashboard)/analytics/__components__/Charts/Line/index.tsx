@@ -5,25 +5,16 @@ import dynamic from "next/dynamic";
 import chartOptions from "./options";
 const Charts = dynamic(() => import("echarts-for-react"));
 import Select from "@/components/Select";
-import { GetSelfFunds } from "./fetchers";
-import type { ISelectOptions } from "@/components/Select/types";
-import type { ILineChartProps } from "./types";
 import Skeleton from "@/components/Skeleton";
+import type { ILineChartProps } from "./types";
 
-export default function Line({ profits, onChangeFund, isLoading }: ILineChartProps) {
+export default function Line({ fundList, profits, onChangeFund, isLoading }: ILineChartProps) {
   const options = chartOptions(profits || []);
-  const [funds, setFunds] = useState<ISelectOptions[]>();
 
   useEffect(() => {
-    const selfFunds = async () => setFunds(await GetSelfFunds());
-    selfFunds();
-  }, []);
-
-  const fund = useMemo(() => (funds?.length ? funds[0].value : ""), [funds]);
-
-  useEffect(() => {
-    onChangeFund(fund);
-  }, [fund]);
+    onChangeFund(fundList?.[0]?.value || "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fundList]);
 
   return (
     <div>
@@ -31,7 +22,7 @@ export default function Line({ profits, onChangeFund, isLoading }: ILineChartPro
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select value={fund} options={funds || []} onChange={onChangeFund} />
+            <Select value={fundList?.[0]?.value || ""} options={fundList} onChange={onChangeFund} />
           </div>
         }
       >

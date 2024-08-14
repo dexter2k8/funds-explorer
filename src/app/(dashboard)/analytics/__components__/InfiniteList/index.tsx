@@ -5,7 +5,7 @@ import { API } from "@/app/paths";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import { formatCurrency, formatDate } from "@/utils/lib";
+import { formatCurrency, formatDate, parseDate } from "@/utils/lib";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
@@ -16,17 +16,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateAddTransaction";
 import { AxiosError } from "axios";
 import SelectDate from "@/components/SelectDate";
+import { FactoryArg } from "imask";
+import Select from "@/components/Select";
 import type { SubmitHandler } from "react-hook-form";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { IPostTransaction } from "@/app/api/post_transaction/types";
-import { FactoryArg } from "imask";
-import Select from "@/components/Select";
+import type { ISelectOptions } from "@/components/Select/types";
 
 interface IInfiniteListProps {
+  fundList: ISelectOptions[];
   fund_alias: string;
 }
 
-export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
+export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProps) {
   const limit = 5;
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -38,12 +40,13 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
 
-  console.log("errors", errors);
+  Object.keys(errors).length !== 0 && console.log(errors);
 
   const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
     return console.log("data", data);
@@ -58,6 +61,10 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    setValue("bought_at", parseDate(new Date()) as string);
+  }, []);
 
   useEffect(() => {
     api.client
@@ -149,12 +156,12 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
           <label htmlFor="price">Price</label>
           <Input.Controlled control={control} name="price" id="price" mask={currencyMask} />
           <label htmlFor="bought_at">Bought at</label>
-          <SelectDate id="bought_at" onChange={console.log} />
+          <SelectDate.Controlled control={control} name="bought_at" id="bought_at" />
           <label htmlFor="quantity">Quantity</label>
           <Input.Controlled control={control} name="quantity" id="quantity" mask="0000" />
           <label htmlFor="fund_alias">Fund</label>
           <Select.Controlled
-            options={mockFunds}
+            options={fundList || []}
             control={control}
             name="fund_alias"
             id="fund_alias"
@@ -164,11 +171,3 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
     </LayoutCharts>
   );
 }
-
-const mockFunds = [
-  { value: "1", label: "Fund 1" },
-  { value: "2", label: "Fund 2" },
-  { value: "3", label: "Fund 3" },
-  { value: "4", label: "Fund 4" },
-  { value: "5", label: "Fund 5" },
-];
