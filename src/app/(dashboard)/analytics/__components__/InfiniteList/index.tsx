@@ -123,7 +123,8 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
         <form className={modal} onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="price">Price</label>
           <Input.Controlled control={control} name="price" id="price" />
-          <SelectDate onChange={console.log} />
+          <label htmlFor="bought_at">Bought at</label>
+          <SelectDate id="bought_at" onChange={console.log} />
         </form>
       </Modal>
     </LayoutCharts>

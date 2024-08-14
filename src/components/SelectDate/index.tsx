@@ -8,12 +8,13 @@ import { parseDate } from "@/utils/lib";
 import { FaCalendar } from "react-icons/fa";
 
 interface ISelectDateProps {
+  id?: string;
   value?: string;
   onChange?: (value?: string) => void;
   disabled?: boolean;
 }
 
-export default function SelectDate({ value, onChange, disabled }: ISelectDateProps) {
+export default function SelectDate({ id, value, onChange, disabled }: ISelectDateProps) {
   const [date, setDate] = useState(parseDate(new Date()));
   const [showCalendar, setShowCalendar] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
@@ -69,6 +70,7 @@ export default function SelectDate({ value, onChange, disabled }: ISelectDatePro
   return (
     <div className="select-date">
       <input
+        id={id}
         disabled={disabled}
         ref={inputRef}
         className="calendar__input"
