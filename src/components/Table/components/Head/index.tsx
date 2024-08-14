@@ -18,8 +18,8 @@ export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
         };
 
         const handleFilterClick = (text: string) => {
-          onFilter({ field: col.field, text });
-          setFilter({ field: col.field, text });
+          onFilter({ field: col.field as string, text });
+          setFilter({ field: col.field as string, text });
         };
 
         const handleSortClick = (column: string) => {
@@ -68,17 +68,17 @@ export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
         const filterClass = filterClasses.join(" ");
 
         return (
-          <th key={col.field} className={headerClass} style={stickyStyle}>
+          <th key={col.field as string} className={headerClass} style={stickyStyle}>
             <div className={containerClass}>
               {col.renderHeader ? col.renderHeader(col.label) : col.label}
 
               {col.sortable && (
-                <span className={sortClass} onClick={() => handleSortClick(col.field)}>
+                <span className={sortClass} onClick={() => handleSortClick(col.field as string)}>
                   &nbsp;{sortIcon}&nbsp;
                 </span>
               )}
               {col.filterable && (
-                <span className={filterClass} onClick={() => handleOpenFilter(col.field)}>
+                <span className={filterClass} onClick={() => handleOpenFilter(col.field as string)}>
                   ▼
                 </span>
               )}
@@ -86,7 +86,7 @@ export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
                 <Filter
                   value={filter.text}
                   onSearch={handleFilterClick}
-                  onClose={() => handleOpenFilter(col.field)}
+                  onClose={() => handleOpenFilter(col.field as string)}
                 />
               )}
             </div>

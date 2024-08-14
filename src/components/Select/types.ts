@@ -6,6 +6,7 @@ export interface ISelectOptions {
 
 export interface ISelectProps {
   options: ISelectOptions[];
+  id?: string;
   value?: string;
   type?: TTypes;
   placeholder?: string;

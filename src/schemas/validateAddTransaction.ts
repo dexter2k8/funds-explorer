@@ -5,7 +5,7 @@ const schema = yup.object({
     .string()
     .required("Date of purchase is required")
     .matches(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format YYYY-MM-DD"),
-  price: yup.number().required("Price is required").positive("Price must be a positive number"),
+  price: yup.string().required("Price is required"),
   quantity: yup.number().required("Quantity is required"),
   fund_alias: yup
     .string()

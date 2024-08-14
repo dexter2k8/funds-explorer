@@ -19,6 +19,8 @@ import SelectDate from "@/components/SelectDate";
 import type { SubmitHandler } from "react-hook-form";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { IPostTransaction } from "@/app/api/post_transaction/types";
+import { FactoryArg } from "imask";
+import Select from "@/components/Select";
 
 interface IInfiniteListProps {
   fund_alias: string;
@@ -33,11 +35,18 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   const [loading, setLoading] = useState(false);
   const { content, left, right, tag, modal } = styles;
 
-  const { control, handleSubmit } = useForm<IPostTransaction>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
 
+  console.log("errors", errors);
+
   const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
+    return console.log("data", data);
     setLoading(true);
     try {
       await api.client.post("/api/transactions", data);
@@ -75,6 +84,16 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
   };
 
   const skeletons = Array.from({ length: 3 }, (_, index) => <Skeleton key={index} height={60} />);
+
+  const currencyMask: FactoryArg = {
+    mask: "R$num.00",
+    blocks: {
+      num: {
+        mask: Number,
+        thousandsSeparator: " ",
+      },
+    },
+  };
 
   return (
     <LayoutCharts
@@ -119,14 +138,37 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
         })}
       </InfiniteScroll>
 
-      <Modal open={openModal} onClose={() => setOpenModal(false)} title="Add Transaction" hideCross>
-        <form className={modal} onSubmit={handleSubmit(onSubmit)}>
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        title="Add Transaction"
+        onOk={handleSubmit(onSubmit)}
+        hideCross
+      >
+        <form className={modal}>
           <label htmlFor="price">Price</label>
-          <Input.Controlled control={control} name="price" id="price" />
+          <Input.Controlled control={control} name="price" id="price" mask={currencyMask} />
           <label htmlFor="bought_at">Bought at</label>
           <SelectDate id="bought_at" onChange={console.log} />
+          <label htmlFor="quantity">Quantity</label>
+          <Input.Controlled control={control} name="quantity" id="quantity" mask="0000" />
+          <label htmlFor="fund_alias">Fund</label>
+          <Select.Controlled
+            options={mockFunds}
+            control={control}
+            name="fund_alias"
+            id="fund_alias"
+          />
         </form>
       </Modal>
     </LayoutCharts>
   );
 }
+
+const mockFunds = [
+  { value: "1", label: "Fund 1" },
+  { value: "2", label: "Fund 2" },
+  { value: "3", label: "Fund 3" },
+  { value: "4", label: "Fund 4" },
+  { value: "5", label: "Fund 5" },
+];
