@@ -15,10 +15,10 @@ export function formatDate(date: string) {
 }
 
 export function parseDate(date: string | Date) {
-  if (!date) return null;
+  if (!date) return;
   if (date instanceof Date) return dayjs(date).format("YYYY-MM-DD");
   const parsedDate = dayjs(date, "DD/MM/YYYY");
-  if (!parsedDate.isValid()) return null;
+  if (!parsedDate.isValid()) return;
   return parsedDate.format("YYYY-MM-DD");
 }
 

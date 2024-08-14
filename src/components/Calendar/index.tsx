@@ -1,19 +1,29 @@
+import { useState } from "react";
 import "./styles.scss";
-import { Calendar as ReactCalendar } from "react-calendar";
+import { Calendar as DateRangeCalendar } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { parseDate } from "@/utils/lib";
+
 export default function Calendar() {
+  const [date, setDate] = useState(parseDate(new Date()));
+  console.log(date);
+
   return (
-    <>
-      <input className="calendar__input" type="date" />
-      <div className="calendar">
-        <ReactCalendar
-          locale="en-US" // idioma do calendário
-          minDetail="month" // mostra apenas o mês
-          next2Label={null}
-          prev2Label={null}
-          formatShortWeekday={(_, d) => d.toLocaleDateString("en-US", { weekday: "narrow" })} // muda o formato do dia da semana
-          maxDate={new Date()}
-        />
-      </div>
-    </>
+    <div className="calendar">
+      <input
+        className="calendar__input"
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <DateRangeCalendar
+        date={new Date(date + "T00:00:00")}
+        onChange={(date) => setDate(parseDate(date))}
+        weekdayDisplayFormat="EEEEE" // change weekday to format S,M,T,W,T,F,S
+        maxDate={new Date()}
+        color="var(--dark)" // selected date color
+      />
+    </div>
   );
 }

@@ -3,8 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CSSProperties } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const globalFont = {
+  "--inter": inter.style.fontFamily,
+};
 
 export const metadata: Metadata = {
   title: "Funds Explorer",
@@ -18,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={globalFont as CSSProperties}>
         {children}
         <ToastContainer
           position="bottom-center"

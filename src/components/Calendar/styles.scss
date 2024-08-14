@@ -1,5 +1,5 @@
 .calendar__input {
-  font-family: inherit;
+  font-family: var(--inter);
   box-sizing: border-box;
   padding: 0.2rem 0.6rem;
   border-radius: 0.375rem;
@@ -21,87 +21,77 @@
 }
 
 .calendar {
-  width: 16rem;
-
-  // header do calendário
-  .react-calendar__navigation {
-    display: flex;
-    justify-content: center;
-  }
-
-  //remove a cor de fundo e borda de todos os elementos
-  .react-calendar__navigation__arrow,
-  .react-calendar__navigation__label,
-  .react-calendar__tile {
-    background-color: transparent;
-    border: none;
-    font-family: inherit;
-  }
-
-  .react-calendar__navigation__label__labelText--from {
-    color: var(--black);
+  // ***styling header month and year select***
+  .rdrMonthAndYearPickers select {
+    font-family: var(--inter);
     font-size: 1rem;
     font-weight: 600;
+    color: var(--black);
+    padding: 8px 24px 8px 4px;
   }
 
-  // fonte do weekday
-  .react-calendar__month-view__weekdays__weekday {
-    font-family: inherit;
+  // ***styling header***
+  .rdrMonthAndYearWrapper {
+    height: 3rem;
+    width: 17rem;
+    padding: 0.5rem;
+  }
+
+  .rdrMonthPicker {
+    margin: 0;
+  }
+
+  // ***styling arrows***
+  .rdrNextButton i,
+  .rdrPprevButton i {
+    display: none;
+  }
+  .rdrNextPrevButton {
+    background: none;
+    margin: 0;
+  }
+  .rdrPprevButton::before,
+  .rdrNextButton::before {
+    font-size: 1.5rem;
+    font-family: var(--inter);
+    line-height: 1.5rem;
+  }
+
+  .rdrPprevButton::before {
+    content: "‹";
+  }
+  .rdrNextButton::before {
+    content: "›";
+  }
+
+  // ***styling weekdays***
+  .rdrWeekDay {
+    font-size: 1rem;
     font-weight: 600;
     color: var(--black);
-    text-align: center;
-    abbr {
-      text-decoration: none;
-      cursor: default;
-    }
   }
 
-  //container do calendário
-  .react-calendar {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  // ***styling days***
+  .rdrDayNumber span {
+    font-size: 0.875rem;
+    font-weight: 400;
   }
 
-  // fonte do body do calendário
-  .react-calendar__tile {
-    font-family: inherit;
-    width: min-content;
-    padding: 0.25rem;
-    cursor: pointer;
-  }
-
-  // padding do weekdays
-  .react-calendar__month-view__weekdays__weekday--weekend {
-    padding-bottom: 0.5rem;
-  }
-
-  // gap das linhas do body do calendário
-  .react-calendar__month-view__days {
-    gap: 0.5rem 0;
-  }
-
-  // cor do dia selecionado
-  .react-calendar__tile--active {
-    background-color: var(--dark);
+  // ***styling selected date***
+  .rdrSelected {
     border-radius: 0.25rem;
-    color: var(--light);
   }
 
-  // cor dos dias do mês anterior
-  .react-calendar__month-view__days__day--neighboringMonth {
-    color: var(--grey);
+  // ***styling hover days***
+  .rdrDayEndOfWeek .rdrDayStartPreview,
+  .rdrDayStartPreview .rdrDayEndPreview,
+  .rdrCalendarWrapper:not(.rdrDateRangeWrapper) .rdrDayHovered .rdrDayNumber:after,
+  .rdrDayEndPreview {
+    border-radius: 0.25rem !important;
   }
 
-  .react-calendar__navigation__prev-button {
-    margin-left: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  .react-calendar__navigation__next-button {
-    margin-right: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
+  // ***styling months container width***
+  .rdrMonth {
+    width: 17rem;
   }
 }
