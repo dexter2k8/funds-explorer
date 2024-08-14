@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateAddTransaction";
 import { AxiosError } from "axios";
-import Calendar from "@/components/Calendar";
+import SelectDate from "@/components/SelectDate";
 import type { SubmitHandler } from "react-hook-form";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { IPostTransaction } from "@/app/api/post_transaction/types";
@@ -123,7 +123,7 @@ export default function InfiniteList({ fund_alias }: IInfiniteListProps) {
         <form className={modal} onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="price">Price</label>
           <Input.Controlled control={control} name="price" id="price" />
-          <Calendar />
+          <SelectDate onChange={console.log} />
         </form>
       </Modal>
     </LayoutCharts>
