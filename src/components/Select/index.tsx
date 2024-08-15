@@ -72,6 +72,7 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
 
     useEffect(() => {
       value && setSelected(value);
+      setText(options.find((t) => t.value === value)?.label ?? "");
     }, [value]);
 
     const positionStyle = {
