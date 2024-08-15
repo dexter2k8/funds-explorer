@@ -10,6 +10,13 @@ export const formatCurrency = (value: number) => {
   });
 };
 
+export function currencyToNumber(currency: string) {
+  const cleanString = currency.replace(/[^0-9,.-]/g, "");
+  const normalizedString = cleanString.replace(",", ".");
+  const numberValue = parseFloat(normalizedString);
+  return numberValue;
+}
+
 export function formatDate(date: string) {
   return dayjs(date).format("DD/MM/YYYY");
 }

@@ -10,6 +10,7 @@ export interface IModal {
   hideHeader?: boolean;
   hideFooter?: boolean;
   okText?: string;
+  okLoading?: boolean;
   cancelText?: string;
   children?: React.ReactNode;
 }

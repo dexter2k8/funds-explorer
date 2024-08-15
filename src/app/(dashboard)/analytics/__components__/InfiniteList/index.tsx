@@ -5,7 +5,7 @@ import { API } from "@/app/paths";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import { formatCurrency, formatDate, parseDate } from "@/utils/lib";
+import { currencyToNumber, formatCurrency, formatDate, parseDate } from "@/utils/lib";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
@@ -37,22 +37,18 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
   const [loading, setLoading] = useState(false);
   const { content, left, right, tag, modal } = styles;
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<IPostTransaction>({
+  const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
 
-  Object.keys(errors).length !== 0 && console.log(errors);
-
   const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
-    return console.log("data", data);
+    const { price, ...rest } = data;
+    const parsedPrice = currencyToNumber(price);
+    const parsedData = { ...rest, price: parsedPrice };
+
     setLoading(true);
     try {
-      await api.client.post("/api/transactions", data);
+      await api.client.post("/api/post_transaction", parsedData);
       toast.success("Transaction added successfully");
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -60,6 +56,7 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
       }
     }
     setLoading(false);
+    setOpenModal(false);
   };
 
   useEffect(() => {
@@ -67,12 +64,13 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
   }, []);
 
   useEffect(() => {
-    api.client
-      .get(API.GET_TRANSACTIONS, {
-        params: { limit, offset: 0, fund_alias },
-      })
-      .then((res) => setTransactions(res.data))
-      .catch((err) => toast.error(err?.message));
+    fund_alias &&
+      api.client
+        .get(API.GET_TRANSACTIONS, {
+          params: { limit, offset: 0, fund_alias },
+        })
+        .then((res) => setTransactions(res.data))
+        .catch((err) => toast.error(err?.message));
     setOffset(limit);
     setHasMore(true);
   }, [fund_alias]);
@@ -100,6 +98,11 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
         thousandsSeparator: " ",
       },
     },
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    reset();
   };
 
   return (
@@ -147,9 +150,10 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
 
       <Modal
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={handleCloseModal}
         title="Add Transaction"
         onOk={handleSubmit(onSubmit)}
+        okLoading={loading}
         hideCross
       >
         <form className={modal}>
@@ -161,6 +165,7 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
           <Input.Controlled control={control} name="quantity" id="quantity" mask="0000" />
           <label htmlFor="fund_alias">Fund</label>
           <Select.Controlled
+            type="search"
             options={fundList || []}
             control={control}
             name="fund_alias"
