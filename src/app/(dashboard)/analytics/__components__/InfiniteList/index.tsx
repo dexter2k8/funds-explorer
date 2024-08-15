@@ -155,14 +155,27 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
         onOk={handleSubmit(onSubmit)}
         okLoading={loading}
         hideCross
+        width="17rem"
       >
         <form className={modal}>
           <label htmlFor="price">Price</label>
-          <Input.Controlled control={control} name="price" id="price" mask={currencyMask} />
+          <Input.Controlled
+            type="search"
+            control={control}
+            name="price"
+            id="price"
+            mask={currencyMask}
+          />
           <label htmlFor="bought_at">Bought at</label>
           <SelectDate.Controlled control={control} name="bought_at" id="bought_at" />
           <label htmlFor="quantity">Quantity</label>
-          <Input.Controlled control={control} name="quantity" id="quantity" mask="0000" />
+          <Input.Controlled
+            type="search"
+            control={control}
+            name="quantity"
+            id="quantity"
+            mask="0000"
+          />
           <label htmlFor="fund_alias">Fund</label>
           <Select.Controlled
             type="search"
