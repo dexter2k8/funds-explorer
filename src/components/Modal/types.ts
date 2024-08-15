@@ -1,6 +1,8 @@
-export interface IModal {
+export interface IModalDefaultProps {
   open: boolean;
   onClose: () => void;
+}
+export interface IModal extends IModalDefaultProps {
   onOk?: () => void;
   leftIcon?: React.ReactNode;
   title?: string;

@@ -5,22 +5,13 @@ import { API } from "@/app/paths";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import { currencyMask, currencyToNumber, formatCurrency, formatDate, parseDate } from "@/utils/lib";
+import { formatCurrency, formatDate } from "@/utils/lib";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
-import Modal from "@/components/Modal";
-import Input from "@/components/Input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import schema from "@/schemas/validateAddTransaction";
-import { AxiosError } from "axios";
-import SelectDate from "@/components/SelectDate";
-import Select from "@/components/Select";
-import type { SubmitHandler } from "react-hook-form";
 import type { ITransactions } from "@/app/api/get_transactions/types";
-import type { IPostTransaction } from "@/app/api/post_transaction/types";
 import type { ISelectOptions } from "@/components/Select/types";
+import AddTransactionModal from "./__components__/AddTransactionModal";
 
 interface IInfiniteListProps {
   fundList: ISelectOptions[];
@@ -33,34 +24,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(limit);
   const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { content, left, right, tag, modal } = styles;
-
-  const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
-    const { price, ...rest } = data;
-    const parsedPrice = currencyToNumber(price);
-    const parsedData = { ...rest, price: parsedPrice };
-
-    setLoading(true);
-    try {
-      await api.client.post("/api/post_transaction", parsedData);
-      toast.success("Transaction added successfully");
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error?.message);
-      }
-    }
-    setLoading(false);
-    setOpenModal(false);
-  };
-
-  useEffect(() => {
-    setValue("bought_at", parseDate(new Date()) as string);
-  }, []);
+  const { content, left, right, tag } = styles;
 
   useEffect(() => {
     fund_alias &&
@@ -88,11 +52,6 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
   };
 
   const skeletons = Array.from({ length: 3 }, (_, index) => <Skeleton key={index} height={60} />);
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    reset();
-  };
 
   return (
     <LayoutCharts
@@ -137,44 +96,11 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         })}
       </InfiniteScroll>
 
-      <Modal
+      <AddTransactionModal
+        fundList={fundList}
         open={openModal}
-        onClose={handleCloseModal}
-        title="Add Transaction"
-        onOk={handleSubmit(onSubmit)}
-        okLoading={loading}
-        hideCross
-        width="17rem"
-      >
-        <form className={modal}>
-          <label htmlFor="price">Price</label>
-          <Input.Controlled
-            type="search"
-            control={control}
-            name="price"
-            id="price"
-            mask={currencyMask}
-          />
-          <label htmlFor="bought_at">Bought at</label>
-          <SelectDate.Controlled control={control} name="bought_at" id="bought_at" />
-          <label htmlFor="quantity">Quantity</label>
-          <Input.Controlled
-            type="search"
-            control={control}
-            name="quantity"
-            id="quantity"
-            mask="0000"
-          />
-          <label htmlFor="fund_alias">Fund</label>
-          <Select.Controlled
-            type="search"
-            options={fundList || []}
-            control={control}
-            name="fund_alias"
-            id="fund_alias"
-          />
-        </form>
-      </Modal>
+        onClose={() => setOpenModal(false)}
+      />
     </LayoutCharts>
   );
 }
