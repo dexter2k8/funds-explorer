@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./styles.module.scss";
 import PatrimonialEvolution from "./__components__/PatrimonialEvolution";
 import Transactions from "./__components__/Transactions";

@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./styles.module.scss";
 import { API } from "@/app/paths";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import { formatCurrency, formatDate } from "@/utils/lib";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
+import AddTransactionModal from "./__components__/AddTransactionModal";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { ISelectOptions } from "@/components/Select/types";
-import AddTransactionModal from "./__components__/AddTransactionModal";
+import TransactionCard from "./__components__/TransactionCard";
 
 interface IInfiniteListProps {
   fundList: ISelectOptions[];
@@ -24,7 +23,6 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(limit);
   const [openModal, setOpenModal] = useState(false);
-  const { content, left, right, tag } = styles;
 
   useEffect(() => {
     fund_alias &&
@@ -71,29 +69,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         loader={skeletons}
         height="12rem"
       >
-        {transactions.map((transaction, i) => {
-          const type = transaction.quantity < 0 ? "sell" : "buy";
-          const total = formatCurrency(Math.abs(transaction.quantity) * transaction.price);
-          return (
-            <li key={i} className={content}>
-              <div className={left}>
-                <p>
-                  {Math.abs(transaction.quantity)} x {formatCurrency(transaction.price)}
-                </p>
-                <small
-                  className={tag}
-                  style={{ backgroundColor: type === "buy" ? "var(--green)" : "var(--red)" }}
-                >
-                  {type}
-                </small>
-              </div>
-              <div className={right}>
-                <b>{total}</b>
-                <small>{formatDate(transaction.bought_at)}</small>
-              </div>
-            </li>
-          );
-        })}
+        <TransactionCard transactions={transactions} />
       </InfiniteScroll>
 
       <AddTransactionModal
