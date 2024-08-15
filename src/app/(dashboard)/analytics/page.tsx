@@ -1,30 +1,35 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import Table from "@/components/Table";
-import Line from "./__components__/Charts/Line";
-import { columns } from "./columns";
+import LineChart from "./__components__/Charts/LineChart";
 import InfiniteList from "./__components__/InfiniteList";
 import { useSWR } from "@/hook/useSWR";
 import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
 import { API } from "@/app/paths";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IGetFunds } from "@/app/api/get_funds/types";
+import IncomesTable from "./__components__/IncomesTable";
 
 export default function Analytics() {
   const { analytics, charts, table, head, table_content } = styles;
   const [fund, setFund] = useState("");
 
-  const { response: fundList } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList, isLoading: isLoadingFunds } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
 
   const funds: ISelectOptions[] = fundList?.map((fund) => ({
     value: fund.alias,
     label: fund.alias,
   }));
 
-  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetIncomesFundResponse[]>(
-    fund && API.GET_INCOMES_FUND + fund
-  );
+  const {
+    response: profits,
+    isLoading: isLoadingProfits,
+    mutate,
+  } = useSWR<IGetIncomesFundResponse[]>(fund && API.GET_INCOMES_FUND + fund);
+
+  useEffect(() => {
+    mutate();
+  }, [fund]);
 
   const reverseProfits = profits?.slice().reverse();
 
@@ -32,7 +37,8 @@ export default function Analytics() {
     <div className={analytics}>
       <main>
         <section className={charts}>
-          <Line
+          <LineChart
+            loadingFunds={isLoadingFunds}
             fundList={funds || []}
             onChangeFund={setFund}
             profits={reverseProfits}
@@ -42,19 +48,11 @@ export default function Analytics() {
         </section>
 
         <section className={table}>
-          <div className={table_content}>
-            <div style={{ minWidth: "600px" }}>
-              <div className={head}>
-                <h4>Incomes Table</h4>
-              </div>
-              <Table
-                isLoading={isLoadingProfits}
-                columns={columns}
-                rows={profits || []}
-                pageSize={5}
-              />
-            </div>
-          </div>
+          <IncomesTable
+            fundList={funds || []}
+            profits={reverseProfits}
+            isLoadingProfits={isLoadingProfits}
+          />
         </section>
       </main>
     </div>

@@ -5,7 +5,7 @@ import { API } from "@/app/paths";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import { currencyToNumber, formatCurrency, formatDate, parseDate } from "@/utils/lib";
+import { currencyMask, currencyToNumber, formatCurrency, formatDate, parseDate } from "@/utils/lib";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
@@ -16,7 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateAddTransaction";
 import { AxiosError } from "axios";
 import SelectDate from "@/components/SelectDate";
-import { FactoryArg } from "imask";
 import Select from "@/components/Select";
 import type { SubmitHandler } from "react-hook-form";
 import type { ITransactions } from "@/app/api/get_transactions/types";
@@ -89,16 +88,6 @@ export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProp
   };
 
   const skeletons = Array.from({ length: 3 }, (_, index) => <Skeleton key={index} height={60} />);
-
-  const currencyMask: FactoryArg = {
-    mask: "R$num.00",
-    blocks: {
-      num: {
-        mask: Number,
-        thousandsSeparator: " ",
-      },
-    },
-  };
 
   const handleCloseModal = () => {
     setOpenModal(false);

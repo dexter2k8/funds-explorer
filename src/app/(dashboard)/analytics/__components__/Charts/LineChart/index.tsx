@@ -8,13 +8,19 @@ import Select from "@/components/Select";
 import Skeleton from "@/components/Skeleton";
 import type { ILineChartProps } from "./types";
 
-export default function Line({ fundList, profits, onChangeFund, isLoading }: ILineChartProps) {
+export default function LineChart({
+  fundList,
+  profits,
+  onChangeFund,
+  isLoading,
+  loadingFunds,
+}: ILineChartProps) {
   const options = chartOptions(profits || []);
 
   useEffect(() => {
     onChangeFund(fundList?.[0]?.value || "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fundList]);
+  }, [loadingFunds]);
 
   return (
     <div>
@@ -22,7 +28,12 @@ export default function Line({ fundList, profits, onChangeFund, isLoading }: ILi
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select value={fundList?.[0]?.value || ""} options={fundList} onChange={onChangeFund} />
+            <Select
+              type="search"
+              value={fundList?.[0]?.value || ""}
+              options={fundList}
+              onChange={onChangeFund}
+            />
           </div>
         }
       >

@@ -6,4 +6,5 @@ export interface ILineChartProps {
   onChangeFund: (value: string) => void;
   profits: IGetIncomesFundResponse[];
   isLoading: boolean;
+  loadingFunds: boolean;
 }

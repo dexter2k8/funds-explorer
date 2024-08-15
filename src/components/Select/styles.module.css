@@ -96,6 +96,7 @@
 .options[data-open="true"] {
   visibility: visible;
   opacity: 1;
+  z-index: 1;
 }
 
 .options[data-empty="true"] {

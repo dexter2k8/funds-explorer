@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { FactoryArg } from "imask";
 import { jwtVerify } from "jose";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
@@ -36,4 +37,14 @@ export const verifyToken = async (token: string) => {
   } catch (err) {
     return "";
   }
+};
+
+export const currencyMask: FactoryArg = {
+  mask: "R$num.00",
+  blocks: {
+    num: {
+      mask: Number,
+      thousandsSeparator: " ",
+    },
+  },
 };

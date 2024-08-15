@@ -1,0 +1,19 @@
+.table_content {
+  background-color: var(--light);
+  border-radius: 0.5rem;
+  overflow: auto hidden;
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+}
+
+.modal {
+  padding: 1rem;
+
+  label {
+    font-size: 12px;
+  }
+}
