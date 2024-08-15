@@ -8,7 +8,7 @@ import Select from "@/components/Select";
 import Skeleton from "@/components/Skeleton";
 import type { ILineChartProps } from "./types";
 
-export default function LineChart({
+export default function PatrimonialEvolution({
   fundList,
   profits,
   onChangeFund,

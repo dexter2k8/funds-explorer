@@ -27,7 +27,7 @@ interface IInfiniteListProps {
   fund_alias: string;
 }
 
-export default function InfiniteList({ fundList, fund_alias }: IInfiniteListProps) {
+export default function Transactions({ fundList, fund_alias }: IInfiniteListProps) {
   const limit = 5;
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
