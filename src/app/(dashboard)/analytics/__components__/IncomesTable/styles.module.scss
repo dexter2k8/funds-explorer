@@ -1,4 +1,4 @@
-.table_content {
+.table_container {
   background-color: var(--light);
   border-radius: 0.5rem;
   overflow: auto hidden;
@@ -7,5 +7,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+  }
+  .table_content {
+    max-height: calc(100vh - 28rem);
+    overflow: hidden auto;
+  }
+}
+
+@media (max-width: 1020px) and (min-width: 630px) {
+  .table_container {
+    .table_content {
+      max-height: calc(100vh - 6rem);
+    }
   }
 }

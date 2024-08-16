@@ -16,10 +16,10 @@ interface IIncomesTableProps {
 
 export default function IncomesTable({ fundList, profits, isLoadingProfits }: IIncomesTableProps) {
   const [openModal, setOpenModal] = useState(false);
-  const { table_content, head } = styles;
+  const { table_container, head, table_content } = styles;
 
   return (
-    <div className={table_content}>
+    <div className={table_container}>
       <div style={{ minWidth: "600px" }}>
         <div className={head}>
           <h4>Incomes Table</h4>
@@ -29,7 +29,14 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
             style={{ cursor: "pointer" }}
           />
         </div>
-        <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={12} />
+        <div className={table_content}>
+          <Table
+            isLoading={isLoadingProfits}
+            columns={columns}
+            rows={profits || []}
+            pageSize={12}
+          />
+        </div>
       </div>
       <AddIncomeModal fundList={fundList} open={openModal} onClose={() => setOpenModal(false)} />
     </div>
