@@ -8,9 +8,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
 import AddTransactionModal from "./__components__/AddTransactionModal";
+import TransactionCard from "./__components__/TransactionCard";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { ISelectOptions } from "@/components/Select/types";
-import TransactionCard from "./__components__/TransactionCard";
 
 interface IInfiniteListProps {
   fundList: ISelectOptions[];
@@ -24,16 +24,21 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
   const [offset, setOffset] = useState(limit);
   const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    fund_alias &&
+  const loadInitialData = () => {
+    if (fund_alias) {
       api.client
         .get(API.GET_TRANSACTIONS, {
           params: { limit, offset: 0, fund_alias },
         })
         .then((res) => setTransactions(res.data))
         .catch((err) => toast.error(err?.message));
-    setOffset(limit);
-    setHasMore(true);
+      setOffset(limit);
+      setHasMore(true);
+    }
+  };
+
+  useEffect(() => {
+    loadInitialData();
   }, [fund_alias]);
 
   const fetchMoreData = () => {
@@ -76,6 +81,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         fundList={fundList}
         open={openModal}
         onClose={() => setOpenModal(false)}
+        onAddTransaction={() => loadInitialData()}
       />
     </LayoutCharts>
   );

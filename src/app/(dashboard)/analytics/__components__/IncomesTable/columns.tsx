@@ -1,12 +1,22 @@
 import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
 import { GridColDef } from "@/components/Table/types";
+import { formatCurrency, formatDate } from "@/utils/lib";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 
 export const columns: GridColDef<IGetIncomesFundResponse>[] = [
-  { field: "updated_at", label: "DATE", sortable: true },
-  { field: "price", label: "PRICE" },
+  {
+    field: "updated_at",
+    label: "DATE",
+    sortable: true,
+    render: (value) => <p>{formatDate(String(value))}</p>,
+  },
+  { field: "price", label: "PRICE", render: (value) => <p>{formatCurrency(Number(value))}</p> },
   { field: "quantity", label: "QUANTITY" },
-  { field: "patrimony", label: "PATRIMONY" },
+  {
+    field: "patrimony",
+    label: "PATRIMONY",
+    render: (value) => <p>{formatCurrency(Number(value))}</p>,
+  },
   {
     field: "variation",
     label: "VARIATION",
@@ -20,18 +30,16 @@ export const columns: GridColDef<IGetIncomesFundResponse>[] = [
         );
       return (
         <div style={{ color, display: "flex", alignItems: "center" }}>
-          {value}
+          {formatCurrency(Number(value))}
           {value && arrow}
         </div>
       );
     },
   },
-  { field: "income", label: "INCOME" },
+  { field: "income", label: "INCOME", render: (value) => <p>{formatCurrency(Number(value))}</p> },
   {
     field: "pvp",
     label: "P/VP",
-    render: (value) => {
-      return <div>{Number(value).toFixed(4)}%</div>;
-    },
+    render: (value) => <p>{Number(value).toFixed(2)}%</p>,
   },
 ];

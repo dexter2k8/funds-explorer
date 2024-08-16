@@ -17,12 +17,14 @@ import { toast } from "react-toastify";
 
 interface IAddTransactionModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
+  onAddTransaction: () => void;
 }
 
 export default function AddTransactionModal({
   fundList,
   open,
   onClose,
+  onAddTransaction,
 }: IAddTransactionModalProps) {
   const { modal } = styles;
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,7 @@ export default function AddTransactionModal({
     try {
       await api.client.post("/api/post_transaction", parsedData);
       toast.success("Transaction added successfully");
+      onAddTransaction();
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error?.message);
