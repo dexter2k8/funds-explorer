@@ -1,6 +1,7 @@
 .ds-table__footer {
   text-align: right;
   padding: 16px;
+  user-select: none;
 }
 
 .ds-table__footer span:not(:last-child) {

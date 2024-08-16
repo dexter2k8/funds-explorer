@@ -44,7 +44,7 @@ export default function Analytics() {
         <section className={table}>
           <IncomesTable
             fundList={funds || []}
-            profits={reverseProfits}
+            profits={profits}
             isLoadingProfits={isLoadingProfits}
           />
         </section>

@@ -29,7 +29,7 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
             style={{ cursor: "pointer" }}
           />
         </div>
-        <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={5} />
+        <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={12} />
       </div>
       <AddIncomeModal fundList={fundList} open={openModal} onClose={() => setOpenModal(false)} />
     </div>
