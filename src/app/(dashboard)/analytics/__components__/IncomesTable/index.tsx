@@ -20,7 +20,7 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
 
   return (
     <div className={table_container}>
-      <div style={{ minWidth: "600px" }}>
+      <div className={table_content}>
         <div className={head}>
           <h4>Incomes Table</h4>
           <CiSquarePlus
@@ -29,14 +29,7 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
             style={{ cursor: "pointer" }}
           />
         </div>
-        <div className={table_content}>
-          <Table
-            isLoading={isLoadingProfits}
-            columns={columns}
-            rows={profits || []}
-            pageSize={12}
-          />
-        </div>
+        <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={12} />
       </div>
       <AddIncomeModal fundList={fundList} open={openModal} onClose={() => setOpenModal(false)} />
     </div>
