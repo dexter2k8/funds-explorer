@@ -4,9 +4,10 @@ import type { ITransactions } from "@/app/api/get_transactions/types";
 
 interface ITransactionCardProps {
   transactions: ITransactions[];
+  onCardClick: (id: string) => void;
 }
 
-export default function TransactionCard({ transactions }: ITransactionCardProps) {
+export default function TransactionCard({ transactions, onCardClick }: ITransactionCardProps) {
   const { content, left, right, tag } = styles;
 
   return (
@@ -15,7 +16,7 @@ export default function TransactionCard({ transactions }: ITransactionCardProps)
         const type = transaction.quantity < 0 ? "sell" : "buy";
         const total = formatCurrency(Math.abs(transaction.quantity) * transaction.price);
         return (
-          <li key={i} className={content}>
+          <li key={i} className={content} onClick={() => onCardClick(transaction.id)}>
             <div className={left}>
               <p>
                 {Math.abs(transaction.quantity)} x {formatCurrency(transaction.price)}

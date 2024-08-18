@@ -22,7 +22,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(limit);
-  const [openModal, setOpenModal] = useState(false);
+  const [idModal, setIdModal] = useState<string>();
 
   const loadInitialData = () => {
     if (fund_alias) {
@@ -30,10 +30,12 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         .get(API.GET_TRANSACTIONS, {
           params: { limit, offset: 0, fund_alias },
         })
-        .then((res) => setTransactions(res.data))
+        .then((res) => {
+          setTransactions(res.data);
+          setHasMore(res.data.length === limit);
+        })
         .catch((err) => toast.error(err?.message));
       setOffset(limit);
-      setHasMore(true);
     }
   };
 
@@ -60,11 +62,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
     <LayoutCharts
       title="Transactions"
       sideControls={
-        <CiSquarePlus
-          size="2rem"
-          onClick={() => setOpenModal(true)}
-          style={{ cursor: "pointer" }}
-        />
+        <CiSquarePlus size="2rem" onClick={() => setIdModal("")} style={{ cursor: "pointer" }} />
       }
     >
       <InfiniteScroll
@@ -74,14 +72,15 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         loader={skeletons}
         height="12rem"
       >
-        <TransactionCard transactions={transactions} />
+        <TransactionCard onCardClick={setIdModal} transactions={transactions} />
       </InfiniteScroll>
 
       <TransactionModal
         fundList={fundList}
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onAddTransaction={() => loadInitialData()}
+        open={idModal !== undefined}
+        transaction={transactions.find((t) => t.id === idModal)}
+        onClose={() => setIdModal(undefined)}
+        onHandleTransaction={() => loadInitialData()}
       />
     </LayoutCharts>
   );

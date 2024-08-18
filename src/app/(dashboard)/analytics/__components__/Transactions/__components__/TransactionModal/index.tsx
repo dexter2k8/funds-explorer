@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
@@ -8,25 +8,28 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import schema from "@/schemas/validateAddTransaction";
 import { AxiosError } from "axios";
-import type { IModalDefaultProps } from "@/components/Modal/types";
-import type { ISelectOptions } from "@/components/Select/types";
-import type { IPostTransaction } from "@/app/api/post_transaction/types";
 import { currencyMask, currencyToNumber, parseDate } from "@/utils/lib";
 import api from "@/services/api";
 import { toast } from "react-toastify";
+import type { IModalDefaultProps } from "@/components/Modal/types";
+import type { ISelectOptions } from "@/components/Select/types";
+import type { IPostTransaction } from "@/app/api/post_transaction/types";
+import { ITransactions } from "@/app/api/get_transactions/types";
 
 interface IAddTransactionModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
-  onAddTransaction: () => void;
+  onHandleTransaction: () => void;
+  transaction?: ITransactions;
 }
 
 export default function TransactionModal({
   fundList,
   open,
+  transaction,
   onClose,
-  onAddTransaction,
+  onHandleTransaction,
 }: IAddTransactionModalProps) {
-  const { modal } = styles;
+  const { modal, action } = styles;
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
@@ -39,9 +42,11 @@ export default function TransactionModal({
 
     setLoading(true);
     try {
-      await api.client.post("/api/post_transaction", parsedData);
-      toast.success("Transaction added successfully");
-      onAddTransaction();
+      transaction
+        ? await api.client.patch(`/api/patch_transaction/${transaction?.id}`, parsedData)
+        : await api.client.post("/api/post_transaction", parsedData);
+      toast.success(`Transaction ${transaction ? "updated" : "added"} successfully`);
+      onHandleTransaction();
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error?.message);
@@ -54,24 +59,50 @@ export default function TransactionModal({
 
   useEffect(() => {
     setValue("bought_at", parseDate(new Date()) as string);
-  }, []);
+
+    if (transaction) {
+      setValue("bought_at", parseDate(transaction.bought_at) as string);
+      setValue("fund_alias", transaction.fund_alias);
+      setValue("price", "R$ " + transaction.price);
+      setValue("quantity", transaction.quantity);
+    }
+  }, [transaction]);
 
   const handleCloseModal = () => {
     onClose();
     reset();
   };
 
+  const handleDelete = async (e: MouseEvent) => {
+    e.preventDefault();
+    try {
+      await api.client.delete(`/api/delete_transaction/${transaction?.id}`);
+      toast.success("Transaction deleted successfully");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.message);
+      }
+    }
+    onHandleTransaction();
+    handleCloseModal();
+  };
+
   return (
     <Modal
       open={open}
       onClose={handleCloseModal}
-      title="Add Transaction"
+      title={transaction ? "Edit Transaction" : "Add Transaction"}
       onOk={handleSubmit(onSubmit)}
       okLoading={loading}
       hideCross
       width="17rem"
     >
       <form className={modal}>
+        {transaction && (
+          <div className={action}>
+            <button onClick={handleDelete}>DELETE</button>
+          </div>
+        )}
         <label htmlFor="price">Price</label>
         <Input.Controlled
           type="search"
