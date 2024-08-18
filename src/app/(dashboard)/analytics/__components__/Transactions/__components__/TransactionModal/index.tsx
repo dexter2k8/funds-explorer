@@ -20,7 +20,7 @@ interface IAddTransactionModalProps extends IModalDefaultProps {
   onAddTransaction: () => void;
 }
 
-export default function AddTransactionModal({
+export default function TransactionModal({
   fundList,
   open,
   onClose,

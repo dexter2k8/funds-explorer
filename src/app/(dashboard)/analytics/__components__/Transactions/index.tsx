@@ -7,7 +7,7 @@ import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layo
 import InfiniteScroll from "react-infinite-scroll-component";
 import Skeleton from "@/components/Skeleton";
 import { CiSquarePlus } from "react-icons/ci";
-import AddTransactionModal from "./__components__/AddTransactionModal";
+import TransactionModal from "./__components__/TransactionModal";
 import TransactionCard from "./__components__/TransactionCard";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { ISelectOptions } from "@/components/Select/types";
@@ -77,7 +77,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         <TransactionCard transactions={transactions} />
       </InfiniteScroll>
 
-      <AddTransactionModal
+      <TransactionModal
         fundList={fundList}
         open={openModal}
         onClose={() => setOpenModal(false)}
