@@ -15,12 +15,14 @@ import { toast } from "react-toastify";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IPostIncome } from "@/app/api/post_income/types";
 import type { ISelectOptions } from "@/components/Select/types";
+import type { IActionsProps } from "../../types";
 
 interface IIncomeModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
+  action?: IActionsProps;
 }
 
-export default function IncomeModal({ open, onClose, fundList }: IIncomeModalProps) {
+export default function IncomeModal({ open, onClose, fundList, action }: IIncomeModalProps) {
   const { modal } = styles;
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, reset } = useForm<IPostIncome>({

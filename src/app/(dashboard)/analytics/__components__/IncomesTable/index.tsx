@@ -12,8 +12,6 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
   const { table_container, head, table_content } = styles;
   const columns = getColumns({ onAction: setAction });
 
-  console.log(action);
-
   return (
     <div className={table_container}>
       <div className={table_content}>
@@ -28,6 +26,7 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
         <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={12} />
       </div>
       <IncomeModal
+        action={action}
         fundList={fundList}
         open={action !== undefined}
         onClose={() => setAction(undefined)}
