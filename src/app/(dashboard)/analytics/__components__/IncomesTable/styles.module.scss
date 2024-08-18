@@ -15,6 +15,17 @@
   }
 }
 
+.actions {
+  display: flex;
+  gap: 1rem;
+  svg {
+    cursor: pointer;
+  }
+  svg:last-child {
+    color: var(--red);
+  }
+}
+
 @media (max-width: 1020px) and (min-width: 630px) {
   .table_container {
     .table_content {
