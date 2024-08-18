@@ -16,11 +16,11 @@ import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IPostIncome } from "@/app/api/post_income/types";
 import type { ISelectOptions } from "@/components/Select/types";
 
-interface IAddIncomeModalProps extends IModalDefaultProps {
+interface IIncomeModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
 }
 
-export default function AddIncomeModal({ open, onClose, fundList }: IAddIncomeModalProps) {
+export default function IncomeModal({ open, onClose, fundList }: IIncomeModalProps) {
   const { modal } = styles;
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, reset } = useForm<IPostIncome>({

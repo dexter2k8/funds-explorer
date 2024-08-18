@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import { CiSquarePlus } from "react-icons/ci";
 import { columns } from "./columns";
 import Table from "@/components/Table";
-import AddIncomeModal from "./__components__/AddIncomeModal";
+import IncomeModal from "./__components__/IncomeModal";
 import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
 import type { ISelectOptions } from "@/components/Select/types";
 
@@ -31,7 +31,7 @@ export default function IncomesTable({ fundList, profits, isLoadingProfits }: II
         </div>
         <Table isLoading={isLoadingProfits} columns={columns} rows={profits || []} pageSize={12} />
       </div>
-      <AddIncomeModal fundList={fundList} open={openModal} onClose={() => setOpenModal(false)} />
+      <IncomeModal fundList={fundList} open={openModal} onClose={() => setOpenModal(false)} />
     </div>
   );
 }
