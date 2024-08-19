@@ -64,7 +64,7 @@ export default function Dashboard() {
             isLoading={isLoadingProfits}
           />
           <Card
-            label="Profit"
+            label="Last Profits"
             icon={
               <FaHandHoldingDollar
                 style={{ color: "var(--green)", fontSize: "1.25rem", marginBottom: "0.25rem" }}

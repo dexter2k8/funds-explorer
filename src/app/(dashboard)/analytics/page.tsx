@@ -36,6 +36,7 @@ export default function Analytics() {
           <PatrimonialEvolution
             loadingFunds={isLoadingFunds}
             fundList={funds || []}
+            selectedFund={funds?.[0]?.value || ""}
             onChangeFund={setFund}
             profits={reverseProfits}
             isLoading={isLoadingProfits}

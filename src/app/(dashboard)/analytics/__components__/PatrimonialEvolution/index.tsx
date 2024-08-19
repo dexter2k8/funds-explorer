@@ -11,6 +11,7 @@ import type { ILineChartProps } from "./types";
 export default function PatrimonialEvolution({
   fundList,
   profits,
+  selectedFund,
   onChangeFund,
   isLoading,
   loadingFunds,
@@ -18,7 +19,7 @@ export default function PatrimonialEvolution({
   const options = chartOptions(profits || []);
 
   useEffect(() => {
-    onChangeFund(fundList?.[0]?.value || "");
+    onChangeFund(selectedFund);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingFunds]);
 
