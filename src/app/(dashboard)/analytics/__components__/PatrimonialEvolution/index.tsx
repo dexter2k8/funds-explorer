@@ -29,7 +29,9 @@ export default function PatrimonialEvolution({
   const fundToSet = useMemo(() => {
     const selectedFund = searchParams.get("fund") || "";
     const defaultFund = fundList.find((t) => t.value === selectedFund);
-    return defaultFund?.value || fundList?.[0]?.value || "";
+    const fund = defaultFund?.value || fundList?.[0]?.value || "";
+    onChangeFund(fund);
+    return fund;
   }, [searchParams, fundList]);
 
   return (
