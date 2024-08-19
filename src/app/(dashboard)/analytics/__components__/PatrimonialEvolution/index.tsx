@@ -1,27 +1,36 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import dynamic from "next/dynamic";
 import chartOptions from "./options";
 const Charts = dynamic(() => import("echarts-for-react"));
 import Select from "@/components/Select";
 import Skeleton from "@/components/Skeleton";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { ILineChartProps } from "./types";
 
 export default function PatrimonialEvolution({
   fundList,
   profits,
-  selectedFund,
   onChangeFund,
   isLoading,
-  loadingFunds,
 }: ILineChartProps) {
   const options = chartOptions(profits || []);
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
 
-  useEffect(() => {
-    onChangeFund(selectedFund);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingFunds]);
+  const handleChangeFund = useCallback((value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("fund", value);
+    replace(`/analytics?${params.toString()}`);
+    onChangeFund(value);
+  }, []);
+
+  const fundToSet = useMemo(() => {
+    const selectedFund = searchParams.get("fund") || "";
+    const defaultFund = fundList.find((t) => t.value === selectedFund);
+    return defaultFund?.value || fundList?.[0]?.value || "";
+  }, [searchParams, fundList]);
 
   return (
     <div>
@@ -31,9 +40,9 @@ export default function PatrimonialEvolution({
           <div style={{ width: "12rem" }}>
             <Select
               type="search"
-              value={fundList?.[0]?.value || ""}
+              value={fundToSet}
               options={fundList}
-              onChange={onChangeFund}
+              onChange={handleChangeFund}
             />
           </div>
         }

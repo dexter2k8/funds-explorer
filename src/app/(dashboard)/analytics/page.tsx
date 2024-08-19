@@ -14,7 +14,7 @@ export default function Analytics() {
   const { analytics, charts, table, head, table_content } = styles;
   const [fund, setFund] = useState("");
 
-  const { response: fundList, isLoading: isLoadingFunds } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
 
   const funds: ISelectOptions[] = fundList?.map((fund) => ({
     value: fund.alias,
@@ -34,9 +34,7 @@ export default function Analytics() {
       <main>
         <section className={charts}>
           <PatrimonialEvolution
-            loadingFunds={isLoadingFunds}
             fundList={funds || []}
-            selectedFund={funds?.[0]?.value || ""}
             onChangeFund={setFund}
             profits={reverseProfits}
             isLoading={isLoadingProfits}
