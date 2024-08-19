@@ -21,9 +21,11 @@ export default function Analytics() {
     label: fund.alias,
   }));
 
-  const { response: profits, isLoading: isLoadingProfits } = useSWR<IGetIncomesFundResponse[]>(
-    fund && API.GET_INCOMES_FUND + fund
-  );
+  const {
+    response: profits,
+    isLoading: isLoadingProfits,
+    mutate,
+  } = useSWR<IGetIncomesFundResponse[]>(fund && API.GET_INCOMES_FUND + fund);
 
   const reverseProfits = profits?.slice().reverse();
 
@@ -46,6 +48,7 @@ export default function Analytics() {
             fundList={funds || []}
             profits={profits}
             isLoadingProfits={isLoadingProfits}
+            onMutate={mutate}
           />
         </section>
       </main>

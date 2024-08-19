@@ -10,7 +10,7 @@ export async function DELETE(req: NextRequest) {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    await api.server.delete(`/income/${id}`, {
+    await api.server.delete(`/incomes/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

@@ -5,9 +5,10 @@ export interface IIncomesTableProps {
   fundList: ISelectOptions[];
   isLoadingProfits: boolean;
   profits: IGetIncomesFundResponse[];
+  onMutate: () => void;
 }
 
-type TAction = "add" | "edit" | "delete";
+export type TAction = "add" | "edit" | "delete";
 export interface IActionsProps {
   action: TAction;
   id?: string | number;

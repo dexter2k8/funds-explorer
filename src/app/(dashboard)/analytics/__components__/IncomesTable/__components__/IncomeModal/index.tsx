@@ -15,14 +15,24 @@ import { toast } from "react-toastify";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IPostIncome } from "@/app/api/post_income/types";
 import type { ISelectOptions } from "@/components/Select/types";
-import type { IActionsProps } from "../../types";
+import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
+import type { TAction } from "../../types";
 
 interface IIncomeModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
-  action?: IActionsProps;
+  incomeData?: IGetIncomesFundResponse;
+  action?: TAction;
+  onMutate: () => void;
 }
 
-export default function IncomeModal({ open, onClose, fundList, action }: IIncomeModalProps) {
+export default function IncomeModal({
+  open,
+  onClose,
+  fundList,
+  incomeData,
+  action,
+  onMutate,
+}: IIncomeModalProps) {
   const { modal } = styles;
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, reset } = useForm<IPostIncome>({
@@ -37,8 +47,11 @@ export default function IncomeModal({ open, onClose, fundList, action }: IIncome
 
     setLoading(true);
     try {
-      await api.client.post("/api/post_income", parsedData);
-      toast.success("Income added successfully");
+      action === "add" && (await api.client.post("/api/post_income", parsedData));
+      action === "edit" &&
+        (await api.client.patch(`/api/patch_income/${incomeData?.id}`, parsedData));
+      onMutate();
+      toast.success(`Income ${action === "add" ? "added" : "updated"} successfully`);
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error?.message);
@@ -51,7 +64,13 @@ export default function IncomeModal({ open, onClose, fundList, action }: IIncome
 
   useEffect(() => {
     setValue("updated_at", parseDate(new Date()) as string);
-  }, []);
+    if (incomeData) {
+      setValue("updated_at", parseDate(incomeData.updated_at) as string);
+      setValue("price", "R$" + incomeData.price);
+      setValue("income", "R$" + incomeData.income.toString());
+      setValue("fund_alias", incomeData.fund_alias);
+    }
+  }, [incomeData]);
   const handleCloseModal = () => {
     onClose();
     reset();
