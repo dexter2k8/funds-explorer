@@ -80,7 +80,7 @@ export default function IncomeModal({
     <Modal
       open={open}
       onClose={handleCloseModal}
-      title="Add Income"
+      title={`${action === "add" ? "Add" : "Edit"} Income`}
       onOk={handleSubmit(onSubmit)}
       okLoading={loading}
       hideCross
