@@ -1,0 +1,8 @@
+@import "../dashboard/styles.module.scss";
+
+.settings {
+  @include container();
+  main {
+    width: 100%;
+  }
+}

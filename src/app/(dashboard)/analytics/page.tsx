@@ -11,7 +11,7 @@ import type { ISelectOptions } from "@/components/Select/types";
 import type { IGetFunds } from "@/app/api/get_funds/types";
 
 export default function Analytics() {
-  const { analytics, charts, table, head, table_content } = styles;
+  const { analytics, charts, table } = styles;
   const [fund, setFund] = useState("");
 
   const { response: fundList } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
