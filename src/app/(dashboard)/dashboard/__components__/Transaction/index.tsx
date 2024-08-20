@@ -1,21 +1,24 @@
-import { useRef } from "react";
 import styles from "./styles.module.scss";
 import { formatCurrency, formatDate } from "@/utils/lib";
-import Tooltip from "@/components/Tooltip";
 import { ITransactions } from "@/app/api/get_transactions/types";
+import { Tooltip } from "react-tooltip";
 
 export default function Transaction(props: ITransactions) {
   const { transaction, head, content, left, right, alias, tag, stats } = styles;
-  const fund = useRef<HTMLParagraphElement>(null);
 
   const type = props.quantity < 0 ? "sell" : "buy";
 
   return (
     <div className={transaction}>
-      <p ref={fund} className={head}>
+      <p
+        data-tooltip-id="transaction-tooltip"
+        data-tooltip-content={props.description}
+        className={head}
+      >
         {props.name}
       </p>
-      <Tooltip targetRef={fund} message={props.description} maxWidth={280} />
+      <Tooltip id="transaction-tooltip" style={{ maxWidth: "18rem" }} />
+
       <div className={content}>
         <div className={left}>
           <small className={alias}>{props.fund_alias}</small>

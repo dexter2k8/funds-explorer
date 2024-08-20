@@ -5,9 +5,8 @@ import { formatCurrency, formatDate } from "@/utils/lib";
 import { CiSquareMinus } from "react-icons/ci";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
+import { Tooltip } from "react-tooltip";
 import type { IActions } from "./types";
-import { createRef } from "react";
-import Tooltip from "@/components/Tooltip";
 
 export function getColumns({ onAction }: IActions) {
   const columns: GridColDef<IGetIncomesFundResponse>[] = [
@@ -53,23 +52,26 @@ export function getColumns({ onAction }: IActions) {
       field: "actions" as keyof IGetIncomesFundResponse,
       label: "ACTIONS",
       valueGetter: (row) => row.id,
-      render: (value) => {
-        const editRef = createRef<HTMLSpanElement>();
-        const deleteRef = createRef<HTMLSpanElement>();
-
-        return (
-          <div className={styles.actions}>
-            <span ref={editRef} onClick={() => onAction({ action: "edit", id: value })}>
-              <RiListSettingsLine size="1rem" />
-            </span>
-            <Tooltip targetRef={editRef} message="Edit income" />
-            <span ref={deleteRef} onClick={() => onAction({ action: "delete", id: value })}>
-              <CiSquareMinus size="1rem" />
-            </span>
-            <Tooltip targetRef={deleteRef} message="Delete income" />
-          </div>
-        );
-      },
+      render: (value) => (
+        <div className={styles.actions}>
+          <span
+            data-tooltip-id="income-tooltip"
+            data-tooltip-content="Edit income"
+            onClick={() => onAction({ action: "edit", id: value })}
+          >
+            <RiListSettingsLine size="1rem" />
+          </span>
+          <Tooltip id="income-tooltip" />
+          <span
+            data-tooltip-id="delete-tooltip"
+            data-tooltip-content="Delete income"
+            onClick={() => onAction({ action: "delete", id: value })}
+          >
+            <CiSquareMinus size="1rem" />
+          </span>
+          <Tooltip id="delete-tooltip" />
+        </div>
+      ),
     },
   ];
 

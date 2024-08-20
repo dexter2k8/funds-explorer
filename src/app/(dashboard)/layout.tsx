@@ -4,6 +4,7 @@ import Sidebar from "@/app/(dashboard)/__components__/Sidebar";
 import { PropsWithChildren, useState } from "react";
 import Header from "./__components__/Header";
 import { usePathname } from "next/navigation";
+import "react-tooltip/dist/react-tooltip.css";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { layout, container, content } = styles;
