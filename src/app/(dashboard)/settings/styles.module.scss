@@ -4,5 +4,9 @@
   @include container();
   main {
     width: 100%;
+    background-color: var(--light);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow: auto;
   }
 }

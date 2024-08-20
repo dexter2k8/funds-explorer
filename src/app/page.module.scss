@@ -1,3 +1,15 @@
+@mixin formItem($width) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: $width;
+  label {
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
 .main {
   display: flex;
   align-items: center;
@@ -32,14 +44,7 @@
     }
 
     .item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      width: 18rem;
-      label {
-        font-size: 0.75rem;
-        font-weight: 600;
-      }
+      @include formItem(18rem);
     }
     button {
       width: 18rem;

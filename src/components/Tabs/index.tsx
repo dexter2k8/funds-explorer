@@ -1,10 +1,11 @@
 "use client";
-import { createRef, useEffect, useState } from "react";
+import { createRef, CSSProperties, useEffect, useState } from "react";
 import classes from "./styles.module.css";
 
 interface ITabsProps {
   items: ITabItemProps[];
   defaultSelected?: number;
+  minWidth?: CSSProperties["minWidth"];
 }
 
 export interface ITabItemProps {
@@ -13,7 +14,7 @@ export interface ITabItemProps {
   children?: React.ReactNode;
 }
 
-export default function Tabs({ items, defaultSelected = 0 }: ITabsProps) {
+export default function Tabs({ items, defaultSelected = 0, minWidth }: ITabsProps) {
   const activeRef = createRef<HTMLLIElement>();
   const [selected, setSelected] = useState<number>(defaultSelected);
   const [offset, setOffset] = useState<number>(0);
@@ -29,7 +30,7 @@ export default function Tabs({ items, defaultSelected = 0 }: ITabsProps) {
 
   return (
     <>
-      <ul className={tabList}>
+      <ul className={tabList} style={{ minWidth }}>
         {items.map((item) => (
           <li
             key={item.key}
