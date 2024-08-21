@@ -17,4 +17,5 @@ export interface ISignInProps {
 export interface ISignUpProps extends ISignInProps {
   name: string;
   confirmPassword: string;
+  avatar?: string;
 }

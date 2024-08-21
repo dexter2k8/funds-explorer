@@ -12,6 +12,7 @@ const schema = yup.object({
     .string()
     .required("Confirm password is required")
     .oneOf([yup.ref("password")], "Passwords must match"),
+  avatar: yup.string().optional(),
 });
 
 export default schema;

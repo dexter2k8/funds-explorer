@@ -19,7 +19,7 @@ export default function SignUp() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<ISignUpProps> = async (data: ISignUpProps) => {
+  const onSubmit: SubmitHandler<ISignUpProps> = async (data) => {
     (await signUp(data)) && router.push("/");
   };
 
@@ -40,7 +40,13 @@ export default function SignUp() {
         </div>
         <div className={item}>
           <label htmlFor="password">Password</label>
-          <Input.Controlled control={control} name="password" id="password" type="password" />
+          <Input.Controlled
+            control={control}
+            name="password"
+            id="password"
+            type="password"
+            autoComplete="new-password"
+          />
         </div>
         <div className={item}>
           <label htmlFor="confirmPassword"> Confirm password</label>
@@ -50,6 +56,10 @@ export default function SignUp() {
             id="confirmPassword"
             type="password"
           />
+        </div>
+        <div className={item}>
+          <label htmlFor="avatar">Avatar URL (optional)</label>
+          <Input.Controlled control={control} name="avatar" id="avatar" />
         </div>
         <Button size="large" variant="primary">
           Create account
