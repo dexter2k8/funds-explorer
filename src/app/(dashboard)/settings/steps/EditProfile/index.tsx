@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
@@ -8,27 +8,40 @@ import { API } from "@/app/paths";
 import { useSWR } from "@/hook/useSWR";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateEditProfile";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import api from "@/services/api";
 import type { IGetSelfUser } from "@/app/api/get_self_user/types";
 import type { IEditProfileProps } from "./types";
 
 export default function EditProfile() {
+  const [loading, setLoading] = useState(false);
   const { form, item } = styles;
   const { control, setValue, handleSubmit } = useForm<IEditProfileProps>({
     resolver: yupResolver(schema),
   });
 
-  const { response } = useSWR<IGetSelfUser>(API.GET_SELF_USER);
+  const { response: selfUser, mutate } = useSWR<IGetSelfUser>(API.GET_SELF_USER);
   useEffect(() => {
-    if (response) {
-      setValue("name", response.name);
-      setValue("email", response.email);
-      setValue("avatar", response.avatar);
+    if (selfUser) {
+      setValue("name", selfUser.name);
+      setValue("email", selfUser.email);
+      setValue("avatar", selfUser.avatar);
     }
-  }, [response]);
+  }, [selfUser]);
 
   const onSubmit: SubmitHandler<IEditProfileProps> = async (data) => {
-    console.log(data, response);
-    const updatedData = { ...response, ...data };
+    try {
+      setLoading(true);
+      const response = await api.client.patch("/api/patch_self_user", data);
+      mutate();
+      setLoading(false);
+      return response.data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error?.message);
+      }
+    }
   };
 
   return (
@@ -46,11 +59,7 @@ export default function EditProfile() {
           <label htmlFor="avatar">Avatar URL</label>
           <Input.Controlled control={control} name="avatar" id="avatar" />
         </div>
-        <Button
-          //   loading={loading}
-          size="large"
-          variant="primary"
-        >
+        <Button loading={loading} size="large" variant="primary">
           Update
         </Button>
       </form>
