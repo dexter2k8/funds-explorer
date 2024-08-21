@@ -1,3 +1,4 @@
+"use client";
 import "./styles.css";
 import Foot from "./components/Foot";
 import Head from "./components/Head";
