@@ -24,7 +24,7 @@ export default function TableActions({ id, onAction }: ITableActionsProps) {
         data-tooltip-content="Delete income"
         onClick={() => onAction({ action: "delete", id })}
       >
-        <CiSquareMinus size="1rem" />
+        <CiSquareMinus size="1rem" style={{ color: "var(--red)" }} />
       </span>
       <Tooltip id="delete-tooltip" />
     </div>
