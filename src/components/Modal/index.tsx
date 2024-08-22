@@ -30,7 +30,7 @@ export default function Modal({ okText = "Ok", cancelText = "Cancel", ...props }
         {!props.hideFooter && (
           <footer>
             <Button onClick={props.onClose}>{cancelText}</Button>
-            <Button loading={props.okLoading} onClick={props.onOk}>
+            <Button disabled={props.okDisabled} loading={props.okLoading} onClick={props.onOk}>
               {okText}
             </Button>
           </footer>

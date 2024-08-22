@@ -19,7 +19,7 @@ export default function EditProfile() {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { form, item } = styles;
-  const { control, setValue, handleSubmit } = useForm<IEditProfileProps>({
+  const { control, setValue, watch, handleSubmit } = useForm<IEditProfileProps>({
     resolver: yupResolver(schema),
   });
 
@@ -81,6 +81,7 @@ export default function EditProfile() {
       </center>
 
       <ChangePasswordModal
+        okDisabled={!watch("password")}
         loading={loading}
         open={openModal}
         control={control}

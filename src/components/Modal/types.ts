@@ -13,6 +13,7 @@ export interface IModal extends IModalDefaultProps {
   hideFooter?: boolean;
   okText?: string;
   okLoading?: boolean;
+  okDisabled?: boolean;
   cancelText?: string;
   children?: React.ReactNode;
 }

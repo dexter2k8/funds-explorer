@@ -4,8 +4,10 @@ import Modal from "@/components/Modal";
 import { Control } from "react-hook-form";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IEditProfileProps } from "../../types";
+import { log } from "util";
 
 interface IChangePasswordModalProps extends IModalDefaultProps {
+  okDisabled: boolean;
   loading: boolean;
   onSubmit: () => void;
   control: Control<IEditProfileProps>;
@@ -21,6 +23,7 @@ export default function ChangePasswordModal(props: IChangePasswordModalProps) {
       onClose={props.onClose}
       onOk={props.onSubmit}
       okLoading={props.loading}
+      okDisabled={props.okDisabled}
     >
       <form>
         <div className={item}>
