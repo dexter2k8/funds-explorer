@@ -1,0 +1,12 @@
+.actions {
+  display: flex;
+  gap: 1rem;
+  svg {
+    cursor: pointer;
+  }
+  span:nth-child(2) {
+    svg {
+      color: var(--red);
+    }
+  }
+}

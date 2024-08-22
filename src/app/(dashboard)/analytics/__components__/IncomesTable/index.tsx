@@ -8,8 +8,9 @@ import { getColumns } from "./columns";
 import Modal from "@/components/Modal";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import type { IActionsProps, IIncomesTableProps } from "./types";
 import api from "@/services/api";
+import type { IIncomesTableProps } from "./types";
+import type { IActionsProps } from "@/components/TableActions/types";
 
 export default function IncomesTable({
   fundList,

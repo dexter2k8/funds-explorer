@@ -7,13 +7,3 @@ export interface IIncomesTableProps {
   profits: IGetIncomesFundResponse[];
   onMutate: () => void;
 }
-
-export type TAction = "add" | "edit" | "delete";
-export interface IActionsProps {
-  action: TAction;
-  id?: string | number;
-}
-
-export interface IActions {
-  onAction: ({ action, id }: IActionsProps) => void;
-}

@@ -15,19 +15,6 @@
   }
 }
 
-.actions {
-  display: flex;
-  gap: 1rem;
-  svg {
-    cursor: pointer;
-  }
-  span:nth-child(2) {
-    svg {
-      color: var(--red);
-    }
-  }
-}
-
 @media (max-width: 1020px) and (min-width: 630px) {
   .table_container {
     .table_content {
