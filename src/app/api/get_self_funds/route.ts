@@ -2,14 +2,14 @@ import { cookies } from "next/headers";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 import { IResponse } from "../types";
-import { IGetFunds } from "../get_funds/types";
+import { IFunds } from "../get_funds/types";
 
 export async function GET() {
   try {
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response: IResponse<IGetFunds> = await api.server.get("/funds/self-funds", {
+    const response: IResponse<IFunds> = await api.server.get("/funds/self-funds", {
       headers: { Authorization: `Bearer ${token}` },
     });
 

@@ -1,11 +1,11 @@
-import { IGetFunds } from "@/app/api/get_funds/types";
+import { IFunds } from "@/app/api/get_funds/types";
 import { GridColDef } from "@/components/Table/types";
 import { Tooltip } from "react-tooltip";
 import type { IActions } from "@/components/TableActions/types";
 import TableActions from "@/components/TableActions";
 
 export function getColumns({ onAction }: IActions) {
-  const columns: GridColDef<IGetFunds>[] = [
+  const columns: GridColDef<IFunds>[] = [
     {
       field: "alias",
       label: "Alias",
@@ -41,7 +41,7 @@ export function getColumns({ onAction }: IActions) {
       },
     },
     {
-      field: "actions" as keyof IGetFunds,
+      field: "actions" as keyof IFunds,
       label: "Actions",
       render: (value) => <TableActions id={value} onAction={onAction} />,
     },

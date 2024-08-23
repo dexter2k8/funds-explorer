@@ -1,19 +1,20 @@
 import { cookies } from "next/headers";
 import api from "@/services/api";
 import { AxiosError } from "axios";
-import { IResponse } from "../types";
-import { IFunds } from "./types";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function DELETE(req: NextRequest) {
   try {
+    const id = req.nextUrl.pathname.split("/").pop();
+
     const token = cookies().get("funds-explorer-token")?.value;
     if (!token) return Response.json("Token not found", { status: 401 });
 
-    const response: IResponse<IFunds> = await api.server.get("/funds", {
+    await api.server.delete(`/funds/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    return Response.json(response.data, { status: 200 });
+    return Response.json("Fund deleted", { status: 200 });
   } catch (error) {
     if (error instanceof AxiosError) {
       return Response.json(error.response?.data.message, { status: error.response?.status });

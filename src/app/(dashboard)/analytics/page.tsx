@@ -8,13 +8,13 @@ import { useSWR } from "@/hook/useSWR";
 import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
 import { API } from "@/app/paths";
 import type { ISelectOptions } from "@/components/Select/types";
-import type { IGetFunds } from "@/app/api/get_funds/types";
+import type { IFunds } from "@/app/api/get_funds/types";
 
 export default function Analytics() {
   const { analytics, charts, table } = styles;
   const [fund, setFund] = useState("");
 
-  const { response: fundList } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList } = useSWR<IFunds[]>(API.GET_SELF_FUNDS);
 
   const funds: ISelectOptions[] = fundList?.map((fund) => ({
     value: fund.alias,

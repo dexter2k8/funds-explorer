@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IPostTransaction } from "@/app/api/post_transaction/types";
-import { ITransactions } from "@/app/api/get_transactions/types";
+import type { ITransactions } from "@/app/api/get_transactions/types";
 
 interface IAddTransactionModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];

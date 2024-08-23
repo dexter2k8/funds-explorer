@@ -6,15 +6,16 @@ import { getColumns } from "./columns";
 import { API } from "@/app/paths";
 import { useSWR } from "@/hook/useSWR";
 import { CiSquarePlus } from "react-icons/ci";
-import type { IGetFunds } from "@/app/api/get_funds/types";
+import type { IFunds } from "@/app/api/get_funds/types";
 import type { IActionsProps } from "@/components/TableActions/types";
+import FundModal from "./__components__/FundModal";
 
 export function ManageFunds() {
   const [action, setAction] = useState<IActionsProps>();
   const { head } = styles;
   const columns = getColumns({ onAction: setAction });
 
-  const { response: fundList, isLoading } = useSWR<IGetFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList, isLoading, mutate } = useSWR<IFunds[]>(API.GET_SELF_FUNDS);
 
   return (
     <div>
@@ -27,6 +28,13 @@ export function ManageFunds() {
         />
       </div>
       <Table isLoading={isLoading} columns={columns} rows={fundList || []} />
+      <FundModal
+        open={action !== undefined && action?.action !== "delete"}
+        onClose={() => setAction(undefined)}
+        fundData={fundList?.find((t) => t.alias === action?.id)}
+        mutateFund={mutate}
+        action={action?.action}
+      />
     </div>
   );
 }

@@ -16,13 +16,13 @@ import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IPostIncome } from "@/app/api/post_income/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
-import type { TAction } from "../../types";
+import type { TAction } from "@/components/TableActions/types";
 
 interface IIncomeModalProps extends IModalDefaultProps {
   fundList: ISelectOptions[];
+  onMutate: () => void;
   incomeData?: IGetIncomesFundResponse;
   action?: TAction;
-  onMutate: () => void;
 }
 
 export default function IncomeModal({
