@@ -54,6 +54,7 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
 
   useEffect(() => {
     setValue("admin", "0");
+    setChecked(false);
     if (userData) {
       setValue("name", userData.name);
       setValue("email", userData.email);
@@ -71,7 +72,7 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
     <Modal
       open={open}
       onClose={handleCloseModal}
-      title={userData ? "Edit Fund" : "Add Fund"}
+      title={userData ? "Edit User" : "Add User"}
       onOk={handleSubmit(onSubmit)}
       okLoading={loading}
       hideCross
@@ -89,6 +90,7 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
           <Checkbox
             data-tooltip-id="checkbox-password"
             data-tooltip-content="Check this if you want to set a new password"
+            checked={checked}
             onChange={() => setChecked(!checked)}
           />
           <Input.Controlled
