@@ -1,17 +1,20 @@
+"use client";
 import Tabs, { ITabItemProps } from "@/components/Tabs";
 import styles from "./styles.module.scss";
 import EditProfile from "./steps/EditProfile";
 import { ManageFunds } from "./steps/ManageFunds";
 import { ManageUsers } from "./steps/ManageUsers";
+import { useAuth } from "@/store/useAuth";
 
 export default function Settings() {
   const { settings } = styles;
+  const { isAdmin } = useAuth();
 
   const tabItems: ITabItemProps[] = [
     { key: 0, label: "Edit profile", children: <EditProfile /> },
     { key: 1, label: "Manage Funds", children: <ManageFunds /> },
-    { key: 2, label: "Manage Users", children: <ManageUsers /> },
   ];
+  if (isAdmin) tabItems.push({ key: 2, label: "Manage Users", children: <ManageUsers /> });
 
   return (
     <div className={settings}>

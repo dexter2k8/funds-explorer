@@ -48,16 +48,6 @@ export default function SignIn() {
         </Button>
         <Link href="/sign-up">Create an account</Link>
       </form>
-      <button onClick={() => GetFunds()}>get funds</button>
     </main>
   );
-}
-
-async function GetFunds() {
-  try {
-    const response = await api.client.get("/api/get_funds");
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
 }

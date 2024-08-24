@@ -6,7 +6,7 @@ export type TActions = {
 };
 
 export type TState = {
-  loading: boolean;
+  isAdmin: boolean;
 };
 
 export interface ISignInProps {

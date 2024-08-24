@@ -4,6 +4,8 @@ import { MdMenu } from "react-icons/md";
 import { useSWR } from "@/hook/useSWR";
 import { API } from "@/app/paths";
 import { IGetSelfUser } from "@/app/api/get_self_user/types";
+import { useEffect } from "react";
+import { useAuth } from "@/store/useAuth";
 
 interface IHeaderProps {
   menuClick: () => void;
@@ -12,8 +14,13 @@ interface IHeaderProps {
 
 export default function Header({ menuClick, label }: IHeaderProps) {
   const { header, menu, title, content } = styles;
+  const { setValue } = useAuth();
 
   const { response } = useSWR<IGetSelfUser>(API.GET_SELF_USER);
+
+  useEffect(() => {
+    if (response) setValue("isAdmin", response.admin);
+  }, [response]);
 
   return (
     <header className={header}>
