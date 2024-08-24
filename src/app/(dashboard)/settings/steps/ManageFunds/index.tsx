@@ -20,13 +20,13 @@ export function ManageFunds() {
   const { head } = styles;
   const columns = getColumns({ onAction: setAction });
 
-  const { response: fundList, isLoading, mutate } = useSWR<IFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList, isLoading, mutate } = useSWR<IFunds[]>(API.GET_FUNDS);
 
   const handleDelete = async () => {
     try {
       setLoading(true);
-      await api.client.delete(`/api/delete_income/${action?.id}`);
-      toast.success("Income deleted successfully");
+      await api.client.delete(`/api/delete_fund/${action?.id}`);
+      toast.success("Fund deleted successfully");
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error?.message);
@@ -56,8 +56,8 @@ export function ManageFunds() {
         onMutate={mutate}
       />
       <Modal
-        title="Delete Income"
-        description="Are you sure you want to delete this income?"
+        title="Delete Fund"
+        description="Are you sure you want to delete this fund?"
         open={action?.action === "delete"}
         onClose={() => setAction(undefined)}
         okText="Delete"

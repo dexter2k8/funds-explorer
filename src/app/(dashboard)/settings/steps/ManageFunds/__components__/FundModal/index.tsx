@@ -37,8 +37,8 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
   const onSubmit: SubmitHandler<IFunds> = async (data) => {
     setLoading(true);
     try {
-      action === "add" && (await api.client.patch(`/api/patch_fund/${fundData?.alias}`, data));
-      action === "edit" && (await api.client.post("/api/post_fund", data));
+      action === "add" && (await api.client.post("/api/post_fund", data));
+      action === "edit" && (await api.client.patch(`/api/patch_fund/${fundData?.alias}`, data));
       onMutate();
       toast.success(`Fund ${action === "add" ? "added" : "updated"} successfully`);
     } catch (error) {
@@ -53,7 +53,7 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
 
   useEffect(() => {
     setValue("description", "");
-
+    setValue("type", "Ação");
     if (fundData) {
       setValue("alias", fundData.alias);
       setValue("name", fundData.name);
@@ -83,6 +83,9 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
         <label htmlFor="alias">Alias</label>
         <Input.Controlled type="search" control={control} name="alias" id="alias" />
 
+        <label htmlFor="name">Name</label>
+        <Input.Controlled type="search" control={control} name="name" id="name" />
+
         <label htmlFor="description">Description (optional)</label>
         <Textarea.Controlled
           control={control}
@@ -96,13 +99,7 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
         <Input.Controlled type="search" control={control} name="sector" id="sector" />
 
         <label htmlFor="type">Type</label>
-        <Select.Controlled
-          defaultValue="Ação"
-          options={typeList}
-          control={control}
-          name="type"
-          id="type"
-        />
+        <Select.Controlled options={typeList} control={control} name="type" id="type" />
       </form>
     </Modal>
   );

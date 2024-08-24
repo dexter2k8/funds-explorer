@@ -25,7 +25,7 @@ export default function Modal({ okText = "Ok", cancelText = "Cancel", ...props }
           </header>
         )}
 
-        <main>{props.children}</main>
+        {props.children && <main>{props.children}</main>}
 
         {!props.hideFooter && (
           <footer>

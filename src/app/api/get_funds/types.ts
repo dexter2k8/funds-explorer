@@ -7,3 +7,8 @@ export interface IFunds {
   sector?: string;
   type: TFundType;
 }
+
+export interface IFundsResponse {
+  data: IFunds[];
+  count: number;
+}
