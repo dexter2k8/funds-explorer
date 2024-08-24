@@ -9,6 +9,7 @@ import schema from "@/schemas/validateFund";
 import { AxiosError } from "axios";
 import api from "@/services/api";
 import { toast } from "react-toastify";
+import Textarea from "@/components/Textarea";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IFunds } from "@/app/api/get_funds/types";
@@ -100,7 +101,13 @@ export default function FundModal({ open, fundData, onClose, mutateFund }: IFund
         <Input.Controlled type="search" control={control} name="alias" id="alias" />
 
         <label htmlFor="description">Description (optional)</label>
-        <Input.Controlled type="search" control={control} name="description" id="description" />
+        <Textarea.Controlled
+          control={control}
+          name="description"
+          id="description"
+          resize="none"
+          rows={3}
+        />
 
         <label htmlFor="sector">Sector (optional)</label>
         <Input.Controlled type="search" control={control} name="sector" id="sector" />
