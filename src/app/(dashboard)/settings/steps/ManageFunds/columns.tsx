@@ -8,23 +8,23 @@ export function getColumns({ onAction }: IActions) {
   const columns: GridColDef<IFunds>[] = [
     {
       field: "alias",
-      label: "Alias",
+      label: "ALIAS",
     },
     {
       field: "name",
-      label: "Name",
+      label: "NAME",
     },
     {
       field: "type",
-      label: "Type",
+      label: "TYPE",
     },
     {
       field: "sector",
-      label: "Sector",
+      label: "SECTOR",
     },
     {
       field: "description",
-      label: "Description",
+      label: "DESCRIPTION",
       render(value) {
         return (
           <>
@@ -42,8 +42,9 @@ export function getColumns({ onAction }: IActions) {
     },
     {
       field: "actions" as keyof IFunds,
-      label: "Actions",
-      render: (value) => <TableActions id={value} onAction={onAction} />,
+      label: "ACTIONS",
+      valueGetter: (row) => row.alias,
+      render: (value) => <TableActions id={value as string} onAction={onAction} />,
     },
   ];
 
