@@ -11,12 +11,14 @@ import api from "@/services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import Modal from "@/components/Modal";
+import { useAuth } from "@/store/useAuth";
 import type { IFunds } from "@/app/api/get_funds/types";
 import type { IActionsProps } from "@/components/TableActions/types";
 
 export function ManageFunds() {
   const [action, setAction] = useState<IActionsProps>();
   const [loading, setLoading] = useState(false);
+  const { isAdmin } = useAuth();
   const { head } = styles;
   const columns = getColumns({ onAction: setAction });
 
@@ -41,11 +43,13 @@ export function ManageFunds() {
     <div>
       <div className={head}>
         <h4>Funds</h4>
-        <CiSquarePlus
-          size="2rem"
-          onClick={() => setAction({ action: "add", id: undefined })}
-          style={{ cursor: "pointer" }}
-        />
+        {isAdmin ? (
+          <CiSquarePlus
+            size="2rem"
+            onClick={() => setAction({ action: "add", id: undefined })}
+            style={{ cursor: "pointer" }}
+          />
+        ) : null}
       </div>
       <Table isLoading={isLoading} columns={columns} rows={fundList || []} />
       <FundModal

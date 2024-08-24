@@ -3,8 +3,10 @@ import { Tooltip } from "react-tooltip";
 import TableActions from "@/components/TableActions";
 import type { IActions } from "@/components/TableActions/types";
 import type { IFunds } from "@/app/api/get_funds/types";
+import { useAuth } from "@/store/useAuth";
 
 export function getColumns({ onAction }: IActions) {
+  const { isAdmin } = useAuth();
   const columns: GridColDef<IFunds>[] = [
     {
       field: "alias",
@@ -40,13 +42,16 @@ export function getColumns({ onAction }: IActions) {
         );
       },
     },
-    {
+  ];
+
+  if (isAdmin) {
+    columns.push({
       field: "actions" as keyof IFunds,
       label: "ACTIONS",
       valueGetter: (row) => row.alias,
       render: (value) => <TableActions id={value as string} onAction={onAction} />,
-    },
-  ];
+    });
+  }
 
   return columns;
 }
