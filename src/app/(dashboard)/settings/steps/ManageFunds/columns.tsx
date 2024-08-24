@@ -1,8 +1,8 @@
-import { IFunds } from "@/app/api/get_funds/types";
 import { GridColDef } from "@/components/Table/types";
 import { Tooltip } from "react-tooltip";
-import type { IActions } from "@/components/TableActions/types";
 import TableActions from "@/components/TableActions";
+import type { IActions } from "@/components/TableActions/types";
+import type { IFunds } from "@/app/api/get_funds/types";
 
 export function getColumns({ onAction }: IActions) {
   const columns: GridColDef<IFunds>[] = [
