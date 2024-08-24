@@ -6,6 +6,7 @@ const API = {
   GET_INCOMES_FUND: "/api/get_incomes_fund/",
   GET_SELF_FUNDS: "/api/get_self_funds",
   GET_FUNDS: "/api/get_funds",
+  GET_USERS: "/api/get_users",
 };
 
 export { API };

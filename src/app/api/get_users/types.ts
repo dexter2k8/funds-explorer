@@ -1,10 +1,9 @@
-export type TFundType = "Ação" | "FII" | "BDR";
-
 export interface IUsers {
-  id: string;
+  id?: string;
   name: string;
-  email?: string;
-  admin?: boolean;
+  email: string;
+  password?: string;
+  admin: boolean;
   avatar?: string;
 }
 

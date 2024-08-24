@@ -6,13 +6,13 @@ import { getColumns } from "./columns";
 import { API } from "@/app/paths";
 import { useSWR } from "@/hook/useSWR";
 import { CiSquarePlus } from "react-icons/ci";
-import type { IFunds } from "@/app/api/get_funds/types";
-import type { IActionsProps } from "@/components/TableActions/types";
 import FundModal from "./__components__/FundModal";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import Modal from "@/components/Modal";
+import type { IFunds } from "@/app/api/get_funds/types";
+import type { IActionsProps } from "@/components/TableActions/types";
 
 export function ManageFunds() {
   const [action, setAction] = useState<IActionsProps>();
