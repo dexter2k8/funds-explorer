@@ -52,6 +52,8 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
   };
 
   useEffect(() => {
+    setValue("description", "");
+
     if (fundData) {
       setValue("alias", fundData.alias);
       setValue("name", fundData.name);
@@ -62,6 +64,7 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
   }, [fundData]);
 
   const handleCloseModal = () => {
+    setValue("description", "");
     onClose();
     reset();
   };
@@ -93,7 +96,13 @@ export default function FundModal({ open, fundData, onClose, action, onMutate }:
         <Input.Controlled type="search" control={control} name="sector" id="sector" />
 
         <label htmlFor="type">Type</label>
-        <Select.Controlled options={typeList} control={control} name="type" id="type" />
+        <Select.Controlled
+          defaultValue="Ação"
+          options={typeList}
+          control={control}
+          name="type"
+          id="type"
+        />
       </form>
     </Modal>
   );

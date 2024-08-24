@@ -12,7 +12,8 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token) {
-    const isValid = !!verifyToken(token);
+    const isValid = await verifyToken(token);
+
     if (!isValid) {
       const response = NextResponse.redirect(loginUrl);
       response.cookies.delete("funds-explorer-token");
