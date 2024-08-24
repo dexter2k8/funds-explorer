@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import dynamic from "next/dynamic";
 import chartOptions from "./options";
@@ -18,21 +18,23 @@ export default function PatrimonialEvolution({
   const options = chartOptions(profits || []);
   const searchParams = useSearchParams();
   const { replace } = useRouter();
+  const [fund, setFund] = useState<string>();
 
   const handleChangeFund = useCallback((value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("fund", value);
     replace(`/analytics?${params.toString()}`);
+    setFund(value);
     onChangeFund(value);
   }, []);
 
-  const fundToSet = useMemo(() => {
+  useEffect(() => {
     const selectedFund = searchParams.get("fund") || "";
-    const defaultFund = fundList.find((t) => t.value === selectedFund);
-    const fund = defaultFund?.value || fundList?.[0]?.value || "";
-    onChangeFund(fund);
-    return fund;
-  }, [searchParams, fundList]);
+    if (selectedFund) {
+      setFund(selectedFund);
+      onChangeFund(selectedFund);
+    }
+  }, [searchParams]);
 
   return (
     <div>
@@ -40,12 +42,7 @@ export default function PatrimonialEvolution({
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select
-              type="search"
-              value={fundToSet}
-              options={fundList}
-              onChange={handleChangeFund}
-            />
+            <Select type="search" value={fund} options={fundList} onChange={handleChangeFund} />
           </div>
         }
       >
