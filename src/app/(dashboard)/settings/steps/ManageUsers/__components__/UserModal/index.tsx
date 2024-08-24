@@ -8,17 +8,17 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AxiosError } from "axios";
 import api from "@/services/api";
 import { toast } from "react-toastify";
-import schema from "@/schemas/validateUser";
 import Checkbox from "@/components/Checkbox";
 import { Tooltip } from "react-tooltip";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { TAction } from "@/components/TableActions/types";
 import type { IUsers } from "@/app/api/get_users/types";
+import { schemaEdit, schemaPost } from "@/schemas/validateUser";
 
 const adminList: ISelectOptions[] = [
-  { value: "0", label: "False" },
-  { value: "1", label: "True" },
+  { value: "false", label: "False" },
+  { value: "true", label: "True" },
 ];
 
 interface IUserModalProps extends IModalDefaultProps {
@@ -31,8 +31,8 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
   const { modal, check } = styles;
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { control, handleSubmit, setValue, reset } = useForm<IUsers>({
-    resolver: yupResolver(schema),
+  const { control, handleSubmit, setValue, reset, watch } = useForm<IUsers>({
+    resolver: yupResolver(action === "add" ? schemaPost : schemaEdit),
   });
 
   const onSubmit: SubmitHandler<IUsers> = async (data) => {
@@ -53,13 +53,13 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
   };
 
   useEffect(() => {
-    setValue("admin", "0");
+    setValue("admin", "false");
     setChecked(false);
     if (userData) {
       setValue("name", userData.name);
       setValue("email", userData.email);
-      setValue("admin", String(userData.admin));
-      setValue("avatar", userData.avatar);
+      setValue("admin", userData.admin ? "true" : "false");
+      userData.avatar && setValue("avatar", userData.avatar);
     }
   }, [userData]);
 
@@ -87,14 +87,16 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
 
         <label htmlFor="password">Password</label>
         <div className={check}>
-          <Checkbox
-            data-tooltip-id="checkbox-password"
-            data-tooltip-content="Check this if you want to set a new password"
-            checked={checked}
-            onChange={() => setChecked(!checked)}
-          />
+          {action === "edit" && (
+            <Checkbox
+              data-tooltip-id="checkbox-password"
+              data-tooltip-content="Check this if you want to set a new password"
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+            />
+          )}
           <Input.Controlled
-            disabled={!checked}
+            disabled={action === "edit" && !checked}
             type="password"
             control={control}
             name="password"
@@ -106,6 +108,9 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
 
         <label htmlFor="admin">Admin</label>
         <Select.Controlled options={adminList} control={control} name="admin" id="type" />
+
+        <label htmlFor="avatar">Avatar URL</label>
+        <Input.Controlled type="search" control={control} name="avatar" id="avatar" />
       </form>
     </Modal>
   );
