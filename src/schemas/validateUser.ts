@@ -7,7 +7,7 @@ const schema = yup.object({
     .string()
     .min(6, "Password must be at least 6 characters")
     .matches(/(\d)/, "Password must contain a number"),
-  admin: yup.boolean().default(false),
+  admin: yup.string().required('"admin" is required').oneOf(["true", "false"]),
   avatar: yup.string().optional(),
 });
 

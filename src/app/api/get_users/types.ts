@@ -3,7 +3,7 @@ export interface IUsers {
   name: string;
   email: string;
   password?: string;
-  admin: boolean;
+  admin: string;
   avatar?: string;
 }
 
