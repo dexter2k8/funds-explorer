@@ -1,8 +1,8 @@
 import Tabs, { ITabItemProps } from "@/components/Tabs";
 import styles from "./styles.module.scss";
 import EditProfile from "./steps/EditProfile";
-import ManageUsers from "./steps/ManageUsers";
 import { ManageFunds } from "./steps/ManageFunds";
+import { ManageUsers } from "./steps/ManageUsers";
 
 export default function Settings() {
   const { settings } = styles;
