@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
@@ -22,13 +22,13 @@ const typeList: ISelectOptions[] = [
 ];
 
 interface IFundModalProps extends IModalDefaultProps {
-  mutateFund: () => void;
+  onMutate: () => void;
   fundData?: IFunds;
   action?: TAction;
 }
 
-export default function FundModal({ open, fundData, onClose, mutateFund }: IFundModalProps) {
-  const { modal, action } = styles;
+export default function FundModal({ open, fundData, onClose, action, onMutate }: IFundModalProps) {
+  const { modal } = styles;
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, setValue, reset } = useForm<IFunds>({
     resolver: yupResolver(schema),
@@ -37,11 +37,10 @@ export default function FundModal({ open, fundData, onClose, mutateFund }: IFund
   const onSubmit: SubmitHandler<IFunds> = async (data) => {
     setLoading(true);
     try {
-      fundData
-        ? await api.client.patch(`/api/patch_fund/${fundData?.alias}`, data)
-        : await api.client.post("/api/post_fund", data);
-      toast.success(`Fund ${fundData ? "updated" : "added"} successfully`);
-      mutateFund();
+      action === "add" && (await api.client.patch(`/api/patch_fund/${fundData?.alias}`, data));
+      action === "edit" && (await api.client.post("/api/post_fund", data));
+      onMutate();
+      toast.success(`Fund ${action === "add" ? "added" : "updated"} successfully`);
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(error?.message);
@@ -67,20 +66,6 @@ export default function FundModal({ open, fundData, onClose, mutateFund }: IFund
     reset();
   };
 
-  const handleDelete = async (e: MouseEvent) => {
-    e.preventDefault();
-    try {
-      await api.client.delete(`/api/delete_fund/${fundData?.alias}`);
-      toast.success("Fund deleted successfully");
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error?.message);
-      }
-    }
-    mutateFund();
-    handleCloseModal();
-  };
-
   return (
     <Modal
       open={open}
@@ -92,11 +77,6 @@ export default function FundModal({ open, fundData, onClose, mutateFund }: IFund
       width="17rem"
     >
       <form className={modal}>
-        {fundData && (
-          <div className={action}>
-            <button onClick={handleDelete}>DELETE</button>
-          </div>
-        )}
         <label htmlFor="alias">Alias</label>
         <Input.Controlled type="search" control={control} name="alias" id="alias" />
 

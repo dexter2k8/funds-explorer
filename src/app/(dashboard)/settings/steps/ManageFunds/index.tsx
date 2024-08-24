@@ -49,11 +49,11 @@ export function ManageFunds() {
       </div>
       <Table isLoading={isLoading} columns={columns} rows={fundList || []} />
       <FundModal
+        action={action?.action}
+        fundData={fundList?.find((t) => t.alias === action?.id)}
         open={action !== undefined && action?.action !== "delete"}
         onClose={() => setAction(undefined)}
-        fundData={fundList?.find((t) => t.alias === action?.id)}
-        mutateFund={mutate}
-        action={action?.action}
+        onMutate={mutate}
       />
       <Modal
         title="Delete Income"
