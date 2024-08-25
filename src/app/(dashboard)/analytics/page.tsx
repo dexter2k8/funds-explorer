@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import styles from "./styles.module.scss";
 import PatrimonialEvolution from "./__components__/PatrimonialEvolution";
 import Transactions from "./__components__/Transactions";
@@ -9,6 +9,7 @@ import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types
 import { API } from "@/app/paths";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IFunds } from "@/app/api/get_funds/types";
+import Skeleton from "@/components/Skeleton";
 
 export default function Analytics() {
   const { analytics, charts, table } = styles;
@@ -30,27 +31,29 @@ export default function Analytics() {
   const reverseProfits = profits?.slice().reverse();
 
   return (
-    <div className={analytics}>
-      <main>
-        <section className={charts}>
-          <PatrimonialEvolution
-            fundList={funds || []}
-            onChangeFund={setFund}
-            profits={reverseProfits}
-            isLoading={isLoadingProfits}
-          />
-          <Transactions fundList={funds || []} fund_alias={fund} />
-        </section>
+    <Suspense fallback={<Skeleton />}>
+      <div className={analytics}>
+        <main>
+          <section className={charts}>
+            <PatrimonialEvolution
+              fundList={funds || []}
+              onChangeFund={setFund}
+              profits={reverseProfits}
+              isLoading={isLoadingProfits}
+            />
+            <Transactions fundList={funds || []} fund_alias={fund} />
+          </section>
 
-        <section className={table}>
-          <IncomesTable
-            fundList={funds || []}
-            profits={profits}
-            isLoadingProfits={isLoadingProfits}
-            onMutate={mutate}
-          />
-        </section>
-      </main>
-    </div>
+          <section className={table}>
+            <IncomesTable
+              fundList={funds || []}
+              profits={profits}
+              isLoadingProfits={isLoadingProfits}
+              onMutate={mutate}
+            />
+          </section>
+        </main>
+      </div>
+    </Suspense>
   );
 }
