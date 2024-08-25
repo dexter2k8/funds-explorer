@@ -76,7 +76,6 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
       </InfiniteScroll>
 
       <TransactionModal
-        fundList={fundList}
         open={idModal !== undefined}
         transaction={transactions.find((t) => t.id === idModal)}
         onClose={() => setIdModal(undefined)}

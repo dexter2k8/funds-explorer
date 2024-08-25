@@ -15,15 +15,16 @@ import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IPostTransaction } from "@/app/api/post_transaction/types";
 import type { ITransactions } from "@/app/api/get_transactions/types";
+import type { IFunds } from "@/app/api/get_funds/types";
+import { useSWR } from "@/hook/useSWR";
+import { API } from "@/app/paths";
 
 interface IAddTransactionModalProps extends IModalDefaultProps {
-  fundList: ISelectOptions[];
   onHandleTransaction: () => void;
   transaction?: ITransactions;
 }
 
 export default function TransactionModal({
-  fundList,
   open,
   transaction,
   onClose,
@@ -34,6 +35,13 @@ export default function TransactionModal({
   const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
+
+  const { response } = useSWR<IFunds[]>(API.GET_FUNDS);
+
+  const fundList: ISelectOptions[] = response?.map((fund) => ({
+    value: fund.alias,
+    label: fund.alias,
+  }));
 
   const onSubmit: SubmitHandler<IPostTransaction> = async (data) => {
     const { price, ...rest } = data;
