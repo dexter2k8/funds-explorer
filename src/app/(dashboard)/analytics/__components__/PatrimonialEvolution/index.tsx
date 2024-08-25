@@ -29,12 +29,16 @@ export default function PatrimonialEvolution({
   }, []);
 
   useEffect(() => {
-    const selectedFund = searchParams.get("fund") || "";
+    const selectedFund = searchParams.get("fund");
     if (selectedFund) {
       setFund(selectedFund);
       onChangeFund(selectedFund);
+    } else if (fundList.length) {
+      const params = new URLSearchParams(searchParams);
+      params.set("fund", fundList[0].value);
+      replace(`/analytics?${params.toString()}`);
     }
-  }, [searchParams]);
+  }, [searchParams, fundList]);
 
   return (
     <div>
