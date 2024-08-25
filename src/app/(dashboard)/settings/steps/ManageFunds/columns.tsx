@@ -11,6 +11,7 @@ export function getColumns({ onAction }: IActions) {
     {
       field: "alias",
       label: "ALIAS",
+      filterable: true,
     },
     {
       field: "name",
