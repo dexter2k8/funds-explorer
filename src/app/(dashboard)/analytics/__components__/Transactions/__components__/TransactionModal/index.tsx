@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import schema from "@/schemas/validateAddTransaction";
 import { AxiosError } from "axios";
-import { currencyMask, currencyToNumber, parseDate } from "@/utils/lib";
+import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import type { IModalDefaultProps } from "@/components/Modal/types";
@@ -32,6 +32,7 @@ export default function TransactionModal({
 }: IAddTransactionModalProps) {
   const { modal, action } = styles;
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useState("");
   const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
@@ -69,9 +70,10 @@ export default function TransactionModal({
     setValue("bought_at", parseDate(new Date()) as string);
 
     if (transaction) {
+      const price = String(transaction.price).replace(".", ",");
       setValue("bought_at", parseDate(transaction.bought_at) as string);
       setValue("fund_alias", transaction.fund_alias);
-      setValue("price", "R$ " + transaction.price);
+      setValue("price", "R$ " + formatBRL(price).value);
       setValue("quantity", transaction.quantity);
     }
   }, [transaction]);
@@ -112,15 +114,11 @@ export default function TransactionModal({
           </div>
         )}
         <label htmlFor="price">Price</label>
-        <Input.Controlled
-          type="search"
-          control={control}
-          name="price"
-          id="price"
-          mask={currencyMask}
-        />
+        <Input.Currency name="price" control={control} />
+
         <label htmlFor="bought_at">Bought at</label>
         <SelectDate.Controlled control={control} name="bought_at" id="bought_at" />
+
         <label htmlFor="quantity">Quantity</label>
         <Input.Controlled
           type="search"
@@ -129,6 +127,7 @@ export default function TransactionModal({
           id="quantity"
           mask="0000"
         />
+
         <label htmlFor="fund_alias">Fund</label>
         <Select.Controlled
           type="search"

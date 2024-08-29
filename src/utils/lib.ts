@@ -13,8 +13,8 @@ export const formatCurrency = (value: number) => {
 
 export function currencyToNumber(currency: string) {
   const cleanString = currency.replace(/[^0-9,.-]/g, "");
-  const normalizedString = cleanString.replace(",", ".");
-  const numberValue = parseFloat(normalizedString);
+  const raw = cleanString.replace(/\./g, "").replace(",", ".");
+  const numberValue = parseFloat(raw);
   return numberValue;
 }
 
@@ -48,3 +48,35 @@ export const currencyMask: FactoryArg = {
     },
   },
 };
+
+export function formatBRL(value: string) {
+  // Remove todos os caracteres que não sejam dígitos ou vírgulas
+  const cleaned = value.replace(/[^\d,]/g, "");
+
+  // Separa a parte inteira da decimal com base na vírgula
+  const parts = cleaned.split(",");
+
+  let integerPart = parts[0];
+  let decimalPart = parts[1];
+
+  // Adiciona o ponto como separador de milhar
+  if (integerPart.length > 3) {
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  let formatted = integerPart;
+
+  // Adiciona a vírgula como separador decimal
+  if (decimalPart !== undefined) {
+    decimalPart = decimalPart.slice(0, 2); // Limita a 2 casas decimais
+    formatted += "," + decimalPart;
+  }
+
+  // Gera o valor "raw" com ponto como separador decimal
+  const raw = formatted.replace(/\./g, "").replace(",", ".");
+
+  return {
+    value: formatted,
+    raw: raw,
+  };
+}

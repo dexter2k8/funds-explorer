@@ -8,7 +8,7 @@ import SelectDate from "@/components/SelectDate";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import schema from "@/schemas/validateAddIncome";
-import { currencyMask, currencyToNumber, parseDate } from "@/utils/lib";
+import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
 import { AxiosError } from "axios";
 import api from "@/services/api";
 import { toast } from "react-toastify";
@@ -65,9 +65,12 @@ export default function IncomeModal({
   useEffect(() => {
     setValue("updated_at", parseDate(new Date()) as string);
     if (incomeData) {
+      const price = String(incomeData.price).replace(".", ",");
+      const income = String(incomeData.income).replace(".", ",");
       setValue("updated_at", parseDate(incomeData.updated_at) as string);
       setValue("price", "R$" + incomeData.price);
-      setValue("income", "R$" + incomeData.income.toString());
+      setValue("price", "R$ " + formatBRL(price).value);
+      setValue("income", "R$ " + formatBRL(income).value);
       setValue("fund_alias", incomeData.fund_alias);
     }
   }, [incomeData]);
@@ -88,23 +91,14 @@ export default function IncomeModal({
     >
       <form className={modal}>
         <label htmlFor="price">Price</label>
-        <Input.Controlled
-          type="search"
-          control={control}
-          name="price"
-          id="price"
-          mask={currencyMask}
-        />
+        <Input.Currency name="price" control={control} />
+
         <label htmlFor="updated_at">Updated at</label>
         <SelectDate.Controlled control={control} name="updated_at" id="updated_at" />
+
         <label htmlFor="income">Income</label>
-        <Input.Controlled
-          type="search"
-          control={control}
-          name="income"
-          id="income"
-          mask={currencyMask}
-        />
+        <Input.Currency name="income" control={control} />
+
         <label htmlFor="fund_alias">Fund</label>
         <Select.Controlled
           type="search"

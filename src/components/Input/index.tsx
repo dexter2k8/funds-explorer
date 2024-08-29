@@ -7,6 +7,7 @@ import CheckCircle from "./Icons/check-circle";
 import ExclamationCircle from "./Icons/exclamation-circle";
 import { FC, forwardRef, InputHTMLAttributes, useState } from "react";
 import { ControlledInput } from "./__components__/ControlledInput";
+import { InputCurrency } from "../InputCurrency";
 
 type TStatus = "info" | "success" | "error";
 type size = "small" | "default" | "large";
@@ -93,8 +94,10 @@ const InputBasic: FC<IInputProps> = forwardRef<HTMLInputElement, IInputProps>(
 
 const Input = InputBasic as React.FC<IInputProps> & {
   Controlled: typeof ControlledInput;
+  Currency: typeof InputCurrency;
 };
 
 Input.Controlled = ControlledInput;
+Input.Currency = InputCurrency;
 
 export default Input;
