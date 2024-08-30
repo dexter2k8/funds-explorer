@@ -27,7 +27,8 @@ export default function Dashboard() {
       init_date: getDate(range),
       end_date: endDate,
       type: type === 1 ? "" : segmentedTypes[type - 1].label,
-    }
+    },
+    { revalidateOnFocus: false }
   );
 
   const { response: latest, isLoading: isLoadingLatest } = useSWR<ITransactions[]>(
@@ -35,11 +36,14 @@ export default function Dashboard() {
     {
       limit: 5,
       offset: 0,
-    }
+    },
+    { revalidateOnFocus: false }
   );
 
   const { response: incomes, isLoading: isLoadingIncomes } = useSWR<IGetIncomesResponse>(
-    API.GET_INCOMES_PATRIMONY
+    API.GET_INCOMES_PATRIMONY,
+    {},
+    { revalidateOnFocus: false }
   );
 
   const skeletons = Array.from({ length: 5 }, (_, index) => <Skeleton key={index} height={90} />);

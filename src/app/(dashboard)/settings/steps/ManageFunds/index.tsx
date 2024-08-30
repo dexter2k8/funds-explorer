@@ -22,7 +22,11 @@ export function ManageFunds() {
   const { head } = styles;
   const columns = getColumns({ onAction: setAction });
 
-  const { response: fundList, isLoading, mutate } = useSWR<IFunds[]>(API.GET_FUNDS);
+  const {
+    response: fundList,
+    isLoading,
+    mutate,
+  } = useSWR<IFunds[]>(API.GET_FUNDS, {}, { revalidateOnFocus: false });
 
   const handleDelete = async () => {
     try {

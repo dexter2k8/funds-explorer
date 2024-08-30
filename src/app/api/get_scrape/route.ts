@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
 
     // Acessa a página alvo e espera pela carga completa
     await page.goto(`https://statusinvest.com.br/${type}/${fund_alias}`, {
-      waitUntil: "domcontentloaded", // Espera até que o conteúdo da página tenha carregado
+      waitUntil: "domcontentloaded", // Espera até que o conteúdo da dom tenha carregado
       // waitUntil: "networkidle2", // Espera até que a página tenha carregado completamente
     });
 

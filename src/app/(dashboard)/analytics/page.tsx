@@ -15,7 +15,11 @@ export default function Analytics() {
   const { analytics, charts, table } = styles;
   const [fund, setFund] = useState("");
 
-  const { response: fundList } = useSWR<IFunds[]>(API.GET_SELF_FUNDS);
+  const { response: fundList } = useSWR<IFunds[]>(
+    API.GET_SELF_FUNDS,
+    {},
+    { revalidateOnFocus: false }
+  );
 
   const funds: ISelectOptions[] = fundList?.map((fund) => ({
     value: fund.alias,
@@ -26,7 +30,11 @@ export default function Analytics() {
     response: profits,
     isLoading: isLoadingProfits,
     mutate,
-  } = useSWR<IGetIncomesFundResponse[]>(fund && API.GET_INCOMES_FUND + fund);
+  } = useSWR<IGetIncomesFundResponse[]>(
+    fund && API.GET_INCOMES_FUND + fund,
+    {},
+    { revalidateOnFocus: false }
+  );
 
   const reverseProfits = profits?.slice().reverse();
 
