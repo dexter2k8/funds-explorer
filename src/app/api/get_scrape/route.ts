@@ -100,11 +100,19 @@ export async function GET(req: NextRequest) {
       return text1 + text2 ?? null;
     });
 
+    // Extrai o pvp, contido na segunda tag <strong> com a classe "value" dentro do <div> com as classes especificadas
+    const pvp = await page.evaluate(() => {
+      const elements = document.querySelectorAll(
+        "div.top-info.top-info-2.top-info-md-3.top-info-lg-n.d-flex.justify-between .value"
+      );
+      return elements.length > 1 ? elements[1]?.textContent?.trim() : null;
+    });
+
     // Fecha o navegador
     await browser.close();
 
     // Retorna o resultado para o frontend
-    return new Response(JSON.stringify({ value, valueGrowth, dy, growth }), {
+    return new Response(JSON.stringify({ value, valueGrowth, dy, growth, pvp }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
