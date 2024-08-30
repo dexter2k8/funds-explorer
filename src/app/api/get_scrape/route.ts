@@ -1,9 +1,26 @@
 import puppeteer from "puppeteer";
+import { NextRequest } from "next/server";
+
+const getType = (base: string) => {
+  const type = {
+    Ação: "acoes",
+    FII: "fundos-imobiliarios",
+    BDR: "bdrs",
+  };
+  return type[base as keyof typeof type];
+};
 
 // Função utilitária para pausar a execução por um determinado tempo
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const searchParams = new URL(req.url);
+    const param_alias = searchParams.searchParams.get("fund_alias");
+    const param_type = searchParams.searchParams.get("type");
+
+    const type = getType(param_type!);
+    const fund_alias = param_alias?.toLocaleLowerCase();
+
     // Inicializa o navegador Puppeteer com opções adicionais
     const browser = await puppeteer.launch({
       headless: true, // Executa o navegador em modo visual (não headless)
@@ -32,8 +49,9 @@ export async function GET() {
     await page.setViewport({ width: 128, height: 128 }); // Define o tamanho do viewport na janela
 
     // Acessa a página alvo e espera pela carga completa
-    await page.goto("https://statusinvest.com.br/acoes/bbas3", {
-      waitUntil: "networkidle2", // Espera até que a página tenha carregado completamente
+    await page.goto(`https://statusinvest.com.br/${type}/${fund_alias}`, {
+      waitUntil: "domcontentloaded", // Espera até que o conteúdo da página tenha carregado
+      // waitUntil: "networkidle2", // Espera até que a página tenha carregado completamente
     });
 
     // Executa uma interação para parecer mais "humano"
