@@ -15,8 +15,8 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export async function GET(req: NextRequest) {
   try {
     const searchParams = new URL(req.url);
-    const param_alias = searchParams.searchParams.get("fund_alias");
     const param_type = searchParams.searchParams.get("type");
+    const param_alias = searchParams.searchParams.get("fund_alias");
 
     const type = getType(param_type!);
     const fund_alias = param_alias?.toLocaleLowerCase();
@@ -64,15 +64,7 @@ export async function GET(req: NextRequest) {
       return element?.textContent?.trim() ?? null;
     });
 
-    // Extrai o dividend yeld, contido na tag <strong> com a classe "value" dentro de um <div> com o título específico
-    const dy = await page.evaluate(() => {
-      const element = document.querySelector(
-        'div[title*="Dividend Yield com base nos últimos 12 meses"] .value'
-      );
-      return element?.textContent?.trim() ?? null;
-    });
-
-    // Extrai a valorização, contida na tag <strong> com a classe "v-align-middle" dentro de um <span> com o título específico
+    // Extrai a variação, contida na tag <strong> com a classe "v-align-middle" dentro de um <span> com o título específico
     const valueGrowth = await page.evaluate(() => {
       const element1 = document.querySelector(
         "span[title*='Variação do valor do ativo com base no dia anterior'] i"
@@ -84,6 +76,14 @@ export async function GET(req: NextRequest) {
       const text1 = value1 === "arrow_upward" ? "+" : value1 === "arrow_downward" ? "-" : "";
       const text2 = element2?.textContent?.trim();
       return text1 + text2 ?? null;
+    });
+
+    // Extrai o dividend yeld, contido na tag <strong> com a classe "value" dentro de um <div> com o título específico
+    const dy = await page.evaluate(() => {
+      const element = document.querySelector(
+        'div[title*="Dividend Yield com base nos últimos 12 meses"] .value'
+      );
+      return element?.textContent?.trim() ?? null;
     });
 
     // Extrai a valorização, contida na tag <strong> com a classe "value" dentro de um <div> com o título específico
