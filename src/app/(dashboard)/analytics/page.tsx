@@ -98,7 +98,7 @@ export default function Analytics() {
               profits={reverseProfits}
               isLoading={isLoadingProfits}
             />
-            <Transactions fund_alias={fund} />
+            <Transactions fund_alias={fund} fundValue={indicators?.value} />
           </section>
 
           <section className={table}>

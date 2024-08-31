@@ -14,9 +14,10 @@ import type { ISelectOptions } from "@/components/Select/types";
 
 interface IInfiniteListProps {
   fund_alias: string;
+  fundValue?: number;
 }
 
-export default function Transactions({ fund_alias }: IInfiniteListProps) {
+export default function Transactions({ fund_alias, fundValue }: IInfiniteListProps) {
   const limit = 5;
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -80,6 +81,7 @@ export default function Transactions({ fund_alias }: IInfiniteListProps) {
         onClose={() => setIdModal(undefined)}
         onHandleTransaction={() => loadInitialData()}
         fund_alias={fund_alias}
+        fundValue={fundValue}
       />
     </LayoutCharts>
   );

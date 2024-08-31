@@ -62,7 +62,10 @@ export default function IncomeModal({
       }
     }
     setLoading(false);
-    reset();
+    reset({
+      fund_alias: fund_alias || "",
+      price: "R$" + fundValue || "",
+    });
     onClose();
   };
 

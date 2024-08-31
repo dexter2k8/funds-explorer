@@ -23,6 +23,7 @@ interface IAddTransactionModalProps extends IModalDefaultProps {
   onHandleTransaction: () => void;
   transaction?: ITransactions;
   fund_alias?: string;
+  fundValue?: number;
 }
 
 export default function TransactionModal({
@@ -31,6 +32,7 @@ export default function TransactionModal({
   onClose,
   onHandleTransaction,
   fund_alias,
+  fundValue,
 }: IAddTransactionModalProps) {
   const { modal, action } = styles;
   const [loading, setLoading] = useState(false);
@@ -63,13 +65,17 @@ export default function TransactionModal({
       }
     }
     setLoading(false);
-    reset();
+    reset({
+      fund_alias: fund_alias || "",
+      price: "R$ " + fundValue || "",
+    });
     onClose();
   };
 
   useEffect(() => {
     setValue("bought_at", parseDate(new Date()) as string);
     setValue("fund_alias", fund_alias || "");
+    setValue("price", "R$ " + fundValue);
 
     if (transaction) {
       const price = String(transaction.price).replace(".", ",");
@@ -78,11 +84,14 @@ export default function TransactionModal({
       setValue("price", "R$ " + formatBRL(price).value);
       setValue("quantity", transaction.quantity);
     }
-  }, [transaction, fund_alias]);
+  }, [transaction, fund_alias, fundValue]);
 
   const handleCloseModal = () => {
     onClose();
-    reset();
+    reset({
+      fund_alias: fund_alias || "",
+      price: "R$ " + fundValue || "",
+    });
   };
 
   const handleDelete = async (e: MouseEvent) => {
