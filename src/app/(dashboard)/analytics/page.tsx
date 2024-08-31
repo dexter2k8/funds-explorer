@@ -29,7 +29,7 @@ export default function Analytics() {
   const fundType = fundList?.find((f) => f.alias === fund)?.type;
 
   const { response: indicators, isLoading: isLoadingIndicators } = useSWR<IScrapeResponse>(
-    API.GET_SCRAPE,
+    fundType && API.GET_SCRAPE,
     {
       fund_alias: fund,
       type: fundType,
