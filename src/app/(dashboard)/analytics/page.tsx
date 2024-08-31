@@ -98,7 +98,7 @@ export default function Analytics() {
               profits={reverseProfits}
               isLoading={isLoadingProfits}
             />
-            <Transactions fundList={funds || []} fund_alias={fund} />
+            <Transactions fund_alias={fund} />
           </section>
 
           <section className={table}>
@@ -107,6 +107,7 @@ export default function Analytics() {
               profits={profits}
               isLoadingProfits={isLoadingProfits}
               onMutate={mutate}
+              fund_alias={fund}
             />
           </section>
         </main>

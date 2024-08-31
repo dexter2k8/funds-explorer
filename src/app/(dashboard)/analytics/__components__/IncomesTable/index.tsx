@@ -17,6 +17,7 @@ export default function IncomesTable({
   profits,
   isLoadingProfits,
   onMutate,
+  fund_alias,
 }: IIncomesTableProps) {
   const [action, setAction] = useState<IActionsProps>();
   const [loading, setLoading] = useState(false);
@@ -58,6 +59,7 @@ export default function IncomesTable({
         open={action !== undefined && action?.action !== "delete"}
         onClose={() => setAction(undefined)}
         onMutate={onMutate}
+        fund_alias={fund_alias}
       />
       <Modal
         title="Delete Income"

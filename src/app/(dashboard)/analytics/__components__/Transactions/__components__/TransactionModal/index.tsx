@@ -22,6 +22,7 @@ import { API } from "@/app/paths";
 interface IAddTransactionModalProps extends IModalDefaultProps {
   onHandleTransaction: () => void;
   transaction?: ITransactions;
+  fund_alias?: string;
 }
 
 export default function TransactionModal({
@@ -29,10 +30,10 @@ export default function TransactionModal({
   transaction,
   onClose,
   onHandleTransaction,
+  fund_alias,
 }: IAddTransactionModalProps) {
   const { modal, action } = styles;
   const [loading, setLoading] = useState(false);
-  const [text, setText] = useState("");
   const { control, handleSubmit, setValue, reset } = useForm<IPostTransaction>({
     resolver: yupResolver(schema),
   });
@@ -68,6 +69,7 @@ export default function TransactionModal({
 
   useEffect(() => {
     setValue("bought_at", parseDate(new Date()) as string);
+    setValue("fund_alias", fund_alias || "");
 
     if (transaction) {
       const price = String(transaction.price).replace(".", ",");
@@ -76,7 +78,7 @@ export default function TransactionModal({
       setValue("price", "R$ " + formatBRL(price).value);
       setValue("quantity", transaction.quantity);
     }
-  }, [transaction]);
+  }, [transaction, fund_alias]);
 
   const handleCloseModal = () => {
     onClose();

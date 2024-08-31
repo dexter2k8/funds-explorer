@@ -13,11 +13,10 @@ import type { ITransactions } from "@/app/api/get_transactions/types";
 import type { ISelectOptions } from "@/components/Select/types";
 
 interface IInfiniteListProps {
-  fundList: ISelectOptions[];
   fund_alias: string;
 }
 
-export default function Transactions({ fundList, fund_alias }: IInfiniteListProps) {
+export default function Transactions({ fund_alias }: IInfiniteListProps) {
   const limit = 5;
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -80,6 +79,7 @@ export default function Transactions({ fundList, fund_alias }: IInfiniteListProp
         transaction={transactions.find((t) => t.id === idModal)}
         onClose={() => setIdModal(undefined)}
         onHandleTransaction={() => loadInitialData()}
+        fund_alias={fund_alias}
       />
     </LayoutCharts>
   );
