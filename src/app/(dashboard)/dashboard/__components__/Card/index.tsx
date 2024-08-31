@@ -7,12 +7,24 @@ import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 interface ICardProps {
   label: string;
   value: number;
-  difference: number;
+  currency?: boolean;
+  decimals?: number;
+  suffix?: string;
+  difference?: number;
   icon?: React.ReactNode;
   isLoading?: boolean;
 }
 
-export default function Card({ label, value = 0, difference = 0, icon, isLoading }: ICardProps) {
+export default function Card({
+  label,
+  value = 0,
+  currency,
+  decimals = 2,
+  suffix,
+  difference,
+  icon,
+  isLoading,
+}: ICardProps) {
   const { card, title, diff } = styles;
   return (
     <div className={card}>
@@ -24,10 +36,20 @@ export default function Card({ label, value = 0, difference = 0, icon, isLoading
         {isLoading ? (
           <Skeleton height="2rem" width="9rem" />
         ) : (
-          <CountUp duration={1} end={value} formattingFn={formatCurrency} />
+          <CountUp
+            duration={1}
+            end={value}
+            decimals={decimals}
+            decimal=","
+            suffix={suffix}
+            formattingFn={currency ? formatCurrency : undefined}
+          />
         )}
       </div>
-      <div className={diff} style={{ color: difference >= 0 ? "var(--green)" : "var(--red)" }}>
+      <div
+        className={diff}
+        style={{ color: difference && difference >= 0 ? "var(--green)" : "var(--red)" }}
+      >
         {isLoading ? (
           <>
             <div> </div>
@@ -35,12 +57,12 @@ export default function Card({ label, value = 0, difference = 0, icon, isLoading
           </>
         ) : (
           <>
-            {difference >= 0 ? (
+            {!difference ? null : difference >= 0 ? (
               <MdOutlineArrowDropUp size="1.25rem" />
             ) : (
               <MdOutlineArrowDropDown size="1.25rem" />
             )}
-            <small>{difference}%</small>
+            {difference && <small>{difference}%</small>}
           </>
         )}
       </div>

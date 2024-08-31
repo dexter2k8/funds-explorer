@@ -9,7 +9,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@/schemas/validateLogin";
 import { useAuth } from "@/store/useAuth";
-import api from "@/services/api";
 import { useRouter } from "next/navigation";
 import type { ISignInProps } from "@/store/useAuth/types";
 

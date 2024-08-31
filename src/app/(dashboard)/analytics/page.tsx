@@ -14,6 +14,7 @@ import Card from "../dashboard/__components__/Card";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaArrowTrendUp, FaArrowUpRightDots } from "react-icons/fa6";
 import { RiExchangeFundsFill } from "react-icons/ri";
+import { IScrapeResponse } from "@/app/api/get_scrape/types";
 
 export default function Analytics() {
   const { analytics, charts, table, cards } = styles;
@@ -22,6 +23,17 @@ export default function Analytics() {
   const { response: fundList } = useSWR<IFunds[]>(
     API.GET_SELF_FUNDS,
     {},
+    { revalidateOnFocus: false }
+  );
+
+  const fundType = fundList?.find((f) => f.alias === fund)?.type;
+
+  const { response: indicators, isLoading: isLoadingIndicators } = useSWR<IScrapeResponse>(
+    API.GET_SCRAPE,
+    {
+      fund_alias: fund,
+      type: fundType,
+    },
     { revalidateOnFocus: false }
   );
 
@@ -50,30 +62,32 @@ export default function Analytics() {
             <Card
               label="Value"
               icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
-              value={0}
-              difference={0}
-              isLoading={false}
+              value={indicators?.value}
+              currency
+              difference={indicators?.valueGrowth}
+              isLoading={isLoadingIndicators}
             />
-            <Card
-              label="P/VP"
-              icon={<RiExchangeFundsFill style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
-              value={0}
-              difference={0}
-              isLoading={false}
-            />
+            {indicators?.pvp && (
+              <Card
+                label="P/VP"
+                icon={<RiExchangeFundsFill style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
+                value={indicators?.pvp}
+                isLoading={isLoadingIndicators}
+              />
+            )}
             <Card
               label="DY"
               icon={<FaArrowUpRightDots style={{ color: "var(--blue)", fontSize: "1.25rem" }} />}
-              value={0}
-              difference={0}
-              isLoading={false}
+              value={indicators?.dy}
+              suffix="%"
+              isLoading={isLoadingIndicators}
             />
             <Card
               label="Valuing (12M)"
               icon={<FaArrowTrendUp style={{ color: "var(--blue)", fontSize: "1.25rem" }} />}
-              value={0}
-              difference={0}
-              isLoading={false}
+              value={indicators?.growth}
+              suffix="%"
+              isLoading={isLoadingIndicators}
             />
           </section>
 

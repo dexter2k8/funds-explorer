@@ -64,6 +64,7 @@ export default function Dashboard() {
             label="Patrimony"
             icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
             value={profits?.patrimony.value ?? 0}
+            currency
             difference={profits?.patrimony.difference ?? 0}
             isLoading={isLoadingProfits}
           />
@@ -75,6 +76,7 @@ export default function Dashboard() {
               />
             }
             value={profits?.profit.value ?? 0}
+            currency
             difference={profits?.profit.difference ?? 0}
             isLoading={isLoadingProfits}
           />

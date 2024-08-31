@@ -61,21 +61,19 @@ export async function GET(req: NextRequest) {
     // Extrai o valor da cota, contido na tag <strong> com a classe "value" dentro de um <div> com a classe "d-md-inline-block"
     const value = await page.evaluate(() => {
       const element = document.querySelector(".d-md-inline-block .value");
-      return element?.textContent?.trim() ?? null;
+      const shareValue = element?.textContent?.trim();
+      const parsedValue = Number(shareValue?.replace(",", "."));
+      return shareValue ? parsedValue : null;
     });
 
     // Extrai a variação, contida na tag <strong> com a classe "v-align-middle" dentro de um <span> com o título específico
     const valueGrowth = await page.evaluate(() => {
-      const element1 = document.querySelector(
-        "span[title*='Variação do valor do ativo com base no dia anterior'] i"
-      );
-      const element2 = document.querySelector(
+      const element = document.querySelector(
         "span[title*='Variação do valor do ativo com base no dia anterior'] .v-align-middle"
       );
-      const value1 = element1?.textContent?.trim();
-      const text1 = value1 === "arrow_upward" ? "+" : value1 === "arrow_downward" ? "-" : "";
-      const text2 = element2?.textContent?.trim();
-      return text1 + text2 ?? null;
+      const value = element?.textContent?.trim();
+      const parsedValue = Number(value?.slice(0, -1).replace(",", "."));
+      return value ? parsedValue : null;
     });
 
     // Extrai o dividend yeld, contido na tag <strong> com a classe "value" dentro de um <div> com o título específico
@@ -83,21 +81,19 @@ export async function GET(req: NextRequest) {
       const element = document.querySelector(
         'div[title*="Dividend Yield com base nos últimos 12 meses"] .value'
       );
-      return element?.textContent?.trim() ?? null;
+      const value = element?.textContent?.trim();
+      const parsedValue = Number(value?.replace(",", "."));
+      return value ? parsedValue : null;
     });
 
     // Extrai a valorização, contida na tag <strong> com a classe "value" dentro de um <div> com o título específico
     const growth = await page.evaluate(() => {
-      const element1 = document.querySelector(
-        'div[title*="Valorização no preço do ativo com base nos últimos 12 meses"] i'
-      );
-      const element2 = document.querySelector(
+      const element = document.querySelector(
         'div[title*="Valorização no preço do ativo com base nos últimos 12 meses"] .value'
       );
-      const value1 = element1?.textContent?.trim();
-      const text1 = value1 === "arrow_upward" ? "+" : value1 === "arrow_downward" ? "-" : "";
-      const text2 = element2?.textContent?.trim();
-      return text1 + text2 ?? null;
+      const value = element?.textContent?.trim();
+      const parsedValue = Number(value?.slice(0, -1).replace(",", "."));
+      return value ? parsedValue : null;
     });
 
     // Extrai o pvp, contido na segunda tag <strong> com a classe "value" dentro do <div> com as classes especificadas
@@ -105,7 +101,9 @@ export async function GET(req: NextRequest) {
       const elements = document.querySelectorAll(
         "div.top-info.top-info-2.top-info-md-3.top-info-lg-n.d-flex.justify-between .value"
       );
-      return elements.length > 1 ? elements[1]?.textContent?.trim() : null;
+      const value = elements.length > 1 ? elements[1]?.textContent?.trim() : null;
+      const parsedValue = Number(value?.replace(",", "."));
+      return value ? parsedValue : null;
     });
 
     // Fecha o navegador
