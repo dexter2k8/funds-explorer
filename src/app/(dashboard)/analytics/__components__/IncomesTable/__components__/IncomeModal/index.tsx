@@ -24,6 +24,7 @@ interface IIncomeModalProps extends IModalDefaultProps {
   incomeData?: IGetIncomesFundResponse;
   action?: TAction;
   fund_alias?: string;
+  fundValue?: number;
 }
 
 export default function IncomeModal({
@@ -34,6 +35,7 @@ export default function IncomeModal({
   action,
   onMutate,
   fund_alias,
+  fundValue,
 }: IIncomeModalProps) {
   const { modal } = styles;
   const [loading, setLoading] = useState(false);
@@ -67,6 +69,8 @@ export default function IncomeModal({
   useEffect(() => {
     setValue("updated_at", parseDate(new Date()) as string);
     setValue("fund_alias", fund_alias || "");
+    setValue("price", "R$" + fundValue);
+
     if (incomeData) {
       const price = String(incomeData.price).replace(".", ",");
       const income = String(incomeData.income).replace(".", ",");
@@ -76,10 +80,13 @@ export default function IncomeModal({
       setValue("income", "R$ " + formatBRL(income).value);
       setValue("fund_alias", incomeData.fund_alias);
     }
-  }, [incomeData, fund_alias]);
+  }, [incomeData, fund_alias, fundValue]);
   const handleCloseModal = () => {
     onClose();
-    reset();
+    reset({
+      fund_alias: fund_alias || "",
+      price: "R$" + fundValue || "",
+    });
   };
 
   return (

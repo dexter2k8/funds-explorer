@@ -108,6 +108,7 @@ export default function Analytics() {
               isLoadingProfits={isLoadingProfits}
               onMutate={mutate}
               fund_alias={fund}
+              fundValue={indicators?.value}
             />
           </section>
         </main>

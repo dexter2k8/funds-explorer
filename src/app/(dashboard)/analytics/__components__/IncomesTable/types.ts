@@ -7,4 +7,5 @@ export interface IIncomesTableProps {
   profits: IGetIncomesFundResponse[];
   onMutate: () => void;
   fund_alias?: string;
+  fundValue?: number;
 }
