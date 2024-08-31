@@ -10,9 +10,13 @@ import { API } from "@/app/paths";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { IFunds } from "@/app/api/get_funds/types";
 import Skeleton from "@/components/Skeleton";
+import Card from "../dashboard/__components__/Card";
+import { AiFillDollarCircle } from "react-icons/ai";
+import { FaArrowTrendUp, FaArrowUpRightDots } from "react-icons/fa6";
+import { RiExchangeFundsFill } from "react-icons/ri";
 
 export default function Analytics() {
-  const { analytics, charts, table } = styles;
+  const { analytics, charts, table, cards } = styles;
   const [fund, setFund] = useState("");
 
   const { response: fundList } = useSWR<IFunds[]>(
@@ -42,6 +46,37 @@ export default function Analytics() {
     <Suspense fallback={<Skeleton />}>
       <div className={analytics}>
         <main>
+          <section className={cards}>
+            <Card
+              label="Value"
+              icon={<AiFillDollarCircle style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
+              value={0}
+              difference={0}
+              isLoading={false}
+            />
+            <Card
+              label="P/VP"
+              icon={<RiExchangeFundsFill style={{ color: "var(--blue)", fontSize: "1.5rem" }} />}
+              value={0}
+              difference={0}
+              isLoading={false}
+            />
+            <Card
+              label="DY"
+              icon={<FaArrowUpRightDots style={{ color: "var(--blue)", fontSize: "1.25rem" }} />}
+              value={0}
+              difference={0}
+              isLoading={false}
+            />
+            <Card
+              label="Valuing (12M)"
+              icon={<FaArrowTrendUp style={{ color: "var(--blue)", fontSize: "1.25rem" }} />}
+              value={0}
+              difference={0}
+              isLoading={false}
+            />
+          </section>
+
           <section className={charts}>
             <PatrimonialEvolution
               fundList={funds || []}

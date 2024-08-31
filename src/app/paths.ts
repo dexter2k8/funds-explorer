@@ -7,6 +7,7 @@ const API = {
   GET_SELF_FUNDS: "/api/get_self_funds",
   GET_FUNDS: "/api/get_funds",
   GET_USERS: "/api/get_users",
+  GET_SCRAPE: "/api/get_scrape",
 };
 
 export { API };
