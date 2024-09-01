@@ -67,7 +67,7 @@ export default function TransactionModal({
     setLoading(false);
     reset({
       fund_alias: fund_alias || "",
-      price: "R$ " + fundValue || "",
+      price: "R$ " + String(fundValue).replace(".", ",") || "",
     });
     onClose();
   };
@@ -75,7 +75,7 @@ export default function TransactionModal({
   useEffect(() => {
     setValue("bought_at", parseDate(new Date()) as string);
     setValue("fund_alias", fund_alias || "");
-    setValue("price", "R$ " + fundValue);
+    setValue("price", "R$ " + String(fundValue).replace(".", ","));
 
     if (transaction) {
       const price = String(transaction.price).replace(".", ",");
@@ -90,7 +90,7 @@ export default function TransactionModal({
     onClose();
     reset({
       fund_alias: fund_alias || "",
-      price: "R$ " + fundValue || "",
+      price: "R$ " + String(fundValue).replace(".", ",") || "",
     });
   };
 

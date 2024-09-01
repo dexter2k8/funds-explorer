@@ -64,7 +64,7 @@ export default function IncomeModal({
     setLoading(false);
     reset({
       fund_alias: fund_alias || "",
-      price: "R$" + fundValue || "",
+      price: "R$" + String(fundValue).replace(".", ",") || "",
     });
     onClose();
   };
@@ -72,7 +72,7 @@ export default function IncomeModal({
   useEffect(() => {
     setValue("updated_at", parseDate(new Date()) as string);
     setValue("fund_alias", fund_alias || "");
-    setValue("price", "R$" + fundValue);
+    setValue("price", "R$" + String(fundValue).replace(".", ","));
 
     if (incomeData) {
       const price = String(incomeData.price).replace(".", ",");
@@ -88,7 +88,7 @@ export default function IncomeModal({
     onClose();
     reset({
       fund_alias: fund_alias || "",
-      price: "R$" + fundValue || "",
+      price: "R$" + String(fundValue).replace(".", ",") || "",
     });
   };
 
