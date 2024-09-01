@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./styles.module.scss";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
@@ -42,6 +42,10 @@ export default function IncomeModal({
   const { control, handleSubmit, setValue, reset } = useForm<IPostIncome>({
     resolver: yupResolver(schema),
   });
+  const pastDate = useMemo(() => {
+    const date = new Date();
+    return new Date(date.setDate(date.getDate() - 26));
+  }, []);
 
   const onSubmit: SubmitHandler<IPostIncome> = async (data) => {
     const { price, income, ...rest } = data;
@@ -65,12 +69,13 @@ export default function IncomeModal({
     reset({
       fund_alias: fund_alias || "",
       price: "R$" + String(fundValue).replace(".", ",") || "",
+      updated_at: parseDate(pastDate) as string,
     });
     onClose();
   };
 
   useEffect(() => {
-    setValue("updated_at", parseDate(new Date()) as string);
+    setValue("updated_at", parseDate(pastDate) as string);
     setValue("fund_alias", fund_alias || "");
     setValue("price", "R$" + String(fundValue).replace(".", ","));
 
@@ -89,6 +94,7 @@ export default function IncomeModal({
     reset({
       fund_alias: fund_alias || "",
       price: "R$" + String(fundValue).replace(".", ",") || "",
+      updated_at: parseDate(pastDate) as string,
     });
   };
 
