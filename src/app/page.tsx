@@ -55,5 +55,5 @@ export default function SignIn() {
 
 const fetchFunds = async () => {
   const res = await fetch("http://dexternet.ddns.net:3001/");
-  return console.log(res.json());
+  return console.log(await res.json());
 };
