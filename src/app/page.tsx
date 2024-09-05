@@ -11,6 +11,7 @@ import schema from "@/schemas/validateLogin";
 import { useAuth } from "@/store/useAuth";
 import { useRouter } from "next/navigation";
 import type { ISignInProps } from "@/store/useAuth/types";
+import api from "@/services/api";
 
 export default function SignIn() {
   const { main, container, head, item } = styles;
@@ -47,6 +48,12 @@ export default function SignIn() {
         </Button>
         <Link href="/sign-up">Create an account</Link>
       </form>
+      <button onClick={fetchFunds}>fetch</button>
     </main>
   );
 }
+
+const fetchFunds = async () => {
+  const res = await fetch("http://dexternet.ddns.net:3001/");
+  return console.log(res.json());
+};
