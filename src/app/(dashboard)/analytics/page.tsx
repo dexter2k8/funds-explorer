@@ -15,16 +15,16 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { FaArrowTrendUp, FaArrowUpRightDots } from "react-icons/fa6";
 import { RiExchangeFundsFill } from "react-icons/ri";
 import { IScrapeResponse } from "@/app/api/get_scrape/types";
+import { useQueryState } from "nuqs";
 
 export default function Analytics() {
   const { analytics, charts, table, cards } = styles;
-  const [fund, setFund] = useState("");
-
   const { response: fundList } = useSWR<IFunds[]>(
     API.GET_SELF_FUNDS,
     {},
     { revalidateOnFocus: false }
   );
+  const [fund] = useQueryState("fund", { defaultValue: fundList?.[0]?.alias });
 
   const fundType = fundList?.find((f) => f.alias === fund)?.type;
 
@@ -94,7 +94,6 @@ export default function Analytics() {
           <section className={charts}>
             <PatrimonialEvolution
               fundList={funds || []}
-              onChangeFund={setFund}
               profits={reverseProfits}
               isLoading={isLoadingProfits}
             />

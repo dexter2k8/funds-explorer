@@ -1,44 +1,16 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import dynamic from "next/dynamic";
 import chartOptions from "./options";
 const Charts = dynamic(() => import("echarts-for-react"));
 import Select from "@/components/Select";
 import Skeleton from "@/components/Skeleton";
-import { useRouter, useSearchParams } from "next/navigation";
 import type { ILineChartProps } from "./types";
+import { useQueryState } from "nuqs";
 
-export default function PatrimonialEvolution({
-  fundList,
-  profits,
-  onChangeFund,
-  isLoading,
-}: ILineChartProps) {
+export default function PatrimonialEvolution({ fundList, profits, isLoading }: ILineChartProps) {
   const options = chartOptions(profits || []);
-  const searchParams = useSearchParams();
-  const { replace } = useRouter();
-  const [fund, setFund] = useState<string>();
-
-  const handleChangeFund = useCallback((value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("fund", value);
-    replace(`/analytics?${params.toString()}`);
-    setFund(value);
-    onChangeFund(value);
-  }, []);
-
-  useEffect(() => {
-    const selectedFund = searchParams.get("fund");
-    if (selectedFund) {
-      setFund(selectedFund);
-      onChangeFund(selectedFund);
-    } else if (fundList.length) {
-      const params = new URLSearchParams(searchParams);
-      params.set("fund", fundList[0].value);
-      replace(`/analytics?${params.toString()}`);
-    }
-  }, [searchParams, fundList]);
+  const [fund, setFund] = useQueryState("fund", { defaultValue: fundList[0]?.value });
 
   return (
     <div>
@@ -46,7 +18,7 @@ export default function PatrimonialEvolution({
         title="Patrimonial Evolution"
         sideControls={
           <div style={{ width: "12rem" }}>
-            <Select type="search" value={fund} options={fundList} onChange={handleChangeFund} />
+            <Select type="search" value={fund} options={fundList} onChange={setFund} />
           </div>
         }
       >
