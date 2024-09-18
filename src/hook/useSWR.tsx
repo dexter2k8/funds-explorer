@@ -24,7 +24,9 @@ export function useSWR<T extends object, P = object>(
     return response.data;
   };
 
-  const { data: response, error, isLoading, mutate } = fetchSWR(fullURL, fetcher, config);
+  const mergedConfig = { revalidateOnFocus: false, ...config };
+
+  const { data: response, error, isLoading, mutate } = fetchSWR(fullURL, fetcher, mergedConfig);
 
   return { response, error, isLoading, mutate };
 }

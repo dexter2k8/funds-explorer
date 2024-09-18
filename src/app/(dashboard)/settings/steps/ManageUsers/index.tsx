@@ -20,11 +20,7 @@ export function ManageUsers() {
   const { head } = styles;
   const columns = getColumns({ onAction: setAction });
 
-  const {
-    response: userList,
-    isLoading,
-    mutate,
-  } = useSWR<IUsers[]>(API.GET_USERS, {}, { revalidateOnFocus: false });
+  const { response: userList, isLoading, mutate } = useSWR<IUsers[]>(API.GET_USERS);
 
   const handleDelete = async () => {
     try {

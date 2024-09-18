@@ -16,7 +16,7 @@ export default function Header({ menuClick, label }: IHeaderProps) {
   const { header, menu, title, content } = styles;
   const { setValue } = useAuth();
 
-  const { response } = useSWR<IGetSelfUser>(API.GET_SELF_USER, {}, { revalidateOnFocus: false });
+  const { response } = useSWR<IGetSelfUser>(API.GET_SELF_USER);
 
   useEffect(() => {
     if (response) setValue("isAdmin", response.admin);

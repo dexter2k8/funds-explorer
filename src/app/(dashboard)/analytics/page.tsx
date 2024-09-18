@@ -19,22 +19,14 @@ import { useQueryState } from "nuqs";
 
 export default function Analytics() {
   const { analytics, charts, table, cards } = styles;
-  const { response: fundList } = useSWR<IFunds[]>(
-    API.GET_SELF_FUNDS,
-    {},
-    { revalidateOnFocus: false }
-  );
+  const { response: fundList } = useSWR<IFunds[]>(API.GET_SELF_FUNDS, {});
   const [fund] = useQueryState("fund", { defaultValue: fundList?.[0]?.alias });
 
   const fundType = fundList?.find((f) => f.alias === fund)?.type;
 
   const { response: indicators, isLoading: isLoadingIndicators } = useSWR<IScrapeResponse>(
     fundType && API.GET_SCRAPE,
-    {
-      fund_alias: fund,
-      type: fundType,
-    },
-    { revalidateOnFocus: false }
+    { fund_alias: fund, type: fundType }
   );
 
   const funds: ISelectOptions[] = fundList?.map((fund) => ({
@@ -46,11 +38,7 @@ export default function Analytics() {
     response: profits,
     isLoading: isLoadingProfits,
     mutate,
-  } = useSWR<IGetIncomesFundResponse[]>(
-    fund && API.GET_INCOMES_FUND + fund,
-    {},
-    { revalidateOnFocus: false }
-  );
+  } = useSWR<IGetIncomesFundResponse[]>(fund && API.GET_INCOMES_FUND + fund);
 
   const reverseProfits = profits?.slice().reverse();
 

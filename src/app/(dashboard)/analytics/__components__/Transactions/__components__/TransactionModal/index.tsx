@@ -40,7 +40,7 @@ export default function TransactionModal({
     resolver: yupResolver(schema),
   });
 
-  const { response } = useSWR<IFunds[]>(API.GET_FUNDS, {}, { revalidateOnFocus: false });
+  const { response } = useSWR<IFunds[]>(API.GET_FUNDS);
 
   const fundList: ISelectOptions[] = response?.map((fund) => ({
     value: fund.alias,
