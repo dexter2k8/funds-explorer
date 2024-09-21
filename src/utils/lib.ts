@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
-import { FactoryArg } from "imask";
 import { jwtVerify } from "jose";
+import type { FactoryArg } from "imask";
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
@@ -34,7 +34,7 @@ export const verifyToken = async (token: string) => {
   try {
     const { payload } = await jwtVerify(token, new TextEncoder().encode(SECRET_KEY));
     return payload;
-  } catch (err) {
+  } catch {
     return "";
   }
 };

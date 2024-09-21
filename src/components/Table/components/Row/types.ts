@@ -1,4 +1,4 @@
-import { GridColDef, TRowModel } from "../../types";
+import type { GridColDef, TRowModel } from "../../types";
 
 export interface IRow {
   columns: GridColDef[];

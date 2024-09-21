@@ -1,8 +1,8 @@
-import styles from "./styles.module.scss";
-import Skeleton from "@/components/Skeleton";
-import { formatCurrency } from "@/utils/lib";
 import CountUp from "react-countup";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
+import Skeleton from "@/components/Skeleton";
+import { formatCurrency } from "@/utils/lib";
+import styles from "./styles.module.scss";
 
 interface ICardProps {
   label: string;
@@ -52,6 +52,7 @@ export default function Card({
       >
         {isLoading ? (
           <>
+            {/* eslint-disable-next-line no-irregular-whitespace */}
             <div> </div>
             <Skeleton height="1.25rem" width="2rem" />
           </>

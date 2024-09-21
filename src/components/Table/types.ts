@@ -1,11 +1,11 @@
-import { IFilterProps, ISortProps } from "./components/Head/types";
+import type { IFilterProps, ISortProps } from "./components/Head/types";
 
 export type TRowModel = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string | symbol]: any;
 };
 
-export interface GridBaseColDef<T extends TRowModel = TRowModel> {
+export interface IGridBaseColDef<T extends TRowModel = TRowModel> {
   field: keyof T; // Field of the row.
   label?: string; // Label of the column.
   width?: string | number; // Width of the column.
@@ -19,7 +19,7 @@ export interface GridBaseColDef<T extends TRowModel = TRowModel> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type GridColDef<R extends TRowModel = any> = GridBaseColDef<R>;
+export type GridColDef<R extends TRowModel = any> = IGridBaseColDef<R>;
 
 export interface ITable {
   columns: GridColDef[];

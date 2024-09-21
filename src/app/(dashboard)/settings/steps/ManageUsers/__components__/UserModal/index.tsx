@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import styles from "./styles.module.scss";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
+import Checkbox from "@/components/Checkbox";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { AxiosError } from "axios";
+import { schemaEdit, schemaPost } from "@/schemas/validateUser";
 import api from "@/services/api";
-import { toast } from "react-toastify";
-import Checkbox from "@/components/Checkbox";
-import { Tooltip } from "react-tooltip";
+import styles from "./styles.module.scss";
+import type { SubmitHandler } from "react-hook-form";
+import type { IUsers } from "@/app/api/get_users/types";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
 import type { TAction } from "@/components/TableActions/types";
-import type { IUsers } from "@/app/api/get_users/types";
-import { schemaEdit, schemaPost } from "@/schemas/validateUser";
 
 const adminList: ISelectOptions[] = [
   { value: "false", label: "False" },
@@ -31,15 +32,15 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
   const { modal, check } = styles;
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { control, handleSubmit, setValue, reset, watch } = useForm<IUsers>({
+  const { control, handleSubmit, setValue, reset } = useForm<IUsers>({
     resolver: yupResolver(action === "add" ? schemaPost : schemaEdit),
   });
 
   const onSubmit: SubmitHandler<IUsers> = async (data) => {
     setLoading(true);
     try {
-      action === "add" && (await api.client.post("/api/post_user", data));
-      action === "edit" && (await api.client.patch(`/api/patch_user/${userData?.id}`, data));
+      if (action === "add") await api.client.post("/api/post_user", data);
+      if (action === "edit") await api.client.patch(`/api/patch_user/${userData?.id}`, data);
       onMutate();
       toast.success(`User ${action === "add" ? "added" : "updated"} successfully`);
     } catch (error) {
@@ -59,8 +60,9 @@ export default function UserModal({ open, userData, onClose, action, onMutate }:
       setValue("name", userData.name);
       setValue("email", userData.email);
       setValue("admin", userData.admin ? "true" : "false");
-      userData.avatar && setValue("avatar", userData.avatar);
+      if (userData.avatar) setValue("avatar", userData.avatar);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
 
   const handleCloseModal = () => {

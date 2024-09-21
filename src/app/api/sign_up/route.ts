@@ -1,7 +1,6 @@
 import { AxiosError } from "axios";
-import { NextRequest } from "next/server";
 import api from "@/services/api";
-import { cookies } from "next/headers";
+import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {

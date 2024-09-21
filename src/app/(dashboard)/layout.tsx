@@ -1,10 +1,11 @@
 "use client";
-import styles from "./styles.module.scss";
-import Sidebar from "@/app/(dashboard)/__components__/Sidebar";
-import { PropsWithChildren, useState } from "react";
-import Header from "./__components__/Header";
-import { usePathname } from "next/navigation";
 import "react-tooltip/dist/react-tooltip.css";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Sidebar from "@/app/(dashboard)/__components__/Sidebar";
+import Header from "./__components__/Header";
+import styles from "./styles.module.scss";
+import type { PropsWithChildren } from "react";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { layout, container, content } = styles;

@@ -1,13 +1,14 @@
 "use client";
-import styles from "./styles.module.scss";
-import LayoutCharts from "../layout";
 import dynamic from "next/dynamic";
-import chartOptions from "./options";
-import { IVerticalBarsProps } from "./types";
-import SegmentedControl, { ISegmentedControlItem } from "@/components/SegmentedControl";
-import { CSSProperties } from "react";
-import { segmentedRange } from "../../../types";
+import SegmentedControl from "@/components/SegmentedControl";
 import Skeleton from "@/components/Skeleton";
+import chartOptions from "./options";
+import { segmentedRange } from "../../../types";
+import LayoutCharts from "../layout";
+import styles from "./styles.module.scss";
+import type { CSSProperties } from "react";
+import type { IVerticalBarsProps } from "./types";
+
 const Charts = dynamic(() => import("echarts-for-react"));
 
 export default function VerticalBars({ data = [], selectedRange, isLoading }: IVerticalBarsProps) {

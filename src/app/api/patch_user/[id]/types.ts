@@ -1,3 +1,3 @@
-import { IPostUser } from "../../post_user/types";
+import type { IPostUser } from "../../post_user/types";
 
-export interface IPatchUser extends IPostUser {}
+export type IPatchUser = IPostUser;

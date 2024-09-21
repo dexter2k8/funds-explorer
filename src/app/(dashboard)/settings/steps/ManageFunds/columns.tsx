@@ -1,11 +1,11 @@
-import { GridColDef } from "@/components/Table/types";
 import { Tooltip } from "react-tooltip";
 import TableActions from "@/components/TableActions";
-import type { IActions } from "@/components/TableActions/types";
-import type { IFunds } from "@/app/api/get_funds/types";
 import { useAuth } from "@/store/useAuth";
+import type { IFunds } from "@/app/api/get_funds/types";
+import type { GridColDef } from "@/components/Table/types";
+import type { IActions } from "@/components/TableActions/types";
 
-export function getColumns({ onAction }: IActions) {
+export function GetColumns({ onAction }: IActions) {
   const { isAdmin } = useAuth();
   const columns: GridColDef<IFunds>[] = [
     {

@@ -1,6 +1,6 @@
-import styles from "./styles.module.scss";
-import { MdOutlinePerson } from "react-icons/md";
 import Image from "next/image";
+import { MdOutlinePerson } from "react-icons/md";
+import styles from "./styles.module.scss";
 
 interface IUserDetailsProps {
   avatar?: string;

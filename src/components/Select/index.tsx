@@ -1,7 +1,8 @@
-import { CSSProperties, FC, forwardRef, useEffect, useRef, useState } from "react";
-import classes from "./styles.module.css";
-import { ISelectProps } from "./types";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { ControlledSelect } from "./__components__/ControlledSelect";
+import classes from "./styles.module.css";
+import type { CSSProperties, FC } from "react";
+import type { ISelectProps } from "./types";
 
 const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>(
   ({ type = "default", ...props }, ref) => {
@@ -71,7 +72,7 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
     }, [open]);
 
     useEffect(() => {
-      value && setSelected(value);
+      if (value) setSelected(value);
       setText(options.find((t) => t.value === value)?.label ?? "");
     }, [value, options]);
 
@@ -128,6 +129,8 @@ const SelectBasic: FC<ISelectProps> = forwardRef<HTMLInputElement, ISelectProps>
     );
   }
 );
+
+SelectBasic.displayName = "Select";
 
 const Select = SelectBasic as FC<ISelectProps> & {
   Controlled: typeof ControlledSelect;

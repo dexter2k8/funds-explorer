@@ -1,4 +1,4 @@
-import { GridColDef } from "../../types";
+import type { GridColDef } from "../../types";
 
 export type TSort = "asc" | "desc";
 

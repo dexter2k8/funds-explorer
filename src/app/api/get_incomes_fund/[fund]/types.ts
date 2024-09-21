@@ -1,5 +1,3 @@
-import { IDonutData } from "@/app/(dashboard)/dashboard/__components__/Charts/Donut/types";
-
 export interface IGetIncomes {
   id: string;
   price: number;

@@ -1,13 +1,13 @@
 import "./styles.css";
 import { useEffect, useRef, useState } from "react";
-import { IFilter } from "./types";
+import type { IFilter } from "./types";
 
 export default function Filter({ value, onSearch, onClose }: IFilter) {
   const filterRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState(value);
 
   useEffect(() => {
-    !text && onSearch("");
+    if (!text) onSearch("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 

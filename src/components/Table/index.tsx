@@ -1,12 +1,12 @@
 "use client";
 import "./styles.css";
+import { useEffect, useRef, useState } from "react";
+import CheckboxSelection from "./components/CheckboxSelection";
 import Foot from "./components/Foot";
 import Head from "./components/Head";
 import Row from "./components/Row";
-import { ITable } from "./types";
-import { useEffect, useRef, useState } from "react";
-import { IFilterProps, ISortProps } from "./components/Head/types";
-import CheckboxSelection from "./components/CheckboxSelection";
+import type { IFilterProps, ISortProps } from "./components/Head/types";
+import type { ITable } from "./types";
 
 export default function Table({
   columns,

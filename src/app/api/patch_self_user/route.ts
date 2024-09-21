@@ -1,10 +1,10 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { IResponse } from "../types";
 import type { NextRequest } from "next/server";
-import type { IPatchSelfUser } from "./types";
 import type { IGetSelfUser } from "../get_self_user/types";
+import type { IResponse } from "../types";
+import type { IPatchSelfUser } from "./types";
 
 export async function PATCH(req: NextRequest) {
   const body: IPatchSelfUser = await req.json();

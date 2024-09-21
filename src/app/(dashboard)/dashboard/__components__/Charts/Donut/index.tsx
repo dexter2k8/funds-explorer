@@ -1,9 +1,10 @@
 "use client";
-import Skeleton from "@/components/Skeleton";
-import LayoutCharts from "../layout";
-import chartOptions from "./options";
-import { IDonutProps } from "./types";
 import dynamic from "next/dynamic";
+import Skeleton from "@/components/Skeleton";
+import chartOptions from "./options";
+import LayoutCharts from "../layout";
+import type { IDonutProps } from "./types";
+
 const Charts = dynamic(() => import("echarts-for-react"));
 
 export default function Donut({ title, data, colors, isLoading }: IDonutProps) {

@@ -1,4 +1,4 @@
-import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
+import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
 
 export default function chartOptions(profits: IGetIncomesFundResponse[]) {
   const options: echarts.EChartsOption = {

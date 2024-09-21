@@ -1,20 +1,20 @@
 "use client";
-import styles from "./styles.module.scss";
-import Card from "./__components__/Card";
-import VerticalBars from "./__components__/Charts/VerticalBars";
-import Donut from "./__components__/Charts/Donut";
+import { useState } from "react";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaHandHoldingDollar } from "react-icons/fa6";
-import Transaction from "./__components__/Transaction";
-import { useSWR } from "@/hook/useSWR";
-import SegmentedControl from "@/components/SegmentedControl";
-import { useState } from "react";
-import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
-import Skeleton from "@/components/Skeleton";
 import { API } from "@/app/paths";
+import SegmentedControl from "@/components/SegmentedControl";
+import Skeleton from "@/components/Skeleton";
+import { useSWR } from "@/hook/useSWR";
+import { endDate, getDate, patrimonyColors, profitColors, segmentedTypes } from "./types";
+import Card from "./__components__/Card";
+import Donut from "./__components__/Charts/Donut";
+import VerticalBars from "./__components__/Charts/VerticalBars";
+import Transaction from "./__components__/Transaction";
+import styles from "./styles.module.scss";
+import type { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
 import type { IGetSelfProfitsResponse } from "@/app/api/get_self_profits/types";
 import type { ITransactions } from "@/app/api/get_transactions/types";
-import type { IGetIncomesResponse } from "@/app/api/get_incomes_patrimony/types";
 
 export default function Dashboard() {
   const { dashboard, cards, segmented } = styles;

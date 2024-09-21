@@ -1,21 +1,22 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import styles from "./styles.module.scss";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import SelectDate from "@/components/SelectDate";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
 import schema from "@/schemas/validateAddIncome";
-import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
-import { AxiosError } from "axios";
 import api from "@/services/api";
-import { toast } from "react-toastify";
-import type { IModalDefaultProps } from "@/components/Modal/types";
-import type { IPostIncome } from "@/app/api/post_income/types";
-import type { ISelectOptions } from "@/components/Select/types";
+import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
+import styles from "./styles.module.scss";
+import type { SubmitHandler } from "react-hook-form";
 import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
+import type { IPostIncome } from "@/app/api/post_income/types";
+import type { IModalDefaultProps } from "@/components/Modal/types";
+import type { ISelectOptions } from "@/components/Select/types";
 import type { TAction } from "@/components/TableActions/types";
 
 interface IIncomeModalProps extends IModalDefaultProps {
@@ -55,9 +56,10 @@ export default function IncomeModal({
 
     setLoading(true);
     try {
-      action === "add" && (await api.client.post("/api/post_income", parsedData));
-      action === "edit" &&
-        (await api.client.patch(`/api/patch_income/${incomeData?.id}`, parsedData));
+      if (action === "add") await api.client.post("/api/post_income", parsedData);
+      if (action === "edit") {
+        await api.client.patch(`/api/patch_income/${incomeData?.id}`, parsedData);
+      }
       onMutate();
       toast.success(`Income ${action === "add" ? "added" : "updated"} successfully`);
     } catch (error) {
@@ -88,6 +90,7 @@ export default function IncomeModal({
       setValue("income", "R$ " + formatBRL(income).value);
       setValue("fund_alias", incomeData.fund_alias);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incomeData, fund_alias, fundValue]);
   const handleCloseModal = () => {
     onClose();

@@ -1,12 +1,13 @@
 "use client";
-import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import dynamic from "next/dynamic";
+import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
 import chartOptions from "./options";
+
 const Charts = dynamic(() => import("echarts-for-react"));
+import { useQueryState } from "nuqs";
 import Select from "@/components/Select";
 import Skeleton from "@/components/Skeleton";
 import type { ILineChartProps } from "./types";
-import { useQueryState } from "nuqs";
 
 export default function PatrimonialEvolution({ fundList, profits, isLoading }: ILineChartProps) {
   const options = chartOptions(profits || []);

@@ -1,10 +1,9 @@
 import Input from "@/components/Input";
-import styles from "../../styles.module.scss";
 import Modal from "@/components/Modal";
-import { Control } from "react-hook-form";
+import styles from "../../styles.module.scss";
+import type { Control } from "react-hook-form";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { IEditProfileProps } from "../../types";
-import { log } from "util";
 
 interface IChangePasswordModalProps extends IModalDefaultProps {
   okDisabled: boolean;

@@ -1,20 +1,20 @@
 "use client";
-import { ChangeEvent, CSSProperties, FC, forwardRef, useEffect, useRef, useState } from "react";
 import "./styles.scss";
-import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { parseDate } from "@/utils/lib";
+import { forwardRef, useEffect, useRef, useState } from "react";
+import { Calendar } from "react-date-range";
 import { FaCalendar } from "react-icons/fa";
-import type { ISelectDateProps } from "./types";
+import { parseDate } from "@/utils/lib";
 import { ControlledSelectDate } from "./__components__/ControlledSelectDate";
+import type { ChangeEvent, CSSProperties, FC } from "react";
+import type { ISelectDateProps } from "./types";
 
 const SelectDateBasic: FC<ISelectDateProps> = forwardRef<HTMLInputElement, ISelectDateProps>(
   ({ id, value = parseDate(new Date()), onChange, disabled }, ref) => {
     const [date, setDate] = useState(value);
     const [showCalendar, setShowCalendar] = useState(false);
     const [position, setPosition] = useState({ top: 0, left: 0 });
-    const [isAbove, setIsAbove] = useState(false);
     const calendarRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -29,9 +29,7 @@ const SelectDateBasic: FC<ISelectDateProps> = forwardRef<HTMLInputElement, ISele
 
       const handleMouseOver = () => {
         const { left, top } = input.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
         setPosition({ top, left });
-        setIsAbove(top > windowHeight / 2);
       };
 
       const handleClickOutside = (event: MouseEvent) => {
@@ -94,6 +92,8 @@ const SelectDateBasic: FC<ISelectDateProps> = forwardRef<HTMLInputElement, ISele
     );
   }
 );
+
+SelectDateBasic.displayName = "SelectDate";
 
 const SelectDate = SelectDateBasic as FC<ISelectDateProps> & {
   Controlled: typeof ControlledSelectDate;

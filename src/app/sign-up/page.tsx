@@ -1,14 +1,15 @@
 "use client";
-import styles from "../page.module.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Logo from "../../../public/assets/logo";
-import schema from "@/schemas/validateSignUp";
-import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "@/components/Input";
-import Button from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import schema from "@/schemas/validateSignUp";
 import { useAuth } from "@/store/useAuth";
+import Logo from "../../../public/assets/logo";
+import styles from "../page.module.scss";
+import type { SubmitHandler } from "react-hook-form";
 import type { ISignUpProps } from "@/store/useAuth/types";
 
 export default function SignUp() {
@@ -20,7 +21,7 @@ export default function SignUp() {
   });
 
   const onSubmit: SubmitHandler<ISignUpProps> = async (data) => {
-    (await signUp(data)) && router.push("/");
+    if (await signUp(data)) router.push("/");
   };
 
   return (

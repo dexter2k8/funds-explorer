@@ -71,7 +71,7 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ]    
   },
   "overrides": [
     {
@@ -80,19 +80,19 @@
         "simple-import-sort/imports": [
           "error",
           {
-            "groups": [
-              // side effect imports
-              ["^\\u0000"],
-
-              // `react` first, `next` second, then packages starting with a character
-              ["^react$", "^next$", "^react-native$"],
-
-              // Packages starting with `@`
-              ["^@", "^[a-z]"],
-
-              // local packages
+            "groups": [ 
               [
-                "^@assets",
+                "^\\u0000",             // Side effect imports
+                "^node:",               // Node.js builtins
+                "^react$",              // React import
+                "^next$",               // Next.js import
+                "^react-native$",       // React Native import
+                "^@?\\w",               // Packages starting with `@` or plain packages (3rd party)
+                "^@",                   // Scoped packages
+                "^[a-z]",               // Non-scoped packages
+                "^",                    // Absolute imports
+                "^\\.",                 // Relative imports (both starting with `./` and `../`)
+                "^@assets",             // Local packages
                 "^@app",
                 "^@templates",
                 "^@utils",
@@ -101,23 +101,21 @@
                 "^@contexts",
                 "^@screens",
                 "^@navigation",
-                "^@styles"
-              ],
-
-              // Imports starting with `../`
-              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-
-              // Imports starting with `./`
-              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-
-              // Style imports
-              ["^./styles.ts$"],
-
-              // type imports from other contexts
-              ["^@?\\w.*\\u0000$"],
-
-              // type imports from actual contexts
-              ["^[^.].*\\u0000$", "^\\..*\\u0000$"]
+                "^@styles",
+                "^\\.\\.(?!/?$)",        // Imports starting with `../`
+                "^\\.\\./?$",            // Relative imports starting with `../`
+                "^\\./(?=.*/)(?!/?$)",   // Imports starting with `./` with folders
+                "^\\.(?!/?$)",           // Imports starting with `.`
+                "^\\./?$",               // Imports starting with `./`
+                "^./styles.ts$",         // Styled components imports
+                "^./styles.scss$",       // Style sass imports
+                "^./styles.module.scss$",// Style sass imports
+                "^./styles.css$",       // Style css imports
+                "^./styles.module.css$",// Style css imports
+                "^@?\\w.*\\u0000$",      // Type imports from other contexts
+                "^[^.].*\\u0000$",       // Type imports from actual contexts
+                "^\\..*\\u0000$"         // Type imports from relative paths
+              ]
             ]
           }
         ]

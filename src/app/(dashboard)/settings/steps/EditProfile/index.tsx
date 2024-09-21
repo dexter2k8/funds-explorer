@@ -1,17 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import Button from "@/components/Button";
-import styles from "./styles.module.scss";
-import Input from "@/components/Input";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { API } from "@/app/paths";
-import { useSWR } from "@/hook/useSWR";
 import { yupResolver } from "@hookform/resolvers/yup";
-import schema from "@/schemas/validateEditProfile";
 import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { API } from "@/app/paths";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { useSWR } from "@/hook/useSWR";
+import schema from "@/schemas/validateEditProfile";
 import api from "@/services/api";
 import ChangePasswordModal from "./__components__/ChangePasswordModal";
+import styles from "./styles.module.scss";
+import type { SubmitHandler } from "react-hook-form";
 import type { IGetSelfUser } from "@/app/api/get_self_user/types";
 import type { IEditProfileProps } from "./types";
 
@@ -30,10 +31,11 @@ export default function EditProfile() {
       setValue("email", selfUser.email);
       setValue("avatar", selfUser.avatar);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selfUser]);
 
   const onSubmit: SubmitHandler<IEditProfileProps> = async (data) => {
-    const { password, confirmPassword, ...rest } = data;
+    const { password, ...rest } = data;
     const parsedData = password ? { password } : rest;
     try {
       setLoading(true);

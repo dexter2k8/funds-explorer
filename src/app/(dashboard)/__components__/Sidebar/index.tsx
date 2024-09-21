@@ -1,8 +1,8 @@
-import styles from "./styles.module.scss";
 import Link from "next/link";
-import Logo from "../../../../../public/assets/logo";
 import { MdDashboard, MdLogout, MdOutlineSettings, MdOutlineTableChart } from "react-icons/md";
 import { useAuth } from "@/store/useAuth";
+import Logo from "../../../../../public/assets/logo";
+import styles from "./styles.module.scss";
 
 const sidebarItems = [
   { label: "Dashboard", value: "/dashboard", icon: <MdDashboard /> },

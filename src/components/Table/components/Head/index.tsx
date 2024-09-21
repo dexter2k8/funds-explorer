@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useState } from "react";
-import { IFilterProps, IHead, ISortProps, TSort } from "./types";
 import Filter from "./components/Filter";
+import type { IFilterProps, IHead, ISortProps, TSort } from "./types";
 
 export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
   const [sort, setSort] = useState<ISortProps>();
@@ -50,13 +50,13 @@ export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
         const sortIcon = col.sortable ? (sort?.field === col.field ? sortIconType : "↓") : " ";
 
         const headerClasses = [];
-        !col.sortable && !col.filterable && headerClasses.push("ds-table__head--adjust");
-        col.fixed && headerClasses.push(`ds-table__fixed`);
+        if (!col.sortable && !col.filterable) headerClasses.push("ds-table__head--adjust");
+        if (col.fixed) headerClasses.push(`ds-table__fixed`);
         const headerClass = headerClasses.join(" ");
 
         const sortClasses = [];
-        col.sortable && sortClasses.push("ds-table__head--cursor");
-        sort?.field === col.field && sort?.sort && sortClasses.push("ds-table__head--color");
+        if (col.sortable) sortClasses.push("ds-table__head--cursor");
+        if (sort?.field === col.field && sort?.sort) sortClasses.push("ds-table__head--color");
         const sortClass = sortClasses.join(" ");
 
         const containerClasses = ["ds-table__head--container"];
@@ -64,7 +64,9 @@ export default function Head({ columns, colWidths, onSort, onFilter }: IHead) {
         const containerClass = containerClasses.join(" ");
 
         const filterClasses = ["ds-table__head--filter"];
-        filter?.field === col.field && filter?.text && filterClasses.push("ds-table__head--color");
+        if (filter?.field === col.field && filter?.text) {
+          filterClasses.push("ds-table__head--color");
+        }
         const filterClass = filterClasses.join(" ");
 
         return (

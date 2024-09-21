@@ -1,7 +1,7 @@
-import styles from "./styles.module.scss";
-import { formatCurrency, formatDate } from "@/utils/lib";
-import { ITransactions } from "@/app/api/get_transactions/types";
 import { Tooltip } from "react-tooltip";
+import { formatCurrency, formatDate } from "@/utils/lib";
+import styles from "./styles.module.scss";
+import type { ITransactions } from "@/app/api/get_transactions/types";
 
 export default function Transaction(props: ITransactions) {
   const { transaction, head, content, left, right, alias, tag, stats } = styles;

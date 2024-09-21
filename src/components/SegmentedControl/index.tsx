@@ -1,6 +1,6 @@
 "use client";
-import classes from "./styles.module.css";
 import { createRef, useEffect, useState } from "react";
+import classes from "./styles.module.css";
 
 export interface ISegmentedControlItem {
   key: number;
@@ -29,7 +29,7 @@ export default function SegmentedControl({
   const { controlList, controlItem } = classes;
 
   useEffect(() => {
-    selected && setActive(selected);
+    if (selected) setActive(selected);
     onSelect?.(active);
 
     if (!segmentRef.current || !activeRef.current) return;

@@ -1,15 +1,16 @@
 "use client";
 import { useState } from "react";
-import styles from "./page.module.scss";
-import Input from "@/components/Input";
-import Logo from "../../public/assets/logo";
-import Button from "@/components/Button";
-import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
 import schema from "@/schemas/validateLogin";
 import { useAuth } from "@/store/useAuth";
-import { useRouter } from "next/navigation";
+import styles from "./page.module.scss";
+import Logo from "../../public/assets/logo";
+import type { SubmitHandler } from "react-hook-form";
 import type { ISignInProps } from "@/store/useAuth/types";
 
 export default function SignIn() {
@@ -23,7 +24,8 @@ export default function SignIn() {
 
   const onSubmit: SubmitHandler<ISignInProps> = async (data) => {
     setLoading(true);
-    (await signIn(data)) && router.replace("/dashboard");
+    const result = await signIn(data);
+    if (result) router.replace("/dashboard");
     setLoading(false);
   };
 

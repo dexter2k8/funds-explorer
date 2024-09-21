@@ -1,18 +1,18 @@
 "use client";
 import { useState } from "react";
-import styles from "../../styles.module.scss";
-import Table from "@/components/Table";
-import { getColumns } from "./columns";
-import { API } from "@/app/paths";
-import { useSWR } from "@/hook/useSWR";
-import { CiSquarePlus } from "react-icons/ci";
-import UserModal from "./__components__/UserModal";
-import api from "@/services/api";
-import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { CiSquarePlus } from "react-icons/ci";
+import { toast } from "react-toastify";
+import { API } from "@/app/paths";
 import Modal from "@/components/Modal";
-import type { IActionsProps } from "@/components/TableActions/types";
+import Table from "@/components/Table";
+import { useSWR } from "@/hook/useSWR";
+import api from "@/services/api";
+import { getColumns } from "./columns";
+import styles from "../../styles.module.scss";
+import UserModal from "./__components__/UserModal";
 import type { IUsers } from "@/app/api/get_users/types";
+import type { IActionsProps } from "@/components/TableActions/types";
 
 export function ManageUsers() {
   const [action, setAction] = useState<IActionsProps>();

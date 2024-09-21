@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/utils/lib";
-import { IDonutOptions } from "./types";
+import type { IDonutOptions } from "./types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatParams = (params: any) => {
   return `${params.marker} ${params.name}: <b>${formatCurrency(params.value)}</b> (${
     params.percent

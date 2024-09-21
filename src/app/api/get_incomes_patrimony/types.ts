@@ -1,4 +1,4 @@
-import { IDonutData } from "@/app/(dashboard)/dashboard/__components__/Charts/Donut/types";
+import type { IDonutData } from "@/app/(dashboard)/dashboard/__components__/Charts/Donut/types";
 
 export interface IGetIncomesPatrimony {
   type: string;

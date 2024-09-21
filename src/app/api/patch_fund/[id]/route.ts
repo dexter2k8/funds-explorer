@@ -1,7 +1,7 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import type { IResponse } from "../../types";
 import type { IPatchFund } from "./types";
 

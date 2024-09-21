@@ -1,16 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-import { API } from "@/app/paths";
-import api from "@/services/api";
+import { CiSquarePlus } from "react-icons/ci";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { toast } from "react-toastify";
 import LayoutCharts from "@/app/(dashboard)/dashboard/__components__/Charts/layout";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { API } from "@/app/paths";
 import Skeleton from "@/components/Skeleton";
-import { CiSquarePlus } from "react-icons/ci";
-import TransactionModal from "./__components__/TransactionModal";
+import api from "@/services/api";
 import TransactionCard from "./__components__/TransactionCard";
+import TransactionModal from "./__components__/TransactionModal";
 import type { ITransactions } from "@/app/api/get_transactions/types";
-import type { ISelectOptions } from "@/components/Select/types";
 
 interface IInfiniteListProps {
   fund_alias: string;
@@ -41,6 +40,7 @@ export default function Transactions({ fund_alias, fundValue }: IInfiniteListPro
 
   useEffect(() => {
     loadInitialData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fund_alias]);
 
   const fetchMoreData = () => {
@@ -50,7 +50,8 @@ export default function Transactions({ fund_alias, fundValue }: IInfiniteListPro
       })
       .then((res) => {
         setTransactions([...transactions, ...res.data]);
-        res.data.length > 0 ? setHasMore(true) : setHasMore(false);
+        if (res.data.length > 0) setHasMore(true);
+        else setHasMore(false);
       })
       .catch((err) => toast.error(err?.message));
     setOffset((prev) => prev + limit);

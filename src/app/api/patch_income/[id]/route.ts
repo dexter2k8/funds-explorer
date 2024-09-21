@@ -1,9 +1,9 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
+import type { IPatchTransaction } from "../../patch_transaction/[id]/types";
 import type { IResponse } from "../../types";
-import { IPatchTransaction } from "../../patch_transaction/[id]/types";
 
 export async function PATCH(req: NextRequest) {
   const body: IPatchTransaction = await req.json();

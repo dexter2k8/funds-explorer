@@ -1,8 +1,8 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { IResponse } from "../types";
 import type { NextRequest } from "next/server";
+import type { IResponse } from "../types";
 import type { IPostUser } from "./types";
 
 export async function POST(req: NextRequest) {

@@ -1,5 +1,5 @@
 import "./styles.css";
-import { IFoot } from "./types";
+import type { IFoot } from "./types";
 
 export default function Foot({ page, colCount, rowCount, pageSize, onPageChange }: IFoot) {
   const min = 1 + (page - 1) * pageSize;

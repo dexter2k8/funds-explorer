@@ -1,10 +1,10 @@
-import Button from "../Button";
 import "./styles.css";
-import { IModal } from "./types";
+import Button from "../Button";
+import type { IModal } from "./types";
 
 export default function Modal({ okText = "Ok", cancelText = "Cancel", ...props }: IModal) {
   const modalClasses = ["ds-modal"];
-  props.open && modalClasses.push("ds-modal__open");
+  if (props.open) modalClasses.push("ds-modal__open");
   const modalClass = modalClasses.join(" ");
 
   return (

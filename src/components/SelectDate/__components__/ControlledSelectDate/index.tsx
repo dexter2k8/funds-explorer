@@ -1,6 +1,7 @@
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import type { ISelectDateProps } from "../../types";
+import { Controller } from "react-hook-form";
 import SelectDate from "../..";
+import type { Control, FieldValues, Path } from "react-hook-form";
+import type { ISelectDateProps } from "../../types";
 
 interface IControlledSelectDateProps<T extends FieldValues> extends ISelectDateProps {
   name: Path<T>;

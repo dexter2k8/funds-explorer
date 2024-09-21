@@ -1,6 +1,7 @@
 "use client";
-import { createRef, CSSProperties, useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import classes from "./styles.module.css";
+import type { CSSProperties } from "react";
 
 interface ITabsProps {
   items: ITabItemProps[];

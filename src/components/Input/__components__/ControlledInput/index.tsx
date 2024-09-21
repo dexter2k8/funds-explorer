@@ -1,7 +1,10 @@
-import IMask, { FactoryArg } from "imask";
 import { useCallback, useMemo } from "react";
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import Input, { IInputProps } from "../..";
+import IMask from "imask";
+import { Controller } from "react-hook-form";
+import Input from "../..";
+import type { FactoryArg } from "imask";
+import type { Control, FieldValues, Path } from "react-hook-form";
+import type { IInputProps } from "../..";
 
 interface IControlledInputProps<T extends FieldValues> extends Omit<IInputProps, "onChange"> {
   name: Path<T>;

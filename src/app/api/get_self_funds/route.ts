@@ -1,8 +1,8 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { IResponse } from "../types";
-import { IFunds } from "../get_funds/types";
+import type { IFunds } from "../get_funds/types";
+import type { IResponse } from "../types";
 
 export async function GET() {
   try {

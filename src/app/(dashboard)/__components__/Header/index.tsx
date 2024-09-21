@@ -1,11 +1,11 @@
-import styles from "./styles.module.scss";
-import UserDetails from "../UserDetails";
-import { MdMenu } from "react-icons/md";
-import { useSWR } from "@/hook/useSWR";
-import { API } from "@/app/paths";
-import { IGetSelfUser } from "@/app/api/get_self_user/types";
 import { useEffect } from "react";
+import { MdMenu } from "react-icons/md";
+import { API } from "@/app/paths";
+import { useSWR } from "@/hook/useSWR";
 import { useAuth } from "@/store/useAuth";
+import UserDetails from "../UserDetails";
+import styles from "./styles.module.scss";
+import type { IGetSelfUser } from "@/app/api/get_self_user/types";
 
 interface IHeaderProps {
   menuClick: () => void;
@@ -20,6 +20,7 @@ export default function Header({ menuClick, label }: IHeaderProps) {
 
   useEffect(() => {
     if (response) setValue("isAdmin", response.admin);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response]);
 
   return (

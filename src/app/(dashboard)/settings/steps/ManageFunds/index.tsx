@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
-import styles from "../../styles.module.scss";
-import Table from "@/components/Table";
-import { getColumns } from "./columns";
-import { API } from "@/app/paths";
-import { useSWR } from "@/hook/useSWR";
-import { CiSquarePlus } from "react-icons/ci";
-import FundModal from "./__components__/FundModal";
-import api from "@/services/api";
-import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { CiSquarePlus } from "react-icons/ci";
+import { toast } from "react-toastify";
+import { API } from "@/app/paths";
 import Modal from "@/components/Modal";
+import Table from "@/components/Table";
+import { useSWR } from "@/hook/useSWR";
+import api from "@/services/api";
 import { useAuth } from "@/store/useAuth";
+import { GetColumns } from "./columns";
+import styles from "../../styles.module.scss";
+import FundModal from "./__components__/FundModal";
 import type { IFunds } from "@/app/api/get_funds/types";
 import type { IActionsProps } from "@/components/TableActions/types";
 
@@ -20,7 +20,7 @@ export function ManageFunds() {
   const [loading, setLoading] = useState(false);
   const { isAdmin } = useAuth();
   const { head } = styles;
-  const columns = getColumns({ onAction: setAction });
+  const columns = GetColumns({ onAction: setAction });
 
   const { response: fundList, isLoading, mutate } = useSWR<IFunds[]>(API.GET_FUNDS);
 

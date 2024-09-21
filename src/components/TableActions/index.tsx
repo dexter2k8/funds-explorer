@@ -1,8 +1,8 @@
-import styles from "./styles.module.scss";
-import { Tooltip } from "react-tooltip";
-import { RiListSettingsLine } from "react-icons/ri";
 import { CiSquareMinus } from "react-icons/ci";
-import { IActions } from "./types";
+import { RiListSettingsLine } from "react-icons/ri";
+import { Tooltip } from "react-tooltip";
+import styles from "./styles.module.scss";
+import type { IActions } from "./types";
 
 interface ITableActionsProps extends IActions {
   id: string | number;

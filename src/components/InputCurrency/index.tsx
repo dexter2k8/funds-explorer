@@ -1,7 +1,9 @@
-import { ChangeEvent } from "react";
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import Input, { IInputProps } from "../Input";
+import { Controller } from "react-hook-form";
 import { formatBRL } from "@/utils/lib";
+import Input from "../Input";
+import type { ChangeEvent } from "react";
+import type { Control, FieldValues, Path } from "react-hook-form";
+import type { IInputProps } from "../Input";
 
 interface IControlledInputProps<T extends FieldValues> extends Omit<IInputProps, "onChange"> {
   name: Path<T>;
@@ -17,7 +19,6 @@ const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 export const InputCurrency = <T extends FieldValues>({
   name,
   control,
-  rawValue,
   ...props
 }: IControlledInputProps<T>) => {
   return (

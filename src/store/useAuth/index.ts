@@ -1,5 +1,6 @@
-import { create, StoreApi, UseBoundStore } from "zustand";
+import { create } from "zustand";
 import { SignIn, SignOut, SignUp } from "./fetchers";
+import type { StoreApi, UseBoundStore } from "zustand";
 import type { TActions, TState } from "./types";
 
 export const useAuth: UseBoundStore<StoreApi<TState & TActions>> = create<TState & TActions>(

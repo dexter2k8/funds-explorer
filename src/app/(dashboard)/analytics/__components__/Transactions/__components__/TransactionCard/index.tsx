@@ -1,5 +1,5 @@
-import styles from "./styles.module.scss";
 import { formatCurrency, formatDate } from "@/utils/lib";
+import styles from "./styles.module.scss";
 import type { ITransactions } from "@/app/api/get_transactions/types";
 
 interface ITransactionCardProps {

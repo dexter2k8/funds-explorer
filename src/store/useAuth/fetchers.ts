@@ -1,6 +1,6 @@
-import api from "@/services/api";
-import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import api from "@/services/api";
 import type { ISignInProps, ISignUpProps } from "./types";
 
 async function SignIn({ email, password }: ISignInProps) {
@@ -37,4 +37,4 @@ async function SignOut() {
   }
 }
 
-export { SignIn, SignUp, SignOut };
+export { SignIn, SignOut, SignUp };

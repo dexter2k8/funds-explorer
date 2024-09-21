@@ -1,8 +1,8 @@
-import { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
-import { GridColDef } from "@/components/Table/types";
-import { formatCurrency, formatDate } from "@/utils/lib";
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from "react-icons/md";
 import TableActions from "@/components/TableActions";
+import { formatCurrency, formatDate } from "@/utils/lib";
+import type { IGetIncomesFundResponse } from "@/app/api/get_incomes_fund/[fund]/types";
+import type { GridColDef } from "@/components/Table/types";
 import type { IActions } from "@/components/TableActions/types";
 
 export function getColumns({ onAction }: IActions) {

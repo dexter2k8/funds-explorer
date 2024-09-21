@@ -1,8 +1,10 @@
 import { formatCurrency } from "@/utils/lib";
 import type { IGetSelfProfits } from "@/app/api/get_self_profits/types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatParams = (params: any) => {
   let content = `${params[0].axisValue}<br/>`;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params.forEach((item: any) => {
     content += `${item.marker} ${item.seriesName}: <b>${formatCurrency(item.value)}</b><br/>`;
   });

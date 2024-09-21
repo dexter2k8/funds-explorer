@@ -1,5 +1,5 @@
 import "./styles.css";
-import { IRow } from "./types";
+import type { IRow } from "./types";
 
 export default function Row({
   columns,
@@ -32,13 +32,13 @@ export default function Row({
           : {};
 
         const dataClasses = ["ds-table__row--td "];
-        checked?.includes(rowIndex) && dataClasses.push("ds-table__row--selected");
-        col.fixed && dataClasses.push(`ds-table__fixed`);
+        if (checked?.includes(rowIndex)) dataClasses.push("ds-table__row--selected");
+        if (col.fixed) dataClasses.push(`ds-table__fixed`);
         const dataClass = dataClasses.join(" ");
 
         const labelClasses = ["ds-table__row--label"];
         labelClasses.push(`ds-table__cell--${col.align || "left"}`);
-        (rowClick || checkboxSelection) && labelClasses.push("ds-table__row--cursor");
+        if (rowClick || checkboxSelection) labelClasses.push("ds-table__row--cursor");
         const labelClass = labelClasses.join(" ");
 
         return (

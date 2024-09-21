@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Checkbox from "./Checkbox";
-import { ICheckboxSelectionProps } from "./types";
+import type { ICheckboxSelectionProps } from "./types";
 
 export default function CheckboxSelection({
   columns,

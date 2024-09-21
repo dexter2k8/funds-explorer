@@ -1,23 +1,25 @@
-import { MouseEvent, useEffect, useState } from "react";
-import styles from "./styles.module.scss";
+import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { API } from "@/app/paths";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import SelectDate from "@/components/SelectDate";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useSWR } from "@/hook/useSWR";
 import schema from "@/schemas/validateAddTransaction";
-import { AxiosError } from "axios";
-import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
 import api from "@/services/api";
-import { toast } from "react-toastify";
+import { currencyToNumber, formatBRL, parseDate } from "@/utils/lib";
+import styles from "./styles.module.scss";
+import type { MouseEvent } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import type { IFunds } from "@/app/api/get_funds/types";
+import type { ITransactions } from "@/app/api/get_transactions/types";
+import type { IPostTransaction } from "@/app/api/post_transaction/types";
 import type { IModalDefaultProps } from "@/components/Modal/types";
 import type { ISelectOptions } from "@/components/Select/types";
-import type { IPostTransaction } from "@/app/api/post_transaction/types";
-import type { ITransactions } from "@/app/api/get_transactions/types";
-import type { IFunds } from "@/app/api/get_funds/types";
-import { useSWR } from "@/hook/useSWR";
-import { API } from "@/app/paths";
 
 interface IAddTransactionModalProps extends IModalDefaultProps {
   onHandleTransaction: () => void;
@@ -54,9 +56,9 @@ export default function TransactionModal({
 
     setLoading(true);
     try {
-      transaction
-        ? await api.client.patch(`/api/patch_transaction/${transaction?.id}`, parsedData)
-        : await api.client.post("/api/post_transaction", parsedData);
+      if (transaction) {
+        await api.client.patch(`/api/patch_transaction/${transaction?.id}`, parsedData);
+      } else await api.client.post("/api/post_transaction", parsedData);
       toast.success(`Transaction ${transaction ? "updated" : "added"} successfully`);
       onHandleTransaction();
     } catch (error) {
@@ -84,6 +86,7 @@ export default function TransactionModal({
       setValue("price", "R$ " + formatBRL(price).value);
       setValue("quantity", transaction.quantity);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transaction, fund_alias, fundValue]);
 
   const handleCloseModal = () => {

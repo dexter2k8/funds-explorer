@@ -1,8 +1,8 @@
-import { GridColDef } from "@/components/Table/types";
 import Image from "next/image";
 import TableActions from "@/components/TableActions";
-import type { IActions } from "@/components/TableActions/types";
 import type { IUsers } from "@/app/api/get_users/types";
+import type { GridColDef } from "@/components/Table/types";
+import type { IActions } from "@/components/TableActions/types";
 
 export function getColumns({ onAction }: IActions) {
   const columns: GridColDef<IUsers>[] = [

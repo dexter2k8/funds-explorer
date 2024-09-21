@@ -1,5 +1,5 @@
-import api from "@/services/api";
 import fetchSWR from "swr";
+import api from "@/services/api";
 import type { AxiosError } from "axios";
 import type { KeyedMutator, SWRConfiguration } from "swr";
 

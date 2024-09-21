@@ -1,9 +1,9 @@
+import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import api from "@/services/api";
-import { AxiosError } from "axios";
-import { IResponse } from "../types";
-import { IGetIncomesPatrimony } from "./types";
-import { IDonutData } from "@/app/(dashboard)/dashboard/__components__/Charts/Donut/types";
+import type { IDonutData } from "@/app/(dashboard)/dashboard/__components__/Charts/Donut/types";
+import type { IResponse } from "../types";
+import type { IGetIncomesPatrimony } from "./types";
 
 export async function GET() {
   try {

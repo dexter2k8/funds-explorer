@@ -1,10 +1,11 @@
 "use client";
-import Tabs, { ITabItemProps } from "@/components/Tabs";
-import styles from "./styles.module.scss";
+import Tabs from "@/components/Tabs";
+import { useAuth } from "@/store/useAuth";
 import EditProfile from "./steps/EditProfile";
 import { ManageFunds } from "./steps/ManageFunds";
 import { ManageUsers } from "./steps/ManageUsers";
-import { useAuth } from "@/store/useAuth";
+import styles from "./styles.module.scss";
+import type { ITabItemProps } from "@/components/Tabs";
 
 export default function Settings() {
   const { settings } = styles;

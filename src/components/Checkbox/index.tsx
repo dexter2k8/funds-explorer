@@ -1,5 +1,5 @@
 import "./styles.css";
-import { ICheckboxProps } from "./types";
+import type { ICheckboxProps } from "./types";
 
 export default function Checkbox({ indeterminate = false, ...props }: ICheckboxProps) {
   return (

@@ -1,5 +1,7 @@
 import puppeteer from "puppeteer";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 const getType = (base: string) => {
   const type = {
@@ -11,7 +13,7 @@ const getType = (base: string) => {
 };
 
 // Função utilitária para pausar a execução por um determinado tempo
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export async function GET(req: NextRequest) {
   try {
     const searchParams = new URL(req.url);

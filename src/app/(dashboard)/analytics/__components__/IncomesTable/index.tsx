@@ -1,16 +1,16 @@
 "use client";
 import { useState } from "react";
-import styles from "./styles.module.scss";
-import { CiSquarePlus } from "react-icons/ci";
-import Table from "@/components/Table";
-import IncomeModal from "./__components__/IncomeModal";
-import { getColumns } from "./columns";
-import Modal from "@/components/Modal";
 import { AxiosError } from "axios";
+import { CiSquarePlus } from "react-icons/ci";
 import { toast } from "react-toastify";
+import Modal from "@/components/Modal";
+import Table from "@/components/Table";
 import api from "@/services/api";
-import type { IIncomesTableProps } from "./types";
+import { getColumns } from "./columns";
+import IncomeModal from "./__components__/IncomeModal";
+import styles from "./styles.module.scss";
 import type { IActionsProps } from "@/components/TableActions/types";
+import type { IIncomesTableProps } from "./types";
 
 export default function IncomesTable({
   fundList,

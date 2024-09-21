@@ -1,5 +1,5 @@
 import "./styles.css";
-import { IButtonProps } from "./types";
+import type { IButtonProps } from "./types";
 
 export default function Button({
   children,
@@ -9,11 +9,11 @@ export default function Button({
   ...props
 }: IButtonProps) {
   const buttonClasses = ["ds-button"];
-  variant === "primary" && buttonClasses.push("ds-button-primary");
-  variant === "link" && buttonClasses.push("ds-button-link");
-  size === "small" && buttonClasses.push("ds-button-small");
-  size === "large" && buttonClasses.push("ds-button-large");
-  loading && buttonClasses.push("ds-button-loading");
+  if (variant === "primary") buttonClasses.push("ds-button-primary");
+  if (variant === "link") buttonClasses.push("ds-button-link");
+  if (size === "small") buttonClasses.push("ds-button-small");
+  if (size === "large") buttonClasses.push("ds-button-large");
+  if (loading) buttonClasses.push("ds-button-loading");
   const buttonClass = buttonClasses.join(" ");
 
   return (

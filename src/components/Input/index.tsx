@@ -1,13 +1,14 @@
 "use client";
 import "./styles.css";
+import { forwardRef, useState } from "react";
+import { InputCurrency } from "../InputCurrency";
+import { ControlledInput } from "./__components__/ControlledInput";
+import CheckCircle from "./Icons/check-circle";
+import ExclamationCircle from "./Icons/exclamation-circle";
 import Eye from "./Icons/eye";
 import EyeSlashed from "./Icons/eye-slashed";
 import InfoCircle from "./Icons/info-circle";
-import CheckCircle from "./Icons/check-circle";
-import ExclamationCircle from "./Icons/exclamation-circle";
-import { FC, forwardRef, InputHTMLAttributes, useState } from "react";
-import { ControlledInput } from "./__components__/ControlledInput";
-import { InputCurrency } from "../InputCurrency";
+import type { FC, InputHTMLAttributes } from "react";
 
 type TStatus = "info" | "success" | "error";
 type size = "small" | "default" | "large";
@@ -80,8 +81,8 @@ const InputBasic: FC<IInputProps> = forwardRef<HTMLInputElement, IInputProps>(
               status === "info"
                 ? "dx-input-infoMessage"
                 : status === "success"
-                ? "dx-input-successMessage"
-                : "dx-input-errorMessage"
+                  ? "dx-input-successMessage"
+                  : "dx-input-errorMessage"
             }
           >
             {messageIcon(status)} {message}
@@ -91,6 +92,8 @@ const InputBasic: FC<IInputProps> = forwardRef<HTMLInputElement, IInputProps>(
     );
   }
 );
+
+InputBasic.displayName = "Input";
 
 const Input = InputBasic as React.FC<IInputProps> & {
   Controlled: typeof ControlledInput;
