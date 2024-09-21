@@ -104,4 +104,4 @@ function Analytics() {
   );
 }
 
-export default dynamic(() => Promise.resolve(Analytics), { ssr: false });
+export default dynamic(() => Promise.resolve(Analytics));
